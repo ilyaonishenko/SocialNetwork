@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies{
+
+
     compile 'ch.qos.logback:logback-classic:+'
 //        logback работает как реализация slf4j
     compileOnly 'org.projectlombok:lombok:+'
@@ -20,5 +22,17 @@ dependencies{
     providedCompile 'org.apache.tomcat:tomcat-api:+'
     providedCompile 'org.apache.tomcat:tomcat-jsp-api:+'
 
+
+    // H2Database
     compile 'com.h2database:h2:+'
+
+    // Jersey
+    compile 'org.glassfish.jersey.containers:jersey-container-servlet:+'
+    compile 'org.glassfish.jersey.media:jersey-media-moxy:+'
+
+    // Jackson
+    compile 'com.fasterxml.jackson.core:jackson-databind:+'
+
+    // WebSockets
+    compile 'org.apache.tomcat:tomcat-websocket-api:+'
 }
