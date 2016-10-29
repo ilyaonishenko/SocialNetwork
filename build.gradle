@@ -1,0 +1,24 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies{
+    compile 'ch.qos.logback:logback-classic:+'
+//        logback работает как реализация slf4j
+    compileOnly 'org.projectlombok:lombok:+'
+    testCompile 'junit:junit:+'
+    compile 'com.github.spullara.mustache.java:compiler:+'
+    compile 'org.apache.commons:commons-lang3:3.4'
+
+    providedCompile 'org.apache.tomcat:tomcat-api:+'
+    providedCompile 'org.apache.tomcat:tomcat-jsp-api:+'
+
+    compile 'com.h2database:h2:+'
+}
