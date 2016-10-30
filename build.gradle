@@ -35,4 +35,8 @@ dependencies{
 
     // WebSockets
     compile 'org.apache.tomcat:tomcat-websocket-api:+'
+
+    //JSTL
+    compile 'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:+'
+    compile 'org.glassfish.web:javax.servlet.jsp.jstl:+'
 }
