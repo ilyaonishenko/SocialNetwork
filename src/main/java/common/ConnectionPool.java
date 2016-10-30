@@ -1,7 +1,7 @@
 package common;
 
 import lombok.SneakyThrows;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.nio.file.Files;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 /**
  * Created by wopqw on 21.10.16.
  */
-@Log
+@Slf4j
 public class ConnectionPool implements AutoCloseable {
 
     private static BlockingQueue<Connection> freeConnections;
