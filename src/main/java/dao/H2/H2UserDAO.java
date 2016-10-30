@@ -48,4 +48,22 @@ public class H2UserDAO implements UserDAO {
             return users;
         }
     }
+
+    @Override
+    @SneakyThrows
+    public Collection<String> getUserRole(User user) {
+
+        HashSet<String> userRoles = new HashSet<>();
+
+        try(Connection connection =  connectionPool.getConnection()){
+
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT role FROM Roles WHERE username = '"+
+                    user.getUsername()+"'");
+            while(rs.next()) {
+                userRoles.add(rs.getString(1));
+            }
+        }
+        return userRoles;
+    }
 }

@@ -1,16 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
   User: wopqw
-  Date: 30.10.16
-  Time: 19:57
+  Date: 31.10.16
+  Time: 2:19
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Error!</title>
+    <title>HomePage</title>
 </head>
 <body>
-<p/> Such an error!
+
+Welcome to homePage!
 </body>
 </html>

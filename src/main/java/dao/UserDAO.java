@@ -12,6 +12,8 @@ public interface UserDAO {
 
     Collection<User> getAll();
 
+    Collection<String> getUserRole(User user);
+
     default Optional<User> getById(long id){
 
         return getAll().stream()
@@ -25,4 +27,14 @@ public interface UserDAO {
                 .filter(user -> user.getUsername().equals(username))
                 .findAny();
     }
+
+    default Optional<User> isRegistered(String username, String hash){
+
+        return getAll().stream()
+                .filter(u -> u.getUsername().equals(username)
+                && u.getPassword().equals(hash))
+                .findAny();
+    }
+
+
 }
