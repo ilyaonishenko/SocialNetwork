@@ -11,6 +11,10 @@
     <title>Login</title>
 </head>
 <body>
-<p/>You need to login first!
+<form method="POST" action="/login">
+    <input name="j_username" title="Login"/><br/>
+    <input type="password" name="j_password" autocomplete="off" title="Password"/><br/>
+    <input type="submit" value="submit"/>
+</form>
 </body>
 </html>

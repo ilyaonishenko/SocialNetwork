@@ -1,0 +1,18 @@
+.jumbotron#main{
+    text-align: center;
+    margin: auto;
+    width:80%;
+    background-color: #ffffff;
+}
+
+.navbar-brand {
+    text-align: center;
+    float: none;
+    position: absolute;
+    left: 47%;
+    right: 50%;
+}
+a.navbar-brand{
+    display: block;
+}
+

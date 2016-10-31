@@ -1,12 +1,9 @@
 package controllers;
 
 import common.BaseServlet;
-import dao.UserDAO;
-import listeners.Initer;
 import lombok.extern.slf4j.Slf4j;
 import model.User;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +17,6 @@ import java.util.Optional;
 @Slf4j
 @WebServlet(urlPatterns = {"/user/*"})
 public class UserController extends BaseServlet {
-
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-
-        userDAO = (UserDAO) config.getServletContext().getAttribute(Initer.USER_DAO);
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

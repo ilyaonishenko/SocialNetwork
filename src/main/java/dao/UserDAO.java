@@ -28,12 +28,12 @@ public interface UserDAO {
                 .findAny();
     }
 
-    default Optional<User> isRegistered(String username, String hash){
+    default boolean isRegistered(String username, String hash){
 
         return getAll().stream()
                 .filter(u -> u.getUsername().equals(username)
                 && u.getPassword().equals(hash))
-                .findAny();
+                .findAny().isPresent();
     }
 
 

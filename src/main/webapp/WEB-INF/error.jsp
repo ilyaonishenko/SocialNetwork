@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Error!</title>
+    <meta http-equiv="Refresh" content="2; URL=/login">
 </head>
 <body>
 <p/> Such an error!
