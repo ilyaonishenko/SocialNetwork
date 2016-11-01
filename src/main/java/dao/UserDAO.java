@@ -36,5 +36,7 @@ public interface UserDAO {
                 .findAny().isPresent();
     }
 
+    void addUser(User user);
+
 
 }

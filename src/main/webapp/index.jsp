@@ -27,7 +27,7 @@
     <div class="jumbotron" id="main">
         <h2>We make the news real</h2>
         <p>Texter is the best social network to spread the news.</p>
-        <p><a class="btn btn-primary btn-lg">Join the Community!</a></p>
+        <p><a class="btn btn-primary btn-lg" href="/register">Join the Community!</a></p>
         <p/><a href="/login">Or login</a>
     </div>
 

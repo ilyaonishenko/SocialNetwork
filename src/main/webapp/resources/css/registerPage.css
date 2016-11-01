@@ -1,0 +1,21 @@
+.form-horizontal{
+
+    display: block;
+    margin: auto;
+    text-align: center;
+    left: 50%;
+    right: 50%;
+    width: 50%;
+
+    background-color: transparent;
+}
+
+.form-group{
+
+    text-align: center;
+    margin: auto;
+}
+
+.form-control{
+    width: 25%;
+}

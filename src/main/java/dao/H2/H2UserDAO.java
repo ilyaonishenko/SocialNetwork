@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import model.User;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Collection;
@@ -65,5 +66,25 @@ public class H2UserDAO implements UserDAO {
             }
         }
         return userRoles;
+    }
+
+    @Override
+    @SneakyThrows
+    public void addUser(User user) {
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "INSERT INTO User (username, email, password, first_name, last_name) VALUES (?,?,?,?,?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1,user.getUsername());
+            preparedStatement.setString(2,user.getEmail());
+            preparedStatement.setString(3,user.getPassword());
+            preparedStatement.setString(4,user.getFirstName());
+            preparedStatement.setString(5,user.getLastName());
+
+            preparedStatement.execute();
+        }
     }
 }
