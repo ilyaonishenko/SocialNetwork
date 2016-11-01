@@ -29,7 +29,7 @@ public class UserController extends BaseServlet {
         if(optUser.isPresent()){
             
             User user = optUser.get();
-            req.setAttribute("user", user);
+            req.setAttribute(USER, user);
             req.getRequestDispatcher("/WEB-INF/user/user.jsp").forward(req,resp);
         } else {
             // TODO: 30.10.16 make error page

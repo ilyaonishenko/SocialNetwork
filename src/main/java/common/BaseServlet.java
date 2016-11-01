@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
  */
 public class BaseServlet extends HttpServlet {
 
+    protected static final String USER = "user";
+
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;
 

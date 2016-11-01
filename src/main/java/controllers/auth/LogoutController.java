@@ -1,4 +1,4 @@
-package controllers;
+package controllers.auth;
 
 import common.BaseServlet;
 import lombok.extern.slf4j.Slf4j;
@@ -12,21 +12,27 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by wopqw on 31.10.16.
+ * Created by wopqw on 01.11.16.
  */
 @Slf4j
-@WebServlet(urlPatterns = {"/home/*"})
-public class HomeController extends BaseServlet {
+@WebServlet(urlPatterns = {"/logout"})
+public class LogoutController extends BaseServlet {
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         HttpSession httpSession = req.getSession();
-        User user = (User)httpSession.getAttribute(USER);
-        log.info("in homeController with user "+user.getUsername());
-        req.setAttribute(USER,user);
-        req.getRequestDispatcher("/WEB-INF/home/home.jsp").forward(req,resp);
+
+        User user = (User) httpSession.getAttribute(USER);
+
+        if(user!=null){
+            log.info("logout user: "+user);
+        }
+        httpSession.removeAttribute(USER);
+        httpSession.invalidate();
+
+        req.getRequestDispatcher("/").forward(req,resp);
     }
 
     @Override

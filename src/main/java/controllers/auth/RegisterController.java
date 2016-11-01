@@ -22,7 +22,8 @@ import java.util.Optional;
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterController extends BaseServlet {
 
-    private static final String USER = "user";
+    // TODO: 01.11.16 Валидация на jsp и тут
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
