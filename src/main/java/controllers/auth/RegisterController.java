@@ -2,7 +2,9 @@ package controllers.auth;
 
 import common.BaseServlet;
 import lombok.extern.slf4j.Slf4j;
+import model.Role;
 import model.User;
+import model.UserRole;
 import security.StringEncryptUtil;
 
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 
@@ -62,6 +65,9 @@ public class RegisterController extends BaseServlet {
                 .build()
         );
 
+        UserRole userRole = new UserRole(username, Role.USER.toString());
+        userRoleDAO.addUserRole(userRole);
+
         Optional<User> optUser = userDAO.getByUsername(username);
 
         if(optUser.isPresent()){
@@ -69,6 +75,7 @@ public class RegisterController extends BaseServlet {
             log.info("user is "+user.toString());
             httpSession.setAttribute(USER,user);
             log.info("method: "+req.getMethod());
+            httpSession.setAttribute(USER_ROLE, new HashSet<UserRole>().add(userRole));
             req.getRequestDispatcher("/home/").forward(req,resp);
         } else {
             req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req,resp);

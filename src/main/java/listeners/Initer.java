@@ -2,7 +2,9 @@ package listeners;
 
 import common.ConnectionPool;
 import dao.H2.H2UserDAO;
-import dao.UserDAO;
+import dao.H2.H2UserRoleDAO;
+import dao.interfaces.UserDAO;
+import dao.interfaces.UserRoleDAO;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import security.StringEncryptUtil;
@@ -25,6 +27,7 @@ public class Initer implements ServletContextListener {
 
 
     public static final String USER_DAO = "userDAO";
+    public static final String USER_ROLE_DAO = "userRoleDAO";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -41,8 +44,10 @@ public class Initer implements ServletContextListener {
         reinitDbWithHash(connectionPool);
 
         UserDAO userDAO = new H2UserDAO(connectionPool);
+        UserRoleDAO userRoleDAO = new H2UserRoleDAO(connectionPool);
 
         servletContext.setAttribute(USER_DAO,userDAO);
+        servletContext.setAttribute(USER_ROLE_DAO,userRoleDAO);
     }
 
     @SneakyThrows

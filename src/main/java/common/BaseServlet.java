@@ -1,6 +1,7 @@
 package common;
 
-import dao.UserDAO;
+import dao.interfaces.UserDAO;
+import dao.interfaces.UserRoleDAO;
 import listeners.Initer;
 
 import javax.servlet.ServletConfig;
@@ -13,13 +14,16 @@ import javax.servlet.http.HttpServlet;
 public class BaseServlet extends HttpServlet {
 
     protected static final String USER = "user";
+    protected static final String USER_ROLE = "userRoles";
 
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;
+    protected UserRoleDAO userRoleDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
 
         userDAO = (UserDAO) config.getServletContext().getAttribute(Initer.USER_DAO);
+        userRoleDAO = (UserRoleDAO) config.getServletContext().getAttribute(Initer.USER_ROLE_DAO);
     }
 }

@@ -1,7 +1,7 @@
 package dao.H2;
 
 import common.ConnectionPool;
-import dao.UserDAO;
+import dao.interfaces.UserDAO;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import model.User;
@@ -19,6 +19,7 @@ import java.util.HashSet;
 @AllArgsConstructor
 public class H2UserDAO implements UserDAO {
 
+    // TODO: 01.11.16 create UnitTest
     private ConnectionPool connectionPool;
 
     @Override

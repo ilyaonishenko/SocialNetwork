@@ -1,6 +1,6 @@
 package security;
 
-import dao.UserDAO;
+import dao.interfaces.UserDAO;
 import filters.HttpFilter;
 import lombok.extern.slf4j.Slf4j;
 import model.User;
