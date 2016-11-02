@@ -26,6 +26,21 @@ INSERT INTO Roles (username, role) VALUES ('peter', 'moderator');
 INSERT INTO Roles (username, role) VALUES ('peter', 'user');
 INSERT INTO Roles (username, role) VALUES ('alex', 'user');
 
+CREATE TABLE Following (
+  follower_id INT NOT NULL,
+  follow_id INT NOT NULL,
+  PRIMARY KEY (follow_id, follower_id),
+  FOREIGN KEY (follower_id) REFERENCES User(id)
+);
+
+INSERT INTO Following (follower_id, follow_id) VALUES (4,1);
+INSERT INTO Following (follower_id, follow_id) VALUES (3,1);
+INSERT INTO Following (follower_id, follow_id) VALUES (2,1);
+INSERT INTO Following (follower_id, follow_id) VALUES (1,2);
+
+
+
+
 
 
 

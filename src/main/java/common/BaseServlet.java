@@ -1,5 +1,6 @@
 package common;
 
+import dao.interfaces.FollowingDAO;
 import dao.interfaces.UserDAO;
 import dao.interfaces.UserRoleDAO;
 import listeners.Initer;
@@ -19,11 +20,13 @@ public class BaseServlet extends HttpServlet {
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;
     protected UserRoleDAO userRoleDAO;
+    protected FollowingDAO followingDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
 
         userDAO = (UserDAO) config.getServletContext().getAttribute(Initer.USER_DAO);
         userRoleDAO = (UserRoleDAO) config.getServletContext().getAttribute(Initer.USER_ROLE_DAO);
+        followingDAO = (FollowingDAO) config.getServletContext().getAttribute(Initer.FOLLOWING_DAO);
     }
 }
