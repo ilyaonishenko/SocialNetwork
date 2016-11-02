@@ -16,6 +16,8 @@ public class BaseServlet extends HttpServlet {
 
     protected static final String USER = "user";
     protected static final String USER_ROLE = "userRoles";
+    protected static final String FOLLOWINGS = "followings";
+    protected static final String FOLLOWERS = "followers";
 
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;

@@ -13,7 +13,5 @@ public interface FollowingDAO {
     Collection<Following> getFollowersById(long followId);
 
 //    get all follows of followerId
-    Collection<Following> getFollowsById(long followerId);
-
-
+    Collection<Following> getFollowingsById(long followerId);
 }

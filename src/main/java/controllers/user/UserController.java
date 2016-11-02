@@ -1,4 +1,4 @@
-package controllers;
+package controllers.user;
 
 import common.BaseServlet;
 import lombok.extern.slf4j.Slf4j;

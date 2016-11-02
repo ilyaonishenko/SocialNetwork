@@ -46,7 +46,7 @@ public class H2FollowingDAO implements FollowingDAO {
 
     @Override
     @SneakyThrows
-    public Collection<Following> getFollowsById(long followerId) {
+    public Collection<Following> getFollowingsById(long followerId) {
 
         Collection<Following> follows = new HashSet<>();
         try(Connection connection = connectionPool.getConnection()){

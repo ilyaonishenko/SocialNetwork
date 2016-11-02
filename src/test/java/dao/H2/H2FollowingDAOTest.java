@@ -19,14 +19,12 @@ public class H2FollowingDAOTest {
     private static final String PATH_TO_CONFIG = "src/main/resources/db.properties";
     private static final String PATH_TO_INIT = "src/main/resources/h2_jsp.sql";
 
-    private ConnectionPool connectionPool;
-
     private FollowingDAO followingDAO;
 
     @Before
     public void init(){
 
-        connectionPool = ConnectionPool.create(PATH_TO_CONFIG);
+        ConnectionPool connectionPool = ConnectionPool.create(PATH_TO_CONFIG);
         connectionPool.initDb(PATH_TO_INIT);
         followingDAO = new H2FollowingDAO(connectionPool);
     }
@@ -44,9 +42,9 @@ public class H2FollowingDAOTest {
     }
 
     @Test
-    public void getFollowsByIdTest(){
+    public void getFollowingsByIdTest(){
 
-        HashSet<Following> followings = (HashSet<Following>) followingDAO.getFollowsById(2L);
+        HashSet<Following> followings = (HashSet<Following>) followingDAO.getFollowingsById(2L);
 
         assertThat(followings.size(),is(1));
         assertThat(followings.contains(new Following(2,1)),is(true));
