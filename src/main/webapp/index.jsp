@@ -30,7 +30,6 @@
         <p><a class="btn btn-primary btn-lg" href="/register">Join the Community!</a></p>
         <p/><a href="/login">Or login</a>
     </div>
-
 </div>
 </body>
 </html>

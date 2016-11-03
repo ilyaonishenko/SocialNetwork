@@ -40,7 +40,9 @@ public class FollowingsController extends BaseServlet {
                     followings.stream()
                         .map(f -> userDAO.getById(f.getFollowId()).get())
                         .collect(Collectors.toCollection(HashSet::new));
+            req.setAttribute(USER, user);
             req.setAttribute(FOLLOWINGS,followingUsers);
+            req.getRequestDispatcher("/WEB-INF/user/following.jsp").forward(req, resp);
         }
         // TODO: 03.11.16 error no such user
     }
