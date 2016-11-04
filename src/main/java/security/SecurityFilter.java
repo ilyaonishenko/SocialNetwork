@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 
 @Slf4j
-@WebFilter(urlPatterns = {"/home/*"})
+@WebFilter(urlPatterns = {"/home/*","/s/*"})
 public class SecurityFilter implements HttpFilter {
 
     private static final String USER = "user";

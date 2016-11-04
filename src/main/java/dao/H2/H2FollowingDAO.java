@@ -67,4 +67,22 @@ public class H2FollowingDAO implements FollowingDAO {
 
         return follows;
     }
+
+
+    @Override
+    @SneakyThrows
+    public void addFollowing(Following following) {
+
+        try( Connection connection = connectionPool.getConnection()){
+
+            String sql = "INSERT INTO Following (follower_id, follow_id) VALUES (?,?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, following.getFollowerId());
+            preparedStatement.setLong(2, following.getFollowId());
+
+            preparedStatement.executeUpdate();
+        }
+    }
 }
