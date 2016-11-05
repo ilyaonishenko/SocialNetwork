@@ -71,7 +71,58 @@ public class H2FollowingDAO implements FollowingDAO {
 
     @Override
     @SneakyThrows
-    public void addFollowing(Following following) {
+    public boolean revertFollowing(Following following) {
+
+        try( Connection connection = connectionPool.getConnection()){
+
+//            String sql = "INSERT INTO Following (follower_id, follow_id) VALUES (?,?)";
+            String sql = "SELECT * FROM Following WHERE follower_id = ? AND follow_id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, following.getFollowerId());
+            preparedStatement.setLong(2, following.getFollowId());
+
+            ResultSet rs = preparedStatement.executeQuery();
+            int count = 0;
+            while (rs.next())
+                count++;
+            if(count==0){
+                addFollowing(following);
+                return true;
+            } else {
+                deleteFollowing(following);
+                return false;
+            }
+
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public boolean isFirstFollowSecond(long followerId, long followId) {
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM Following WHERE follower_id = ? AND follow_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1,followerId);
+            preparedStatement.setLong(2,followId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            int count = 0;
+
+            while (rs.next())
+                count++;
+
+            return count!=0;
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public void addFollowing(Following following){
 
         try( Connection connection = connectionPool.getConnection()){
 
@@ -81,6 +132,22 @@ public class H2FollowingDAO implements FollowingDAO {
 
             preparedStatement.setLong(1, following.getFollowerId());
             preparedStatement.setLong(2, following.getFollowId());
+
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public void deleteFollowing(Following following) {
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "DELETE FROM Following WHERE follower_id = ? AND follow_id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1,following.getFollowerId());
+            preparedStatement.setLong(2,following.getFollowId());
 
             preparedStatement.executeUpdate();
         }

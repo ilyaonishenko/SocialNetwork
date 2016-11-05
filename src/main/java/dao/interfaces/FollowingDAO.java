@@ -15,5 +15,11 @@ public interface FollowingDAO {
 //    get all follows of followerId
     Collection<Following> getFollowingsById(long followerId);
 
+    boolean revertFollowing(Following following);
+
+    boolean isFirstFollowSecond(long followerId, long followId);
+
     void addFollowing(Following following);
+
+    void deleteFollowing(Following following);
 }

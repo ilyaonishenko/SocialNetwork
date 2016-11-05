@@ -11,33 +11,68 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Created by wopqw on 03.11.16.
  */
 @Slf4j
-@WebServlet(urlPatterns = "/s/follow/")
+@WebServlet(urlPatterns = "/s/follow")
 public class FollowController extends BaseServlet {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private HttpSession httpSession;
+    private Optional<User> optFollowUser;
+    private User followedUser;
 
-        HttpSession httpSession = req.getSession();
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        httpSession = req.getSession();
 
         User user = (User)httpSession.getAttribute(USER);
 
         log.info("user from session: "+user.getUsername() );
 
-        String id = req.getParameter("followId");
+        optFollowUser = userDAO.getByUsername(req.getParameter("username"));
 
-        log.info("id from req: "+id);
-
-        long followId = Long.parseLong(id);
+        // noinspection OptionalGetWithoutIsPresent
+        long followId = optFollowUser.get().getId();
 
         log.info("user to follow: "+followId);
 
         Following following = new Following(user.getId(),followId);
 
-        followingDAO.addFollowing(following);
+        boolean answr = followingDAO.revertFollowing(following);
+
+        writeToResponse(resp, String.valueOf(answr));
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        httpSession = req.getSession();
+        User user = (User) httpSession.getAttribute(USER);
+        log.info("session user: "+user);
+
+        String username = req.getParameter("username");
+
+        Optional<User> optFollowedUser = userDAO.getByUsername(username);
+
+        boolean answer = followingDAO.isFirstFollowSecond(user.getId(),optFollowedUser.get().getId());
+
+        log.info("answer: "+String.valueOf(answer));
+
+        writeToResponse(resp, String.valueOf(answer));
+    }
+
+    private void writeToResponse(HttpServletResponse resp, String answer)
+            throws IOException {
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(String.valueOf(answer));
+
     }
 }
