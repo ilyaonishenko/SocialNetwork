@@ -26,10 +26,10 @@
 </div>
 </body>
 <script>
-    var follow = new FollowThings(username = "${user.username}");
+    var follow = new FollowThings(username = "${user.username}", visitor = "<%= visitor.getUsername() %>");
     var postHandler = new PostHandler(userId = "${user.id}", visitorId = "<%= visitor.getId()%>",
             postContainer = document.getElementById("posts"));
-    addEventListener ("DOMContentLoaded", follow.doStuff, false)
+    addEventListener ("DOMContentLoaded", follow.doStuff, false);
     addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false)
 </script>
 </html>

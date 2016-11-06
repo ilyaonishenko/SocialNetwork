@@ -13,6 +13,7 @@
     <title>Registration</title>
     <link rel="stylesheet" href="<c:url value='../resources/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../resources/css/registerPage.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='../resources/css/navbar.css'/>"/>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -20,6 +21,9 @@
         <div class="navbar-header">
             <a class="navbar-brand" id="brand" href="#">Texter</a>
         </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">EN/RU</a></li>
+        </ul>
     </div>
 </nav>
 <form class="form-horizontal" action="/register" method="post">

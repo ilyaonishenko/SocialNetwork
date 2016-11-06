@@ -3,8 +3,9 @@
  */
 class FollowThings {
 
-    constructor(){
-        this.username = "hello";
+    constructor(username, visitor){
+        this.username = username;
+        this.visitor = visitor;
     }
 
     static handleAnswer(data) {
@@ -17,14 +18,20 @@ class FollowThings {
 
 
     doStuff() {
-        $.ajax({
-            url: "/s/follow",
-            type: "GET",
-            data: {"username": this.username},
-            success: function (result) {
-                FollowThings.handleAnswer(result)
-            }
-        })
+        console.log(this.username);
+        console.log(this.visitor);
+        if(this.username === this.visitor){
+            document.getElementById("followButton").style.display = "none";
+        } else {
+            $.ajax({
+                url: "/s/follow",
+                type: "GET",
+                data: {"username": this.username},
+                success: function (result) {
+                    FollowThings.handleAnswer(result)
+                }
+            })
+        }
     }
 
     followClick(data) {
@@ -74,41 +81,4 @@ class PostHandler{
             }
         })
     }
-
-    // addView(view) {
-    //     this.postContainer.appendChild(view);
-    //     this.offsetId = view.id;
-    // }
-    
-    
 }
-
-// $.ajax({
-//     url: "/restapi/posts/",
-//     data: {
-//         userId: sessionUser.id,
-//         fromId: user.id,
-//         offsetId: offsetId,
-//         limit: 10
-//     },
-//     type: "GET",
-//     dataType: "json",
-//     success: function (postViews) {
-//         postViews.forEach(function (postView) {
-//             postsContainer.appendChild(addPostView(postView));
-//             offsetId = postView.postId;
-//         });
-//
-//         // no more posts
-//         if (postViews.length == 0) {
-//             $(window).off('scroll');
-//         } else {
-//             $(window).off('scroll').scroll(function () {
-//                 if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-//                     loadUserPosts(user, offsetId);
-//                 }
-//             });
-//         }
-//     }
-// });
-// }

@@ -1,8 +1,16 @@
+.cont{
+    text-align: center;
+    margin: auto 0;
+    height: 100%;
+}
+
 .jumbotron#main{
     text-align: center;
-    margin: auto;
-    width:80%;
     background-color: #ffffff;
+    height: 50%;
+    margin-bottom: auto;
+    margin-top: auto;
+    padding-top: 13%;
 }
 
 .navbar-brand {
@@ -11,6 +19,7 @@
     position: absolute;
     left: 47%;
     right: 50%;
+    font-size: x-large;
 }
 a.navbar-brand{
     display: block;
