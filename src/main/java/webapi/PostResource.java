@@ -85,6 +85,8 @@ public class PostResource {
 
         String json = JsonWrapper.toJson(timeline);
 
+        log.info(json);
+
         return Response.ok(json).build();
     }
 

@@ -39,20 +39,19 @@ public class H2PostDAO implements PostDAO {
     @SneakyThrows
     public Collection<Post> getUserTimeline(long userId, int offsetId, int limit) {
 
-        Collection<Post> timeline = new HashSet<>();
-
         try(Connection connection = connectionPool.getConnection()){
 
             String sql = "SELECT id, authorId, date, time, text, privacy, expandable " +
                     "FROM Post WHERE authorId IN " +
-                    "(SELECT follow_id FROM Following WHERE follower_id = ?) AND " +
+                    "(SELECT follow_id FROM Following WHERE follower_id = ?) OR authorId=? AND " +
                     "id<? ORDER BY id DESC LIMIT ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setLong(1,userId);
-            preparedStatement.setInt(2,offsetId);
-            preparedStatement.setInt(3,limit);
+            preparedStatement.setLong(2,userId);
+            preparedStatement.setInt(3,offsetId);
+            preparedStatement.setInt(4,limit);
 
             ResultSet rs = preparedStatement.executeQuery();
 

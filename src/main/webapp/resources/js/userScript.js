@@ -91,9 +91,10 @@ class Timeline{
     }
 
     loadTimeline(){
+        console.log("in loadingtimeline");
         var self = this;
         $.ajax({
-            url: 'webapi/post/timeline',
+            url: '/webapi/posts/timeline/',
             type: 'GET',
             data: {
                 userId: this.userId,
