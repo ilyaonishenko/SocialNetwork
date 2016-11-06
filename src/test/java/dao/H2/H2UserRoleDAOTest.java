@@ -1,8 +1,8 @@
 package dao.H2;
 
 import common.ConnectionPool;
-import dao.interfaces.UserDAO;
-import dao.interfaces.UserRoleDAO;
+import dao.UserDAO;
+import dao.UserRoleDAO;
 import model.Role;
 import model.User;
 import model.UserRole;

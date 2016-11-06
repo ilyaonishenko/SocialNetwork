@@ -1,7 +1,7 @@
 package dao.H2;
 
 import common.ConnectionPool;
-import dao.interfaces.FollowingDAO;
+import dao.FollowingDAO;
 import model.Following;
 import org.junit.Before;
 import org.junit.Test;

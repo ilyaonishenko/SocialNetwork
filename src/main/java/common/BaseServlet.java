@@ -1,9 +1,9 @@
 package common;
 
-import dao.interfaces.FollowingDAO;
-import dao.interfaces.PostDAO;
-import dao.interfaces.UserDAO;
-import dao.interfaces.UserRoleDAO;
+import dao.FollowingDAO;
+import dao.PostDAO;
+import dao.UserDAO;
+import dao.UserRoleDAO;
 import listeners.Initer;
 
 import javax.servlet.ServletConfig;

@@ -2,9 +2,9 @@ package webapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.JsonWrapper;
-import dao.interfaces.FollowingDAO;
-import dao.interfaces.PostDAO;
-import dao.interfaces.UserDAO;
+import dao.FollowingDAO;
+import dao.PostDAO;
+import dao.UserDAO;
 import listeners.Initer;
 import lombok.extern.slf4j.Slf4j;
 import model.Post;
