@@ -54,7 +54,8 @@ public class PostResource {
             @QueryParam("userId") long userId,
             @QueryParam("visitorId") long visitorId,
             @QueryParam("offsetId") int offsetId,
-            @QueryParam("limit") int limit) throws JsonProcessingException {
+            @QueryParam("limit") int limit)
+            throws JsonProcessingException {
 
         log.info("getPostsByUser");
 
@@ -65,6 +66,24 @@ public class PostResource {
         log.info(String.valueOf(posts.size()));
 
         String json = JsonWrapper.toJson(posts);
+
+        return Response.ok(json).build();
+    }
+
+    @GET
+    @Path("timeline/")
+    @Produces(APPLICATION_JSON)
+    public Response getTimeLine(
+            @QueryParam("userId") long userId,
+            @QueryParam("offsetId") int offsetId,
+            @QueryParam("limit") int limit)
+            throws JsonProcessingException {
+
+        log.info("getUserTimeline");
+
+        HashSet<Post> timeline = (HashSet<Post>) postDAO.getUserTimeline(userId, offsetId, limit);
+
+        String json = JsonWrapper.toJson(timeline);
 
         return Response.ok(json).build();
     }

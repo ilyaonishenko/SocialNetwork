@@ -13,6 +13,8 @@ public interface PostDAO {
 
     Collection<Post> getAll();
 
+    Collection<Post> getUserTimeline(long userId, int offsetId, int limit);
+
     default Collection<Post> getAllByUser(long userId){
 
         return getAll().stream()

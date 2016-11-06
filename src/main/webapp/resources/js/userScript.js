@@ -67,11 +67,41 @@ class PostHandler{
             data: {
                 userId: this.userId,
                 visitorId: this.visitorId,
-                offsetId: 0,
-                limit: 10
+                offsetId: 1000000000,
+                limit: 1000
             },
             dataType: 'json',
             success: function(views) {
+                views.forEach(function (view) {
+                    var line = document.createElement("p");
+                    line.innerHTML = "<strong>" + view.text + " </strong>";
+                    self.postContainer.appendChild(line);
+                    self.offsetId = view.offsetId;
+                })
+            }
+        })
+    }
+}
+
+class Timeline{
+
+    constructor(userId, postContainer){
+        this.userId = userId;
+        this.postContainer = postContainer;
+    }
+
+    loadTimeline(){
+        var self = this;
+        $.ajax({
+            url: 'webapi/post/timeline',
+            type: 'GET',
+            data: {
+                userId: this.userId,
+                offsetId: 1000000000,
+                limit: 1000
+            },
+            dataType: 'json',
+            success: function (views) {
                 views.forEach(function (view) {
                     var line = document.createElement("p");
                     line.innerHTML = "<strong>" + view.text + " </strong>";

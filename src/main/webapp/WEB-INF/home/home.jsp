@@ -23,5 +23,7 @@ Your role in this project: <br>
 <% for(UserRole role: roles){%>
 <br><%=role%>
 <%}%>
+<p1>your posts:</p1>
+
 </body>
 </html>

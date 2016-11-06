@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import model.Post;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Collection;
@@ -24,29 +25,61 @@ public class H2PostDAO implements PostDAO {
     @SneakyThrows
     public Collection<Post> getAll() {
 
-        Collection<Post> posts = new HashSet<>();
-
         try(Connection connection = connectionPool.getConnection()){
 
             Statement statement = connection.createStatement();
 
             ResultSet rs = statement.executeQuery("SELECT * FROM Post");
 
-            Post.PostBuilder postBuilder = Post.builder();
-
-            while (rs.next())
-                posts.add(
-                        postBuilder
-                                .id(rs.getLong("id"))
-                                .authorId(rs.getLong("authorId"))
-                                .date(rs.getDate("date").toLocalDate())
-                                .time(rs.getTime("time").toLocalTime())
-                                .text(rs.getString("text"))
-                                .privacy(rs.getBoolean("privacy"))
-                                .expandable(rs.getBoolean("expandable"))
-                                .build()
-                );
+            return createCollection(rs);
         }
+    }
+
+    @Override
+    @SneakyThrows
+    public Collection<Post> getUserTimeline(long userId, int offsetId, int limit) {
+
+        Collection<Post> timeline = new HashSet<>();
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT id, authorId, date, time, text, privacy, expandable " +
+                    "FROM Post WHERE authorId IN " +
+                    "(SELECT follow_id FROM Following WHERE follower_id = ?) AND " +
+                    "id<? ORDER BY id DESC LIMIT ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1,userId);
+            preparedStatement.setInt(2,offsetId);
+            preparedStatement.setInt(3,limit);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            return createCollection(rs);
+        }
+
+
+    }
+
+    @SneakyThrows
+    private Collection<Post> createCollection(ResultSet rs){
+
+        Collection<Post> posts = new HashSet<>();
+        Post.PostBuilder postBuilder = Post.builder();
+
+        while(rs.next())
+            posts.add(
+                    postBuilder
+                            .id(rs.getLong("id"))
+                            .authorId(rs.getLong("authorId"))
+                            .date(rs.getDate("date").toLocalDate())
+                            .time(rs.getTime("time").toLocalTime())
+                            .text(rs.getString("text"))
+                            .privacy(rs.getBoolean("privacy"))
+                            .expandable(rs.getBoolean("expandable"))
+                            .build()
+            );
 
         return posts;
     }
