@@ -38,6 +38,21 @@ INSERT INTO Following (follower_id, follow_id) VALUES (3,1);
 INSERT INTO Following (follower_id, follow_id) VALUES (2,1);
 INSERT INTO Following (follower_id, follow_id) VALUES (1,2);
 
+CREATE TABLE Post(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  authorId INT NOT NULL,
+  date DATE NOT NULL,
+  time TIME NOT NULL,
+  text VARCHAR(200) NOT NULL,
+  privacy BOOL NOT NULL,
+  expandable BOOL NOT NULL,
+);
+
+INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (3,'2016-01-01','00:05:00','LOOOOOOOLOOOOL',FALSE ,FALSE );
+INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (1,'2016-01-01','01:00:01','Happy new Year, by the way!',FALSE ,FALSE );
+INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (1,'2016-01-01','00:00:31','Hello! I am admin here', FALSE, FALSE );
+INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (2,'2016-01-01','00:01:00','Hey there! I am smth like moderator here',FALSE ,FALSE );
+
 
 
 

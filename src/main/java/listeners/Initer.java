@@ -2,9 +2,11 @@ package listeners;
 
 import common.ConnectionPool;
 import dao.H2.H2FollowingDAO;
+import dao.H2.H2PostDAO;
 import dao.H2.H2UserDAO;
 import dao.H2.H2UserRoleDAO;
 import dao.interfaces.FollowingDAO;
+import dao.interfaces.PostDAO;
 import dao.interfaces.UserDAO;
 import dao.interfaces.UserRoleDAO;
 import lombok.SneakyThrows;
@@ -31,6 +33,7 @@ public class Initer implements ServletContextListener {
     public static final String USER_DAO = "userDAO";
     public static final String USER_ROLE_DAO = "userRoleDAO";
     public static final String FOLLOWING_DAO = "followingDAO";
+    public static final String POST_DAO = "postDAO";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -49,10 +52,12 @@ public class Initer implements ServletContextListener {
         UserDAO userDAO = new H2UserDAO(connectionPool);
         UserRoleDAO userRoleDAO = new H2UserRoleDAO(connectionPool);
         FollowingDAO followingDAO = new H2FollowingDAO(connectionPool);
+        PostDAO postDAO = new H2PostDAO(connectionPool);
 
         servletContext.setAttribute(USER_DAO,userDAO);
         servletContext.setAttribute(USER_ROLE_DAO,userRoleDAO);
         servletContext.setAttribute(FOLLOWING_DAO,followingDAO);
+        servletContext.setAttribute(POST_DAO,postDAO);
     }
 
     @SneakyThrows

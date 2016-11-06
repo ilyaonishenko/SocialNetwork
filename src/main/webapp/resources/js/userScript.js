@@ -8,12 +8,9 @@ class FollowThings {
     }
 
     static handleAnswer(data) {
-        //            console.log(data);
         if (data === "true") {
-//                console.log("true");
             document.getElementById("followButton").className = "btn btn-danger";
         } else {
-//                console.log("false 2");
             document.getElementById("followButton").className = "btn btn-primary";
         }
     }
@@ -31,13 +28,11 @@ class FollowThings {
     }
 
     followClick(data) {
-//        console.log("clicked");
         $.ajax({
             url: "/s/follow",
             type: "POST",
             data: {'username': data},
             success: function (result) {
-//                console.log("result is "+result);
                 FollowThings.handleAnswer(result);
             },
             error: function (e) {
@@ -46,3 +41,74 @@ class FollowThings {
         });
     }
 }
+
+class PostHandler{
+
+    constructor(userId, visitorId, postContainer){
+
+        this.userId = userId;
+        this.visitorId = visitorId;
+        this.postContainer = postContainer;
+
+    }
+
+    loadUserPosts(){
+        var self = this;
+        $.ajax({
+            url: '/webapi/posts/',
+            type: 'GET',
+            data: {
+                userId: this.userId,
+                visitorId: this.visitorId,
+                offsetId: 0,
+                limit: 10
+            },
+            dataType: 'json',
+            success: function(views) {
+                views.forEach(function (view) {
+                    var line = document.createElement("p");
+                    line.innerHTML = "<strong>" + view.text + " </strong>";
+                    self.postContainer.appendChild(line);
+                    self.offsetId = view.offsetId;
+                })
+            }
+        })
+    }
+
+    // addView(view) {
+    //     this.postContainer.appendChild(view);
+    //     this.offsetId = view.id;
+    // }
+    
+    
+}
+
+// $.ajax({
+//     url: "/restapi/posts/",
+//     data: {
+//         userId: sessionUser.id,
+//         fromId: user.id,
+//         offsetId: offsetId,
+//         limit: 10
+//     },
+//     type: "GET",
+//     dataType: "json",
+//     success: function (postViews) {
+//         postViews.forEach(function (postView) {
+//             postsContainer.appendChild(addPostView(postView));
+//             offsetId = postView.postId;
+//         });
+//
+//         // no more posts
+//         if (postViews.length == 0) {
+//             $(window).off('scroll');
+//         } else {
+//             $(window).off('scroll').scroll(function () {
+//                 if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+//                     loadUserPosts(user, offsetId);
+//                 }
+//             });
+//         }
+//     }
+// });
+// }
