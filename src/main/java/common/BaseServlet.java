@@ -9,6 +9,8 @@ import listeners.Initer;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by wopqw on 30.10.16.
@@ -34,5 +36,14 @@ public class BaseServlet extends HttpServlet {
         userRoleDAO = (UserRoleDAO) config.getServletContext().getAttribute(Initer.USER_ROLE_DAO);
         followingDAO = (FollowingDAO) config.getServletContext().getAttribute(Initer.FOLLOWING_DAO);
         postDAO = (PostDAO) config.getServletContext().getAttribute(Initer.POST_DAO);
+    }
+
+    protected void writeToResponse(HttpServletResponse resp, String answer)
+            throws IOException {
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(String.valueOf(answer));
+
     }
 }

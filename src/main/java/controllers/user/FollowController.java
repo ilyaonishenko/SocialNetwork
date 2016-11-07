@@ -66,13 +66,4 @@ public class FollowController extends BaseServlet {
 
         writeToResponse(resp, String.valueOf(answer));
     }
-
-    private void writeToResponse(HttpServletResponse resp, String answer)
-            throws IOException {
-
-        resp.setContentType("text/plain");
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(String.valueOf(answer));
-
-    }
 }

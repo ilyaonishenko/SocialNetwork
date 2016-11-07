@@ -10,13 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import model.Post;
 
 import javax.servlet.ServletContext;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -85,9 +83,21 @@ public class PostResource {
 
         String json = JsonWrapper.toJson(timeline);
 
-        log.info(json);
-
         return Response.ok(json).build();
     }
 
+    @GET
+    @Path("{id}")
+    @Produces(APPLICATION_JSON)
+    public Response getPostById(@PathParam("id") long id) throws JsonProcessingException {
+
+        Optional<Post> optPost = postDAO.getPostById(id);
+
+        if(optPost.isPresent()){
+            String json = JsonWrapper.toJson(optPost.get());
+            return Response.ok(json).build();
+        } else {
+            return Response.serverError().build();
+        }
+    }
 }

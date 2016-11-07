@@ -91,7 +91,6 @@ class Timeline{
     }
 
     loadTimeline(){
-        console.log("in loadingtimeline");
         var self = this;
         $.ajax({
             url: '/webapi/posts/timeline/',
@@ -109,6 +108,32 @@ class Timeline{
                     self.postContainer.appendChild(line);
                     self.offsetId = view.offsetId;
                 })
+            }
+        })
+    }
+}
+
+class PostCreator{
+
+    constructor(userId, postContainer, timeline){
+        this.userId = userId;
+        // this.postContainer = postContainer;
+        this.timeline = timeline;
+    }
+
+    create(text, expandable, privacy){
+        console.log("post creation");
+        var self = this;
+        $.ajax({
+            url: '/s/createpost',
+            type: 'POST',
+            data: {
+                post: text,
+                expandable: expandable,
+                privacy: privacy
+            },
+            success: function () {
+                console.log("success!!");
             }
         })
     }
