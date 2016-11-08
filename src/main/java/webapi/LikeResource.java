@@ -3,17 +3,21 @@ package webapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.JsonWrapper;
 import dao.LikeDAO;
+import dao.PostDAO;
+import dao.UserDAO;
 import listeners.Initer;
 import lombok.extern.slf4j.Slf4j;
 import model.Like;
+import model.Post;
+import model.User;
 
 import javax.servlet.ServletContext;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -25,6 +29,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class LikeResource {
 
     private static LikeDAO likeDAO;
+    private static UserDAO userDAO;
+    private static PostDAO postDAO;
 
 
     @Context
@@ -32,6 +38,10 @@ public class LikeResource {
 
         if(likeDAO == null)
             likeDAO = (LikeDAO) servletContext.getAttribute(Initer.LIKE_DAO);
+        if(userDAO == null)
+            userDAO = (UserDAO) servletContext.getAttribute(Initer.USER_DAO);
+        if(postDAO == null)
+            postDAO = (PostDAO) servletContext.getAttribute(Initer.POST_DAO);
     }
 
 
@@ -77,5 +87,42 @@ public class LikeResource {
         String json = JsonWrapper.toJson(answer);
 
         return Response.ok(json).build();
+    }
+
+//    return users
+    @GET
+    @Path("post/{postId}")
+    @Produces(APPLICATION_JSON)
+    public Response liked(@PathParam("postId") long postId) throws JsonProcessingException{
+
+        log.info("who likes this post {}",postId);
+
+        Collection<Like> likes = likeDAO.getByPostId(postId);
+
+        //noinspection OptionalGetWithoutIsPresent
+        Collection<User> users = likes.stream()
+                        .map(l -> userDAO.getById(l.getFromUserId()).get())
+                        .collect(Collectors.toCollection(HashSet::new));
+
+
+        return Response.ok(JsonWrapper.toJson(users)).build();
+    }
+
+//    return posts
+    @GET
+    @Path("user/{userId}")
+    @Produces(APPLICATION_JSON)
+    public Response userLikes(@PathParam("userId") long userId) throws JsonProcessingException{
+
+        log.info("likes by this user: {}", userId);
+
+        Collection<Like> likes = likeDAO.getAllUserPost(userId);
+
+        //noinspection OptionalGetWithoutIsPresent
+        Collection<Post> posts = likes.stream()
+                .map(l -> postDAO.getPostById(l.getToPostId()).get())
+                .collect(Collectors.toCollection(HashSet::new));
+
+        return Response.ok(JsonWrapper.toJson(posts)).build();
     }
 }
