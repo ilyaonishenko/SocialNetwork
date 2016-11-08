@@ -1,14 +1,8 @@
 package listeners;
 
 import common.ConnectionPool;
-import dao.H2.H2FollowingDAO;
-import dao.H2.H2PostDAO;
-import dao.H2.H2UserDAO;
-import dao.H2.H2UserRoleDAO;
-import dao.FollowingDAO;
-import dao.PostDAO;
-import dao.UserDAO;
-import dao.UserRoleDAO;
+import dao.*;
+import dao.H2.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import security.StringEncryptUtil;
@@ -34,6 +28,7 @@ public class Initer implements ServletContextListener {
     public static final String USER_ROLE_DAO = "userRoleDAO";
     public static final String FOLLOWING_DAO = "followingDAO";
     public static final String POST_DAO = "postDAO";
+    public static final String LIKE_DAO = "likeDAO";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -53,11 +48,13 @@ public class Initer implements ServletContextListener {
         UserRoleDAO userRoleDAO = new H2UserRoleDAO(connectionPool);
         FollowingDAO followingDAO = new H2FollowingDAO(connectionPool);
         PostDAO postDAO = new H2PostDAO(connectionPool);
+        LikeDAO likeDAO = new H2LikeDAO(connectionPool);
 
         servletContext.setAttribute(USER_DAO,userDAO);
         servletContext.setAttribute(USER_ROLE_DAO,userRoleDAO);
         servletContext.setAttribute(FOLLOWING_DAO,followingDAO);
         servletContext.setAttribute(POST_DAO,postDAO);
+        servletContext.setAttribute(LIKE_DAO, likeDAO);
     }
 
     @SneakyThrows

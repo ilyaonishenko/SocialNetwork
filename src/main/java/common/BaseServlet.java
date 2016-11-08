@@ -1,9 +1,6 @@
 package common;
 
-import dao.FollowingDAO;
-import dao.PostDAO;
-import dao.UserDAO;
-import dao.UserRoleDAO;
+import dao.*;
 import listeners.Initer;
 
 import javax.servlet.ServletConfig;
@@ -22,12 +19,14 @@ public class BaseServlet extends HttpServlet {
     protected static final String FOLLOWINGS = "followings";
     protected static final String FOLLOWERS = "followers";
     protected static final String POST = "post";
+    protected static final String LIKE = "like";
 
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;
     protected UserRoleDAO userRoleDAO;
     protected FollowingDAO followingDAO;
     protected PostDAO postDAO;
+    protected LikeDAO likeDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -36,6 +35,7 @@ public class BaseServlet extends HttpServlet {
         userRoleDAO = (UserRoleDAO) config.getServletContext().getAttribute(Initer.USER_ROLE_DAO);
         followingDAO = (FollowingDAO) config.getServletContext().getAttribute(Initer.FOLLOWING_DAO);
         postDAO = (PostDAO) config.getServletContext().getAttribute(Initer.POST_DAO);
+        likeDAO = (LikeDAO) config.getServletContext().getAttribute(Initer.LIKE_DAO);
     }
 
     protected void writeToResponse(HttpServletResponse resp, String answer)

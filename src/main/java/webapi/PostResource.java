@@ -3,6 +3,7 @@ package webapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.JsonWrapper;
 import dao.FollowingDAO;
+import dao.LikeDAO;
 import dao.PostDAO;
 import dao.UserDAO;
 import listeners.Initer;
@@ -31,6 +32,7 @@ public class PostResource {
     private static PostDAO postDAO;
     private static UserDAO userDAO;
     private static FollowingDAO followingDAO;
+    private static LikeDAO likeDAO;
 
     @Context
     public void init(ServletContext servletContext) {
@@ -44,7 +46,12 @@ public class PostResource {
         if (followingDAO == null) {
             followingDAO = (FollowingDAO) servletContext.getAttribute(Initer.FOLLOWING_DAO);
         }
+        if (likeDAO == null)
+            likeDAO = (LikeDAO) servletContext.getAttribute(Initer.LIKE_DAO);
+
     }
+
+    // TODO: 08.11.16 Add likes
 
     @GET
     @Produces(APPLICATION_JSON)
