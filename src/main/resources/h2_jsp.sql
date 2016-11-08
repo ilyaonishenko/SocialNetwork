@@ -70,3 +70,21 @@ INSERT into 'Like' (from_userId, to_postId) VALUES (1,1);
 INSERT into 'Like' (from_userId, to_postId) VALUES (1,4);
 INSERT into 'Like' (from_userId, to_postId) VALUES (2,2);
 INSERT into 'Like' (from_userId, to_postId) VALUES (4,2);
+
+
+CREATE TABLE Comment (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  from_userId INT NOT NULL,
+  to_postId INT NOT NULL,
+  text VARCHAR(200) NOT NULL,
+  date DATE NOT NULL,
+  time TIME NOT NULL,
+  FOREIGN KEY (from_userId) REFERENCES User(id),
+  FOREIGN KEY (to_postId) REFERENCES Post(id)
+);
+
+INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (2, 3, 'AYO! I am the moderator', '2016-01-01', '00:01:00');
+INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (3, 3, 'Hello! I am a user', '2016-01-01', '00:10:00');
+INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (1, 4, 'WELCOME TO THE CLUB', '2016-01-01', '01:00:00');
+INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (4, 1, 'GTFO', '2016-01-01', '05:00:00');
+

@@ -20,6 +20,7 @@ public class BaseServlet extends HttpServlet {
     protected static final String FOLLOWERS = "followers";
     protected static final String POST = "post";
     protected static final String LIKE = "like";
+    protected static final String COMMENT = "comment";
 
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;
@@ -27,6 +28,7 @@ public class BaseServlet extends HttpServlet {
     protected FollowingDAO followingDAO;
     protected PostDAO postDAO;
     protected LikeDAO likeDAO;
+    protected CommentDAO commentDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -36,6 +38,7 @@ public class BaseServlet extends HttpServlet {
         followingDAO = (FollowingDAO) config.getServletContext().getAttribute(Initer.FOLLOWING_DAO);
         postDAO = (PostDAO) config.getServletContext().getAttribute(Initer.POST_DAO);
         likeDAO = (LikeDAO) config.getServletContext().getAttribute(Initer.LIKE_DAO);
+        commentDAO = (CommentDAO) config.getServletContext().getAttribute(Initer.COMMENT_DAO);
     }
 
     protected void writeToResponse(HttpServletResponse resp, String answer)

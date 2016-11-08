@@ -29,6 +29,7 @@ public class Initer implements ServletContextListener {
     public static final String FOLLOWING_DAO = "followingDAO";
     public static final String POST_DAO = "postDAO";
     public static final String LIKE_DAO = "likeDAO";
+    public static final String COMMENT_DAO = "commentDAO";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -49,12 +50,14 @@ public class Initer implements ServletContextListener {
         FollowingDAO followingDAO = new H2FollowingDAO(connectionPool);
         PostDAO postDAO = new H2PostDAO(connectionPool);
         LikeDAO likeDAO = new H2LikeDAO(connectionPool);
+        CommentDAO commentDAO = new H2CommentDAO(connectionPool);
 
         servletContext.setAttribute(USER_DAO,userDAO);
         servletContext.setAttribute(USER_ROLE_DAO,userRoleDAO);
         servletContext.setAttribute(FOLLOWING_DAO,followingDAO);
         servletContext.setAttribute(POST_DAO,postDAO);
         servletContext.setAttribute(LIKE_DAO, likeDAO);
+        servletContext.setAttribute(COMMENT_DAO, commentDAO);
     }
 
     @SneakyThrows
