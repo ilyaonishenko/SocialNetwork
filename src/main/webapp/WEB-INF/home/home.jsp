@@ -29,17 +29,20 @@ Your role in this project: <br>
 <br>
 <p>timeline:</p>
 <div id="timeline"></div>
-<form action="/s/createPost" method="post">
+<form action="/s/createpost" method="post">
     <label>Write your text here</label>
-    <input name="post" type="text">
-    <button value="submit" type="submit" onclick="timeline.loadTimeline()">Post</button>
+    <input id="text" name="post" type="text">
+    <label>Expandable: </label>
+    <input name = 'expandable' type="checkbox">
+    <label>Private:</label>
+    <input name = 'privacy' type="checkbox">
+    <button type="submit" value="submit">Post</button>
 </form>
 </body>
 <script>
     var userId = '${user.id}';
     var postContainer  = document.getElementById('timeline');
     var timeline = new Timeline(userId, postContainer);
-//    var postCreator = new PostCreator(userId, postContainer);
-    addEventListener("DOMContentLoaded", timeline.loadTimeline, false)
+    addEventListener("DOMContentLoaded", timeline.loadTimeline, false);
 </script>
 </html>

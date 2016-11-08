@@ -100,4 +100,25 @@ public class PostResource {
             return Response.serverError().build();
         }
     }
+
+//    @POST
+//    @Path("create")
+//    public Response createPost(
+//            @QueryParam("userId") long userId,
+//            @QueryParam("text") String text,
+//            @QueryParam("expandable") boolean expandable,
+//            @QueryParam("privacy") boolean privacy){
+//
+//        Post.PostBuilder postBuilder = Post.builder();
+//
+//        postDAO.addPost(
+//                postBuilder
+//                        .authorId(userId)
+//                        .date(LocalDate.now())
+//                        .time(LocalTime.now())
+//                        .text(text)
+//                        .expandable(expandable)
+//                        .privacy(privacy)
+//                        .build());
+//    }
 }

@@ -13,16 +13,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Optional;
 
 /**
  * Created by wopqw on 07.11.16.
  */
 @Slf4j
-@WebServlet(urlPatterns = {"/s/createPost"})
+@WebServlet(urlPatterns = {"/s/createpost"})
 public class PostController extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        log.info("doPost createPost");
 
         HttpSession httpSession = req.getSession();
 
@@ -39,11 +42,12 @@ public class PostController extends BaseServlet {
                 .text(text)
                 .date(LocalDate.now())
                 .time(LocalTime.now())
-                .expandable(Boolean.parseBoolean(expandable))
-                .privacy(Boolean.parseBoolean(privacy))
+                .expandable(Optional.ofNullable(expandable).isPresent())
+                .privacy(Optional.ofNullable(privacy).isPresent())
                 .build();
 
         postDAO.addPost(post);
-        // TODO: 07.11.16 make post sending by javascript
+
+        req.getRequestDispatcher("/home/").forward(req, resp);
     }
 }

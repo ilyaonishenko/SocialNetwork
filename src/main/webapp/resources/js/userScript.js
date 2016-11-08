@@ -112,29 +112,3 @@ class Timeline{
         })
     }
 }
-
-class PostCreator{
-
-    constructor(userId, postContainer, timeline){
-        this.userId = userId;
-        // this.postContainer = postContainer;
-        this.timeline = timeline;
-    }
-
-    create(text, expandable, privacy){
-        console.log("post creation");
-        var self = this;
-        $.ajax({
-            url: '/s/createpost',
-            type: 'POST',
-            data: {
-                post: text,
-                expandable: expandable,
-                privacy: privacy
-            },
-            success: function () {
-                console.log("success!!");
-            }
-        })
-    }
-}
