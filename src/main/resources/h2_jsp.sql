@@ -53,7 +53,7 @@ INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (1,'20
 INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (1,'2016-01-01','00:00:31','Hello! I am admin here', FALSE, FALSE );
 INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (2,'2016-01-01','00:01:00','Hey there! I am smth like moderator here',FALSE ,FALSE );
 
-CREATE TABLE 'Like' (
+CREATE TABLE Likes (
   from_userId INT NOT NULL,
   to_postId INT NOT NULL,
   PRIMARY KEY (from_userId, to_postId),
@@ -62,14 +62,14 @@ CREATE TABLE 'Like' (
 
 );
 
-INSERT into 'Like' (from_userId, to_postId) VALUES (1,3);
-INSERT into 'Like' (from_userId, to_postId) VALUES (2,3);
-INSERT into 'Like' (from_userId, to_postId) VALUES (3,3);
-INSERT into 'Like' (from_userId, to_postId) VALUES (4,3);
-INSERT into 'Like' (from_userId, to_postId) VALUES (1,1);
-INSERT into 'Like' (from_userId, to_postId) VALUES (1,4);
-INSERT into 'Like' (from_userId, to_postId) VALUES (2,2);
-INSERT into 'Like' (from_userId, to_postId) VALUES (4,2);
+INSERT into Likes (from_userId, to_postId) VALUES (1,3);
+INSERT into Likes (from_userId, to_postId) VALUES (2,3);
+INSERT into Likes (from_userId, to_postId) VALUES (3,3);
+INSERT into Likes (from_userId, to_postId) VALUES (4,3);
+INSERT into Likes (from_userId, to_postId) VALUES (1,1);
+INSERT into Likes (from_userId, to_postId) VALUES (1,4);
+INSERT into Likes (from_userId, to_postId) VALUES (2,2);
+INSERT into Likes (from_userId, to_postId) VALUES (4,2);
 
 
 CREATE TABLE Comment (

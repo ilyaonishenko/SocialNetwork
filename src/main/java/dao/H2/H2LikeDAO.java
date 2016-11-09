@@ -29,7 +29,7 @@ public class H2LikeDAO implements LikeDAO {
 
             Statement statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM Like");
+            ResultSet rs = statement.executeQuery("SELECT * FROM Likes");
 
             return createCollection(rs);
         }
@@ -41,7 +41,7 @@ public class H2LikeDAO implements LikeDAO {
 
         try(Connection connection = connectionPool.getConnection()){
 
-            String sql = "INSERT INTO \"Like\" (from_userId, to_postId) VALUES (?, ?) ";
+            String sql = "INSERT INTO Likes (from_userId, to_postId) VALUES (?, ?) ";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setLong(1,like.getFromUserId());
@@ -57,7 +57,7 @@ public class H2LikeDAO implements LikeDAO {
 
         try(Connection connection = connectionPool.getConnection()){
 
-            String sql = "DELETE FROM \"Like\" WHERE from_userId = ? AND to_postId = ?";
+            String sql = "DELETE FROM Likes WHERE from_userId = ? AND to_postId = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 

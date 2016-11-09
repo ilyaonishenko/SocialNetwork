@@ -30,4 +30,11 @@ public interface CommentDAO {
                 .filter(c -> c.getUserId() == userId)
                 .collect(Collectors.toCollection(HashSet::new));
     }
+
+    default long countByPostId(long postId){
+
+        return getAll().stream()
+                .filter(c -> c.getPostId() == postId)
+                .count();
+    }
 }

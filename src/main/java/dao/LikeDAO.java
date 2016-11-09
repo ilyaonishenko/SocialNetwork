@@ -30,4 +30,11 @@ public interface LikeDAO {
                 .filter(l -> l.getFromUserId() == userId)
                 .collect(Collectors.toCollection(HashSet::new));
     }
+
+    default long countByPostId(long postId){
+
+        return getAll().stream()
+                .filter(l -> l.getToPostId() == postId)
+                .count();
+    }
 }

@@ -2,18 +2,17 @@ package webapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.JsonWrapper;
-import dao.FollowingDAO;
-import dao.LikeDAO;
-import dao.PostDAO;
-import dao.UserDAO;
+import dao.*;
 import listeners.Initer;
 import lombok.extern.slf4j.Slf4j;
 import model.Post;
+import model.PostView;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,6 +32,7 @@ public class PostResource {
     private static UserDAO userDAO;
     private static FollowingDAO followingDAO;
     private static LikeDAO likeDAO;
+    private static CommentDAO commentDAO;
 
     @Context
     public void init(ServletContext servletContext) {
@@ -48,7 +48,8 @@ public class PostResource {
         }
         if (likeDAO == null)
             likeDAO = (LikeDAO) servletContext.getAttribute(Initer.LIKE_DAO);
-
+        if (commentDAO == null)
+            commentDAO = (CommentDAO) servletContext.getAttribute(Initer.COMMENT_DAO);
     }
 
     // TODO: 08.11.16 Add likes
@@ -68,9 +69,11 @@ public class PostResource {
         HashSet<Post> posts = postDAO.getAllByUser(userId).stream()
                 .limit(limit).collect(Collectors.toCollection(HashSet::new));
 
-        log.info(String.valueOf(posts.size()));
+        Collection<PostView> postViews = createPostViews(posts);
 
-        String json = JsonWrapper.toJson(posts);
+        log.info(String.valueOf(postViews.size()));
+
+        String json = JsonWrapper.toJson(postViews);
 
         return Response.ok(json).build();
     }
@@ -88,7 +91,9 @@ public class PostResource {
 
         HashSet<Post> timeline = (HashSet<Post>) postDAO.getUserTimeline(userId, offsetId, limit);
 
-        String json = JsonWrapper.toJson(timeline);
+        HashSet<PostView> pvTimeline = (HashSet<PostView>) createPostViews(timeline);
+
+        String json = JsonWrapper.toJson(pvTimeline);
 
         return Response.ok(json).build();
     }
@@ -101,11 +106,32 @@ public class PostResource {
         Optional<Post> optPost = postDAO.getPostById(id);
 
         if(optPost.isPresent()){
-            String json = JsonWrapper.toJson(optPost.get());
+
+            Post post = optPost.get();
+            PostView postView =
+                    new PostView(post,likeDAO.countByPostId(post.getId()),commentDAO.countByPostId(post.getId()));
+
+            String json = JsonWrapper.toJson(postView);
             return Response.ok(json).build();
         } else {
             return Response.serverError().build();
         }
+    }
+
+    private Collection<PostView> createPostViews(Collection<Post> posts){
+
+        HashSet<PostView> postViews = new HashSet<>();
+
+        PostView.PostViewBuilder postViewBuilder = PostView.builder();
+
+        posts.forEach(p -> postViews.add(
+                postViewBuilder
+                        .post(p)
+                        .likesCount(likeDAO.countByPostId(p.getId()))
+                        .commentsCount(commentDAO.countByPostId(p.getId()))
+                        .build()));
+
+        return postViews;
     }
 
 //    @POST
