@@ -108,8 +108,13 @@ public class PostResource {
         if(optPost.isPresent()){
 
             Post post = optPost.get();
-            PostView postView =
-                    new PostView(post,likeDAO.countByPostId(post.getId()),commentDAO.countByPostId(post.getId()));
+
+            //noinspection OptionalGetWithoutIsPresent
+            PostView postView = new PostView(
+                            userDAO.getById(post.getAuthorId()).get(),
+                            post,
+                            likeDAO.countByPostId(post.getId()),
+                            commentDAO.countByPostId(post.getId()));
 
             String json = JsonWrapper.toJson(postView);
             return Response.ok(json).build();
@@ -124,8 +129,10 @@ public class PostResource {
 
         PostView.PostViewBuilder postViewBuilder = PostView.builder();
 
+        //noinspection OptionalGetWithoutIsPresent
         posts.forEach(p -> postViews.add(
                 postViewBuilder
+                        .user(userDAO.getById(p.getAuthorId()).get())
                         .post(p)
                         .likesCount(likeDAO.countByPostId(p.getId()))
                         .commentsCount(commentDAO.countByPostId(p.getId()))

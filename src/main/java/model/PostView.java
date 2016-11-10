@@ -14,6 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PostView {
 
+    private User user;
     private Post post;
     private long likesCount;
     private long commentsCount;

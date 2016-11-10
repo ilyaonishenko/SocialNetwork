@@ -74,8 +74,14 @@ class PostHandler{
             success: function(views) {
                 views.forEach(function (view) {
                     var line = document.createElement("p");
-                    line.innerHTML = "<strong>" + view.text + " </strong>";
+                    line.innerHTML = "<strong>" + view.post.text + "</strong> by "+view.user.username+"<br>";
+                    var like = document.createElement("p");
+                    like.innerHTML = "Likes: "+view.likesCount;
+                    var comments = document.createElement("p");
+                    comments.innerHTML = "Comments: "+view.commentsCount;
                     self.postContainer.appendChild(line);
+                    self.postContainer.appendChild(like);
+                    self.postContainer.appendChild(comments);
                     self.offsetId = view.offsetId;
                 })
             }
@@ -104,8 +110,14 @@ class Timeline{
             success: function (views) {
                 views.forEach(function (view) {
                     var line = document.createElement("p");
-                    line.innerHTML = "<strong>" + view.text + " </strong>";
+                    line.innerHTML = "<strong>" + view.post.text + "</strong> by "+view.user.username+"<br>";
+                    var like = document.createElement("p");
+                    like.innerHTML = "Likes: "+view.likesCount;
+                    var comments = document.createElement("p");
+                    comments.innerHTML = "Comments: "+view.commentsCount;
                     self.postContainer.appendChild(line);
+                    self.postContainer.appendChild(like);
+                    self.postContainer.appendChild(comments);
                     self.offsetId = view.offsetId;
                 })
             }
