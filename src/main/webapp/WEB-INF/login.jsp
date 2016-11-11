@@ -8,9 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="locale" scope="session" class="java.lang.String"/>
+<fmt:setLocale value="${locale}" scope="application"/>
+<script>
+    console.log('${locale}');
+</script>
 <html>
 <head>
     <title>Login</title>
+
     <link rel="stylesheet" href="<c:url value='../resources/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../resources/css/registerPage.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../resources/css/navbar.css'/>"/>
@@ -22,29 +28,27 @@
             <a class="navbar-brand" id="brand" href="/">Texter</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">EN/RU</a></li>
+            <li><a href="/changelocale" >EN/RU</a></li>
         </ul>
     </div>
 </nav>
 <form id="form" class="form-horizontal" action="/login" method="post">
     <fieldset>
-        <legend>Log in</legend>
+        <legend><fmt:message key="login.title"/></legend>
         <div class="form-group">
-            <%--<label for="inputUsername" class="col-lg-2 control-label">Username</label>--%>
             <div class="col-lg-10">
-                <input name="j_username" type="text" class="form-control" id="inputUsername" placeholder="Username">
+                <input name="j_username" type="text" class="form-control" id="inputUsername" placeholder="<fmt:message key="login.username"/>">
             </div>
         </div>
         <div class="form-group">
-            <%--<label for="inputPassword" class="col-lg-2 control-label">Password</label>--%>
             <div class="col-lg-10">
-                <input name="j_password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <input name="j_password" type="password" class="form-control" id="inputPassword" placeholder="<fmt:message key="login.password"/>">
             </div>
         </div>
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-                <button type="reset" class="btn btn-default">Cancel</button>
-                <button value="submit" type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-default"><fmt:message key="button.cancel"/></button>
+                <button value="submit" type="submit" class="btn btn-primary"><fmt:message key="button.submit"/></button>
             </div>
         </div>
     </fieldset>

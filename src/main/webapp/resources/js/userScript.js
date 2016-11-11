@@ -124,3 +124,23 @@ class Timeline{
         })
     }
 }
+
+class LocaleWrapper{
+
+    changeLocale(){
+        var ru = "ru";
+        var en = "en";
+        var lang = window.navigator.language;
+        if (lang === ru){
+
+        } else {
+
+        }
+    }
+
+    sendRequset(locale){
+        $.ajax({
+            url
+        })
+    }
+}
