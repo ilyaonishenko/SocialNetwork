@@ -18,17 +18,17 @@ import java.util.Optional;
 @WebServlet(urlPatterns = {"/changelocale"})
 public class LocaleController extends HttpServlet {
 
-    protected static final String RU = "ru";
-    protected static final String EN = "en";
+    private static final String RU = "ru_RU";
+    private static final String EN = "en_US";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         log.info("changeLocale");
 
-        String url = Optional.ofNullable(req.getParameter("next_url")).orElse("/");
+        String url = req.getHeader("Referer").split(req.getServerName()+":"+req.getServerPort()+"/")[1];
 
-        Optional<String> optional= Optional.ofNullable(req.getParameter("locale"));
+        Optional<String> optional= Optional.ofNullable((String) req.getSession().getAttribute("locale"));
 
         OptionalConsumer.of(optional)
                 .ifPresent(l->{
@@ -40,7 +40,6 @@ public class LocaleController extends HttpServlet {
                     log.info("not present");
                     req.getSession().setAttribute("locale", EN);
         });
-
         resp.sendRedirect(url);
     }
 

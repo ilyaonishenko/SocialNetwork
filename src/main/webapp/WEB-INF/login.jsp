@@ -9,9 +9,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="locale" scope="session" class="java.lang.String"/>
-<fmt:setLocale value="${locale}" scope="application"/>
+<fmt:setLocale value="${locale}" scope="session"/>
 <script>
     console.log('${locale}');
+    sessionStorage.setItem('locale','${locale}');
 </script>
 <html>
 <head>

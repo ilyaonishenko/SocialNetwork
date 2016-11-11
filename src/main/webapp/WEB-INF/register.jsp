@@ -9,8 +9,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="locale" scope="session" class="java.lang.String"/>
-<fmt:setLocale value="${locale}" scope="application"/>
+<fmt:setLocale value="${locale}" scope="session"/>
 <html>
+<script>
+    console.log('${locale}');
+    sessionStorage.setItem('locale','${locale}');
+</script>
 <head>
     <title>Registration</title>
     <link rel="stylesheet" href="<c:url value='../resources/css/bootstrap.min.css'/>"/>
@@ -24,7 +28,7 @@
             <a class="navbar-brand" id="brand" href="/">Texter</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">EN/RU</a></li>
+            <li><a href="/changelocale">EN/RU</a></li>
         </ul>
     </div>
 </nav>

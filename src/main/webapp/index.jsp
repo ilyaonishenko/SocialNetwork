@@ -8,7 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="locale" scope="session" class="java.lang.String"/>
+<fmt:setLocale value="${locale}" scope="session"/>
 <html>
+<script>
+    console.log('${locale}');
+    sessionStorage.setItem('locale','${locale}');
+</script>
 <head>
     <meta charset="utf-8">
     <title>Texter</title>
@@ -23,7 +29,7 @@
             <a class="navbar-brand" id="brand" href="#">Texter</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">EN/RU</a></li>
+            <li><a href="/changelocale">EN/RU</a></li>
         </ul>
     </div>
 </nav>
