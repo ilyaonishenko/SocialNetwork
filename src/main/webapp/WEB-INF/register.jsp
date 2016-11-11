@@ -19,7 +19,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" id="brand" href="#">Texter</a>
+            <a class="navbar-brand" id="brand" href="/">Texter</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#">EN/RU</a></li>
@@ -30,33 +30,33 @@
     <fieldset>
         <legend>Registration</legend>
         <div class="form-group">
-            <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+            <label for="inputUsername" class="col-lg-2 control-label">Username:</label>
             <div class="col-lg-10">
                 <input name="j_username" type="text" class="form-control" id="inputUsername" placeholder="Username">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+            <label for="inputEmail" class="col-lg-2 control-label">Email:</label>
             <div class="col-lg-10">
                 <input name="email" type="text" class="form-control" id="inputEmail" placeholder="Email">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+            <label for="inputPassword" class="col-lg-2 control-label">Password:</label>
             <div class="col-lg-10">
                 <input name="j_password" type="password" class="form-control" id="inputPassword" placeholder="Password">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputFirstName" class="col-lg-2 control-label">First name</label>
+            <label for="inputFirstName" class="col-lg-2 control-label">First name:</label>
             <div class="col-lg-10">
-                <input name="firstName" type="text" class="form-control" id="inputFirstName" placeholder="firstname">
+                <input name="firstName" type="text" class="form-control" id="inputFirstName" placeholder="Firstname">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputLastName" class="col-lg-2 control-label">Last name</label>
+            <label for="inputLastName" class="col-lg-2 control-label">Last name:</label>
             <div class="col-lg-10">
-                <input name="lastName" type="text" class="form-control" id="inputLastName" placeholder="lastname">
+                <input name="lastName" type="text" class="form-control" id="inputLastName" placeholder="Lastname">
             </div>
         </div>
         <div class="form-group">

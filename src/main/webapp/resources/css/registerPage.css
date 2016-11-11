@@ -6,14 +6,34 @@
     left: 50%;
     right: 50%;
     width: 50%;
+    height: 100%;
 
     background-color: transparent;
 }
+fieldset{
+    margin-top: 20%;
+}
 .form-group{
-
     text-align: center;
-    margin: auto;
 }
 .form-control{
     width: 25%;
+    margin: 0 auto;
+}
+
+legend{
+    border-bottom: none;
+}
+.col-lg-10{
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+}
+.col-lg-offset-2{
+    margin-left: auto;
+}
+.col-lg-2{
+    width: 40%;
+    margin-right: -15%;
+    margin-left: 10%;
 }

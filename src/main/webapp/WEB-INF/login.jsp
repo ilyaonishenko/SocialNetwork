@@ -19,24 +19,24 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" id="brand" href="#">Texter</a>
+            <a class="navbar-brand" id="brand" href="/">Texter</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#">EN/RU</a></li>
         </ul>
     </div>
 </nav>
-<form class="form-horizontal" action="/login" method="post">
+<form id="form" class="form-horizontal" action="/login" method="post">
     <fieldset>
         <legend>Log in</legend>
         <div class="form-group">
-            <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+            <%--<label for="inputUsername" class="col-lg-2 control-label">Username</label>--%>
             <div class="col-lg-10">
                 <input name="j_username" type="text" class="form-control" id="inputUsername" placeholder="Username">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+            <%--<label for="inputPassword" class="col-lg-2 control-label">Password</label>--%>
             <div class="col-lg-10">
                 <input name="j_password" type="password" class="form-control" id="inputPassword" placeholder="Password">
             </div>
