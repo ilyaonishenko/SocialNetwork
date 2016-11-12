@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -89,9 +90,9 @@ public class PostResource {
 
         log.info("getUserTimeline");
 
-        HashSet<Post> timeline = (HashSet<Post>) postDAO.getUserTimeline(userId, offsetId, limit);
+        Collection<Post> timeline =  postDAO.getUserTimeline(userId, offsetId, limit);
 
-        HashSet<PostView> pvTimeline = (HashSet<PostView>) createPostViews(timeline);
+        Collection<PostView> pvTimeline = createPostViews(timeline);
 
         String json = JsonWrapper.toJson(pvTimeline);
 
@@ -125,7 +126,7 @@ public class PostResource {
 
     private Collection<PostView> createPostViews(Collection<Post> posts){
 
-        HashSet<PostView> postViews = new HashSet<>();
+        Collection<PostView> postViews = new ArrayList<>();
 
         PostView.PostViewBuilder postViewBuilder = PostView.builder();
 

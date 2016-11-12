@@ -29,6 +29,7 @@ Your role in this project: <br>
 <br>
 <p>timeline:</p>
 <div id="timeline"></div>
+
 <form action="/s/createpost" method="post">
     <label>Write your text here</label>
     <input id="text" name="post" type="text">

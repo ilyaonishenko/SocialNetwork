@@ -67,8 +67,8 @@ class PostHandler{
             data: {
                 userId: this.userId,
                 visitorId: this.visitorId,
-                offsetId: 1000000000,
-                limit: 1000
+                offsetId: 10000000000,
+                limit: 10
             },
             dataType: 'json',
             success: function(views) {
@@ -82,7 +82,7 @@ class PostHandler{
                     self.postContainer.appendChild(line);
                     self.postContainer.appendChild(like);
                     self.postContainer.appendChild(comments);
-                    self.offsetId = view.offsetId;
+                    self.offsetId = view.post.id;
                 })
             }
         })
@@ -104,7 +104,7 @@ class Timeline{
             data: {
                 userId: this.userId,
                 offsetId: 1000000000,
-                limit: 1000
+                limit: 10
             },
             dataType: 'json',
             success: function (views) {
@@ -118,29 +118,9 @@ class Timeline{
                     self.postContainer.appendChild(line);
                     self.postContainer.appendChild(like);
                     self.postContainer.appendChild(comments);
-                    self.offsetId = view.offsetId;
+                    self.offsetId = view.post.id;
                 })
             }
-        })
-    }
-}
-
-class LocaleWrapper{
-
-    changeLocale(){
-        var ru = "ru";
-        var en = "en";
-        var lang = window.navigator.language;
-        if (lang === ru){
-
-        } else {
-
-        }
-    }
-
-    sendRequset(locale){
-        $.ajax({
-            url
         })
     }
 }

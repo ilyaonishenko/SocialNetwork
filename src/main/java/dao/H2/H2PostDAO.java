@@ -7,8 +7,8 @@ import lombok.SneakyThrows;
 import model.Post;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 
 /**
@@ -99,7 +99,7 @@ public class H2PostDAO implements PostDAO {
     @SneakyThrows
     private Collection<Post> createCollection(ResultSet rs){
 
-        Collection<Post> posts = new HashSet<>();
+        Collection<Post> posts = new ArrayList<>();
         Post.PostBuilder postBuilder = Post.builder();
 
         while(rs.next())
