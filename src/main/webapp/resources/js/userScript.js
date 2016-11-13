@@ -49,9 +49,9 @@ class FollowThings {
     }
 }
 
-class PostHandler{
+class PostHandler {
 
-    constructor(userId, visitorId, postContainer){
+    constructor(userId, visitorId, postContainer) {
 
         this.userId = userId;
         this.visitorId = visitorId;
@@ -59,31 +59,63 @@ class PostHandler{
 
     }
 
-    loadUserPosts(){
-        var self = this;
+    loadUserPosts() {
+        var me = this;
         $.ajax({
             url: '/webapi/posts/',
             type: 'GET',
             data: {
                 userId: this.userId,
                 visitorId: this.visitorId,
-                offsetId: 10000000000,
+                offsetId: 1000000000,
                 limit: 10
             },
             dataType: 'json',
-            success: function(views) {
+            success: function (views) {
                 views.forEach(function (view) {
                     var line = document.createElement("p");
-                    line.innerHTML = "<strong>" + view.post.text + "</strong> by "+view.user.username+"<br>";
+                    line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
                     var like = document.createElement("p");
-                    like.innerHTML = "Likes: "+view.likesCount;
+                    like.innerHTML = "Likes: " + view.likesCount;
                     var comments = document.createElement("p");
-                    comments.innerHTML = "Comments: "+view.commentsCount;
-                    self.postContainer.appendChild(line);
-                    self.postContainer.appendChild(like);
-                    self.postContainer.appendChild(comments);
-                    self.offsetId = view.post.id;
-                })
+                    comments.innerHTML = "Comments: " + view.commentsCount;
+                    me.postContainer.appendChild(line);
+                    me.postContainer.appendChild(like);
+                    me.postContainer.appendChild(comments);
+                    me.offsetId = view.post.id;
+                });
+                PostHandler.updateUserPosts(me.userId, me.visitorId, me.offsetId, 10, me.postContainer);
+            }
+        })
+    }
+
+    static updateUserPosts(userId, visitorId, offsetId, limit, postContainer) {
+        console.log("update posts");
+        $.ajax({
+            url: '/webapi/posts/update',
+            type: 'GET',
+            data: {
+                userId: userId,
+                visitorId: visitorId,
+                offsetId: offsetId,
+                limit: limit
+            },
+            dataType: 'json',
+            timeout: 11000,
+            success: function (views) {
+                views.forEach(function (view) {
+                    var line = document.createElement("p");
+                    line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
+                    var like = document.createElement("p");
+                    like.innerHTML = "Likes: " + view.likesCount;
+                    var comments = document.createElement("p");
+                    comments.innerHTML = "Comments: " + view.commentsCount;
+                    postContainer.appendChild(line);
+                    postContainer.appendChild(like);
+                    postContainer.appendChild(comments);
+                    offsetId = view.post.id;
+                });
+                PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
             }
         })
     }

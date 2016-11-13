@@ -112,16 +112,38 @@ public class PostResource {
 
             //noinspection OptionalGetWithoutIsPresent
             PostView postView = new PostView(
-                            userDAO.getById(post.getAuthorId()).get(),
-                            post,
-                            likeDAO.countByPostId(post.getId()),
-                            commentDAO.countByPostId(post.getId()));
+                    userDAO.getById(post.getAuthorId()).get(),
+                    post,
+                    likeDAO.countByPostId(post.getId()),
+                    commentDAO.countByPostId(post.getId()));
 
             String json = JsonWrapper.toJson(postView);
             return Response.ok(json).build();
         } else {
             return Response.serverError().build();
         }
+    }
+
+    @GET
+    @Path("update")
+    @Produces(APPLICATION_JSON)
+    public Response updatePosts(@QueryParam("userId") long userId,
+                                @QueryParam("visitorId") long visitorId,
+                                @QueryParam("offsetId") int offsetId,
+                                @QueryParam("limit") int limit)
+                                throws JsonProcessingException, InterruptedException {
+        log.info("updatePosts");
+        Thread.sleep(10000);
+        HashSet<Post> posts = postDAO.getAllByUser(userId).stream()
+                .limit(limit).collect(Collectors.toCollection(HashSet::new));
+
+        Collection<PostView> postViews = createPostViews(posts);
+
+        log.info(String.valueOf(postViews.size()));
+
+        String json = JsonWrapper.toJson(postViews);
+
+        return Response.ok(json).build();
     }
 
     private Collection<PostView> createPostViews(Collection<Post> posts){
