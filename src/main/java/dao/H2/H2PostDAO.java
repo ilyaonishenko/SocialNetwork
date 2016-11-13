@@ -35,20 +35,20 @@ public class H2PostDAO implements PostDAO {
 
     @Override
     @SneakyThrows
-    public Collection<Post> getUserTimeline(long userId, int offsetId, int limit) {
+    public Collection<Post> getUserTimeline(long userId, long offsetId, int limit) {
 
         try(Connection connection = connectionPool.getConnection()){
 
             String sql = "SELECT id, authorId, date, time, text, privacy, expandable " +
-                    "FROM Post WHERE authorId IN " +
-                    "(SELECT follow_id FROM Following WHERE follower_id = ?) OR authorId=? AND " +
-                    "id<? ORDER BY id DESC LIMIT ?";
+                    "FROM Post WHERE (authorId IN " +
+                    "(SELECT follow_id FROM Following WHERE follower_id = ?) OR authorId=?) AND " +
+                    "id>? ORDER BY id DESC LIMIT ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setLong(1,userId);
             preparedStatement.setLong(2,userId);
-            preparedStatement.setInt(3,offsetId);
+            preparedStatement.setLong(3,offsetId);
             preparedStatement.setInt(4,limit);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -93,6 +93,65 @@ public class H2PostDAO implements PostDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             return createCollection(rs).stream().findAny();
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public Collection<Post> getAllByUser(long userId, long offsetId, int limit){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT id, authorId, date, time, text, privacy, expandable "+
+                    "FROM Post WHERE authorId = ? AND id>? ORDER BY id DESC LIMIT ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, offsetId);
+            preparedStatement.setInt(3, limit);
+
+            return createCollection(preparedStatement.executeQuery());
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public boolean isPostsReadyToUpdate(long userId, long offsetId){
+
+        String sql = "SELECT id FROM Post WHERE authorId=? AND id>?";
+
+        return isReadyToUpdate(userId, offsetId, sql, 2);
+    }
+
+    @Override
+    @SneakyThrows
+    public boolean isTimelineReadyToUpdate(long userId, long offsetId){
+
+        String sql = "SELECT id FROM Post WHERE (authorId IN " +
+                "(SELECT follow_id FROM Following WHERE follower_id = ?) " +
+                "OR Post.authorId = ?) AND id >?";
+        return isReadyToUpdate(userId, offsetId, sql, 3);
+    }
+
+    @SneakyThrows
+    private boolean isReadyToUpdate(long userId, long offsetId, String sql, int params){
+
+        try(Connection connection = connectionPool.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, userId);
+            switch (params){
+                case 2:{
+                    preparedStatement.setLong(2, offsetId);
+                    break;
+                }
+                case 3:{
+                    preparedStatement.setLong(2, userId);
+                    preparedStatement.setLong(3, offsetId);
+                }
+            }
+
+            return preparedStatement.executeQuery().isBeforeFirst();
         }
     }
 

@@ -14,7 +14,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,15 +59,15 @@ public class PostResource {
     public Response getPostByUser(
             @QueryParam("userId") long userId,
             @QueryParam("visitorId") long visitorId,
-            @QueryParam("offsetId") int offsetId,
+            @QueryParam("offsetId") long offsetId,
             @QueryParam("limit") int limit)
             throws JsonProcessingException {
 
         log.info("getPostsByUser");
 
         // TODO: 06.11.16 make limitation by sql-query
-        HashSet<Post> posts = postDAO.getAllByUser(userId).stream()
-                .limit(limit).collect(Collectors.toCollection(HashSet::new));
+        ArrayList<Post> posts = postDAO.getAllByUser(userId, offsetId, limit).stream()
+                .collect(Collectors.toCollection(ArrayList::new));
 
         Collection<PostView> postViews = createPostViews(posts);
 
@@ -84,7 +83,7 @@ public class PostResource {
     @Produces(APPLICATION_JSON)
     public Response getTimeLine(
             @QueryParam("userId") long userId,
-            @QueryParam("offsetId") int offsetId,
+            @QueryParam("offsetId") long offsetId,
             @QueryParam("limit") int limit)
             throws JsonProcessingException {
 
@@ -93,6 +92,8 @@ public class PostResource {
         Collection<Post> timeline =  postDAO.getUserTimeline(userId, offsetId, limit);
 
         Collection<PostView> pvTimeline = createPostViews(timeline);
+
+        log.info(String.valueOf(pvTimeline.size()));
 
         String json = JsonWrapper.toJson(pvTimeline);
 
@@ -129,19 +130,48 @@ public class PostResource {
     @Produces(APPLICATION_JSON)
     public Response updatePosts(@QueryParam("userId") long userId,
                                 @QueryParam("visitorId") long visitorId,
-                                @QueryParam("offsetId") int offsetId,
+                                @QueryParam("offsetId") long offsetId,
                                 @QueryParam("limit") int limit)
                                 throws JsonProcessingException, InterruptedException {
         log.info("updatePosts");
-        Thread.sleep(10000);
-        HashSet<Post> posts = postDAO.getAllByUser(userId).stream()
-                .limit(limit).collect(Collectors.toCollection(HashSet::new));
+        log.info("offsetId: "+offsetId);
+
+        while(!postDAO.isPostsReadyToUpdate(userId, offsetId))
+            Thread.sleep(10000);
+
+        ArrayList<Post> posts = postDAO.getAllByUser(userId, offsetId, limit).stream()
+                .collect(Collectors.toCollection(ArrayList::new));
 
         Collection<PostView> postViews = createPostViews(posts);
 
         log.info(String.valueOf(postViews.size()));
 
         String json = JsonWrapper.toJson(postViews);
+
+        return Response.ok(json).build();
+    }
+
+    @GET
+    @Path("updatetimeline")
+    @Produces(APPLICATION_JSON)
+    public Response updateTimeline(
+            @QueryParam("userId") long userId,
+            @QueryParam("offsetId") long offsetId,
+            @QueryParam("limit") int limit)
+            throws JsonProcessingException, InterruptedException {
+
+        log.info("update timeline");
+
+        while (!postDAO.isTimelineReadyToUpdate(userId, offsetId))
+            Thread.sleep(10000);
+
+        Collection<Post> timeline =  postDAO.getUserTimeline(userId, offsetId, limit);
+
+        Collection<PostView> pvTimeline = createPostViews(timeline);
+
+        log.info(String.valueOf(pvTimeline.size()));
+
+        String json = JsonWrapper.toJson(pvTimeline);
 
         return Response.ok(json).build();
     }

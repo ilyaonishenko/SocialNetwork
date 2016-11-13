@@ -61,13 +61,14 @@ class PostHandler {
 
     loadUserPosts() {
         var me = this;
+        me.offsetId = 0;
         $.ajax({
             url: '/webapi/posts/',
             type: 'GET',
             data: {
                 userId: this.userId,
                 visitorId: this.visitorId,
-                offsetId: 1000000000,
+                offsetId: me.offsetId,
                 limit: 10
             },
             dataType: 'json',
@@ -82,7 +83,8 @@ class PostHandler {
                     me.postContainer.appendChild(line);
                     me.postContainer.appendChild(like);
                     me.postContainer.appendChild(comments);
-                    me.offsetId = view.post.id;
+                    if(me.offsetId < view.post.id)
+                        me.offsetId = view.post.id;
                 });
                 PostHandler.updateUserPosts(me.userId, me.visitorId, me.offsetId, 10, me.postContainer);
             }
@@ -90,7 +92,7 @@ class PostHandler {
     }
 
     static updateUserPosts(userId, visitorId, offsetId, limit, postContainer) {
-        console.log("update posts");
+        console.log("offsetID: "+offsetId);
         $.ajax({
             url: '/webapi/posts/update',
             type: 'GET',
@@ -110,11 +112,18 @@ class PostHandler {
                     like.innerHTML = "Likes: " + view.likesCount;
                     var comments = document.createElement("p");
                     comments.innerHTML = "Comments: " + view.commentsCount;
-                    postContainer.appendChild(line);
-                    postContainer.appendChild(like);
-                    postContainer.appendChild(comments);
-                    offsetId = view.post.id;
+                    var postView = document.createElement('div');
+                    postView.appendChild(line);
+                    postView.appendChild(like);
+                    postView.appendChild(comments);
+                    postContainer.insertBefore(postView, postContainer.firstChild);
+                    if(offsetId < view.post.id)
+                        offsetId = view.post.id;
                 });
+                PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
+            },
+            error: function (err) {
+                console.log(err);
                 PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
             }
         })
@@ -130,12 +139,13 @@ class Timeline{
 
     loadTimeline(){
         var self = this;
+        self.offsetId = 0;
         $.ajax({
             url: '/webapi/posts/timeline/',
             type: 'GET',
             data: {
                 userId: this.userId,
-                offsetId: 1000000000,
+                offsetId: self.offsetId,
                 limit: 10
             },
             dataType: 'json',
@@ -150,8 +160,46 @@ class Timeline{
                     self.postContainer.appendChild(line);
                     self.postContainer.appendChild(like);
                     self.postContainer.appendChild(comments);
-                    self.offsetId = view.post.id;
-                })
+                    if(self.offsetId < view.post.id)
+                        self.offsetId = view.post.id;
+                });
+                Timeline.updateTimeline(self.userId, self.offsetId, 10, self.postContainer);
+            }
+        })
+    }
+    static updateTimeline(userId, offsetId, limit, postContainer){
+        console.log(offsetId);
+        $.ajax({
+            url: '/webapi/posts/updatetimeline',
+            type: 'GET',
+            data: {
+                userId: userId,
+                offsetId: offsetId,
+                limit: limit
+            },
+            dataType: 'json',
+            timeout: 11000,
+            success: function (views) {
+                views.forEach(function (view) {
+                    var line = document.createElement("p");
+                    line.innerHTML = "<strong>" + view.post.text + "</strong> by "+view.user.username+"<br>";
+                    var like = document.createElement("p");
+                    like.innerHTML = "Likes: "+view.likesCount;
+                    var comments = document.createElement("p");
+                    comments.innerHTML = "Comments: "+view.commentsCount;
+                    var postView = document.createElement('div');
+                    postView.appendChild(line);
+                    postView.appendChild(like);
+                    postView.appendChild(comments);
+                    postContainer.insertBefore(postView, postContainer.firstChild);
+                    if(offsetId < view.post.id)
+                        offsetId = view.post.id;
+                });
+                Timeline.updateTimeline(userId, offsetId, limit, postContainer);
+            },
+            error: function (err) {
+                console.log(err);
+                Timeline.updateTimeline(userId, offsetId, limit, postContainer);
             }
         })
     }
