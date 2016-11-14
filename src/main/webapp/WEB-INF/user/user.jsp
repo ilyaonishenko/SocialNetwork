@@ -11,23 +11,34 @@
 <%@ page import="model.User" %>
 <jsp:useBean id="user" type="model.User" scope="request"/>
 <% User visitor = (User) session.getAttribute("user");%>
+<jsp:useBean id="sUser" type="model.User" scope="session"/>
 <html>
 <head>
-    <title><%=user.getUsername()%></title>
+    <title>${user.username}</title>
     <script type="text/javascript" src="<c:url value='../../resources/js/jquery-3.1.0.min.js'/>"></script>
     <script type="text/javascript" src="<c:url value="../../resources/js/userScript.js"/>"></script>
     <link rel="stylesheet" href="<c:url value='../../resources/css/bootstrap.min.css'/>"/>
-    <link rel="stylesheet" href="<c:url value='../../resources/css/registerPage.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='../../resources/css/navbar.css'/>"/>
 </head>
 <body>
-<p/>Hello, <%=user.getFirstName()%> <%=user.getLastName()%>
-<a id="followButton" class="btn btn-primary" onclick="follow.followClick('<%=user.getUsername()%>')">Follow</a>
+<header>
+    <c:choose>
+        <c:when test="${not (empty sUser)}">
+            <jsp:include page="../common/logged_navbar.jsp"/>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="../common/loggedOut_navbar.jsp"/>
+        </c:otherwise>
+    </c:choose>
+</header>
+<p/>Hello, ${user.firstName} ${user.lastName}
+<a id="followButton" class="btn btn-primary" onclick="follow.followClick('${user.username}')">Follow</a>
 <div id="posts">
 </div>
 </body>
 <script>
-    var follow = new FollowThings(username = "${user.username}", visitor = "<%= visitor.getUsername() %>");
-    var postHandler = new PostHandler(userId = "${user.id}", visitorId = "<%= visitor.getId()%>",
+    var follow = new FollowThings(username = "${user.username}", visitor = ${sUser.username});
+    var postHandler = new PostHandler(userId = "${user.id}", visitorId = "${sUser.id}",
             postContainer = document.getElementById("posts"));
     addEventListener ("DOMContentLoaded", follow.doStuff, false);
     addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false)

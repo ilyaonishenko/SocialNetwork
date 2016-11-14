@@ -23,22 +23,15 @@
     <link rel="stylesheet" href="<c:url value='resources/css/navbar.css'/>"/>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" id="brand" href="#">Texter</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="/changelocale">EN/RU</a></li>
-        </ul>
-    </div>
-</nav>
+<header>
+    <jsp:include page="WEB-INF/common/loggedOut_navbar.jsp"/>
+</header>
 <div class="cont">
     <div class="jumbotron" id="main">
         <h3>We make the news real</h3>
         <p>Texter is the best social network to spread the news.</p>
-        <p><a class="btn btn-primary btn-lg" href="/register">Join the Community!</a></p>
-        <p/><a href="/login">Or login</a>
+        <p><a class="btn btn-primary btn-lg" href="/register"><fmt:message key="index.join"/></a></p>
+        <p/><a href="/login"><fmt:message key="index.login"/></a>
     </div>
 </div>
 </body>
