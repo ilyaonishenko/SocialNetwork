@@ -58,7 +58,7 @@ public class LoginController extends BaseServlet {
         if(secCheck(user.getUsername(),password)){
 
             log.info("secCheck is gone");
-            httpSession.setAttribute(USER,user);
+            httpSession.setAttribute(SUSER,user);
             log.info("userRole: "+userRoles);
             httpSession.setAttribute(USER_ROLE, userRoles);
             resp.sendRedirect(nextURL);

@@ -30,7 +30,7 @@ public class FollowController extends BaseServlet {
 
         httpSession = req.getSession();
 
-        User user = (User)httpSession.getAttribute(USER);
+        User user = (User)httpSession.getAttribute(SUSER);
 
         log.info("user from session: "+user.getUsername() );
 

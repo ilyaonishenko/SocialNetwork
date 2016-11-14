@@ -15,6 +15,7 @@ import java.io.IOException;
 public class BaseServlet extends HttpServlet {
 
     protected static final String USER = "user";
+    protected static final String SUSER = "sUser";
     protected static final String USER_ROLE = "userRoles";
     protected static final String FOLLOWINGS = "followings";
     protected static final String FOLLOWERS = "followers";

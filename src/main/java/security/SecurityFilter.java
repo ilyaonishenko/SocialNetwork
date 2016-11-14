@@ -24,6 +24,7 @@ import java.util.Optional;
 public class SecurityFilter implements HttpFilter {
 
     private static final String USER = "user";
+    private static final String SUSER = "sUser";
 
     private UserDAO userDAO;
 
@@ -42,16 +43,16 @@ public class SecurityFilter implements HttpFilter {
         String fromUri = request.getRequestURI();
 
         Optional<User> userOpt =
-                Optional.ofNullable((User) httpSession.getAttribute(USER))
+                Optional.ofNullable((User) httpSession.getAttribute(SUSER))
                         .map(User::getId)
                         .flatMap(userDAO::getById);
         if (userOpt.isPresent()){
             log.info("true");
-            httpSession.setAttribute(USER,userOpt.get());
+            httpSession.setAttribute(SUSER,userOpt.get());
             chain.doFilter(request,response);
         } else {
             log.info("false");
-            httpSession.removeAttribute(USER);
+            httpSession.removeAttribute(SUSER);
             httpSession.setAttribute("next", fromUri);
             request.getRequestDispatcher("/login").forward(request, response);
         }

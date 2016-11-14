@@ -24,12 +24,12 @@ public class LogoutController extends BaseServlet {
 
         HttpSession httpSession = req.getSession();
 
-        User user = (User) httpSession.getAttribute(USER);
+        User user = (User) httpSession.getAttribute(SUSER);
 
         if(user!=null){
             log.info("logout user: "+user);
         }
-        httpSession.removeAttribute(USER);
+        httpSession.removeAttribute(SUSER);
         httpSession.invalidate();
 
         req.getRequestDispatcher("/").forward(req,resp);

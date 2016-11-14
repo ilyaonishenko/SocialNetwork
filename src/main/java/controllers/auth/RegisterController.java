@@ -71,7 +71,7 @@ public class RegisterController extends BaseServlet {
         if(optUser.isPresent()){
             User user = optUser.get();
             log.info("user is "+user.toString());
-            httpSession.setAttribute(USER,user);
+            httpSession.setAttribute(SUSER,user);
             log.info("method: "+req.getMethod());
             httpSession.setAttribute(USER_ROLE, new HashSet<>(Collections.singletonList(userRole)));
 //            req.getRequestDispatcher("/home/").forward(req,resp);

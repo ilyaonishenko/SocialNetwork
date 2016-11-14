@@ -28,7 +28,7 @@ public class CommentController extends BaseServlet {
 
         HttpSession httpSession = req.getSession();
 
-        User user = (User) httpSession.getAttribute(USER);
+        User user = (User) httpSession.getAttribute(SUSER);
 
         Comment.CommentBuilder commentBuilder = Comment.builder();
 

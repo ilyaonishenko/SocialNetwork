@@ -31,7 +31,7 @@ public class PostController extends BaseServlet {
 
         HttpSession httpSession = req.getSession();
 
-        User user = (User) httpSession.getAttribute(USER);
+        User user = (User) httpSession.getAttribute(SUSER);
 
 //        String url = req.getHeader("Referer").split(req.getServerName()+":"+req.getServerPort()+"/s/")[1];
         String url =req.getServerName()+":"+req.getServerPort()+"/home";

@@ -26,7 +26,7 @@ public class HomeController extends BaseServlet {
 
 
         HttpSession httpSession = req.getSession();
-        User user = (User)httpSession.getAttribute(USER);
+        User user = (User)httpSession.getAttribute(SUSER);
         log.info("in homeController with user "+user.getUsername());
         req.setAttribute(USER,user);
         //noinspection unchecked
