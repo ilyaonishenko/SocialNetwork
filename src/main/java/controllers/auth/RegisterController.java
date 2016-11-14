@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by wopqw on 01.11.16.
@@ -75,8 +73,11 @@ public class RegisterController extends BaseServlet {
             log.info("user is "+user.toString());
             httpSession.setAttribute(USER,user);
             log.info("method: "+req.getMethod());
-            httpSession.setAttribute(USER_ROLE, new HashSet<UserRole>().add(userRole));
-            req.getRequestDispatcher("/home/").forward(req,resp);
+            httpSession.setAttribute(USER_ROLE, new HashSet<>(Collections.singletonList(userRole)));
+//            req.getRequestDispatcher("/home/").forward(req,resp);
+            String url =req.getServerName()+":"+req.getServerPort()+"/home";
+            resp.sendRedirect(url);
+
         } else {
             req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req,resp);
         }

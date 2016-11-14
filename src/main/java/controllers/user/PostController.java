@@ -27,11 +27,16 @@ public class PostController extends BaseServlet {
 
         log.info("doPost createPost");
 
+        // TODO: 14.11.16 beautiful post form
+
         HttpSession httpSession = req.getSession();
 
         User user = (User) httpSession.getAttribute(USER);
 
-        Post.PostBuilder postBuilder = Post.builder();
+//        String url = req.getHeader("Referer").split(req.getServerName()+":"+req.getServerPort()+"/s/")[1];
+        String url =req.getServerName()+":"+req.getServerPort()+"/home";
+
+                Post.PostBuilder postBuilder = Post.builder();
 
         String text = req.getParameter("post");
         String expandable = req.getParameter("expandable");
@@ -48,6 +53,7 @@ public class PostController extends BaseServlet {
 
         postDAO.addPost(post);
 
-        req.getRequestDispatcher("/home/").forward(req, resp);
+//        req.getRequestDispatcher("/home/").forward(req, resp);
+        resp.sendRedirect(url);
     }
 }
