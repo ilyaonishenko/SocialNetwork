@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="locale" scope="session" class="java.lang.String"/>
 <fmt:setLocale value="${locale}" scope="session"/>
+<jsp:useBean id="sUser" type="model.User" scope="session"/>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">

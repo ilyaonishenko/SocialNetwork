@@ -10,8 +10,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="model.User" %>
 <jsp:useBean id="user" type="model.User" scope="request"/>
-<% User visitor = (User) session.getAttribute("user");%>
-<jsp:useBean id="sUser" type="model.User" scope="session"/>
 <html>
 <head>
     <title>${user.username}</title>
