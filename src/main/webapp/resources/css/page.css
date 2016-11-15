@@ -1,0 +1,25 @@
+body{
+    background-color: #e5e5e5;
+}
+#user-info{
+    background-color: #ffffff;
+    height: 40%;
+}
+head{
+    border-bottom: 1px inset #4582ec;
+}
+#profile-img{
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    position: initial;
+    float: left;
+    margin-left: 10%;
+}
+#user-container{
+    padding-top: 1%;
+}
+#user-text{
+    margin-left: 3%;
+    margin-top: 1%;
+}
