@@ -10,15 +10,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="locale" scope="session" class="java.lang.String"/>
 <fmt:setLocale value="${locale}" scope="session"/>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" id="brand" href="/">Texter</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login" ><fmt:message key="header.login"/></a></li>
-            <li><a href="/register" ><fmt:message key="header.register"/></a></li>
-            <li><a href="/changelocale" >EN/RU</a></li>
-        </ul>
+<div class="navbar navbar-blue navbar-static-top">
+    <div class="navbar-header">
+        <a href="/" class="navbar-brand">Texter</a>
     </div>
-</nav>
+    <nav class="collapse navbar-collapse" role="navigation">
+        <form class="navbar-form navbar-left">
+            <div class="input-group input-group-sm" style="max-width:360px;">
+                <input type="text" class="form-control" placeholder="<fmt:message key="header.search"/>" name="srch-term" id="srch-term">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/register"><i class="glyphicon glyphicon-home"></i> <fmt:message key="header.register"/></a>
+            </li>
+            <li>
+                <a href="/login"><i class="glyphicon glyphicon-plus"></i> <fmt:message key="header.login"/></a>
+            </li>
+            <li>
+                <a href="/changelocale"> EN/RU</a>
+            </li>
+        </ul>
+    </nav>
+</div>

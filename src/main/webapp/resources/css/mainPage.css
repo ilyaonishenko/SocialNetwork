@@ -1,28 +1,9 @@
-.cont{
-    text-align: center;
-    margin: auto 0;
-    height: 100%;
-}
-
-.jumbotron#main{
-    text-align: center;
-    background-color: #ffffff;
-    height: 50%;
-    margin-bottom: auto;
-    margin-top: auto;
-    padding-top: 13%;
-}
-
-.navbar-brand {
-    text-align: center;
+.col-sm-7{
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
     float: none;
-    position: absolute;
-    left: 47%;
-    right: 50%;
-    font-size: x-large;
 }
-a.navbar-brand{
-    display: block;
+.panel-default{
+    text-align: center;
 }
-
-

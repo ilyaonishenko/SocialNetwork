@@ -19,33 +19,42 @@
     <title>Login</title>
 
     <link rel="stylesheet" href="<c:url value='../resources/css/bootstrap.min.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='../resources/css/styles.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../resources/css/registerPage.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../resources/css/navbar.css'/>"/>
 </head>
 <body>
-<header>
-    <jsp:include page="common/loggedOut_navbar.jsp"/>
-</header>
-<form id="form" class="form-horizontal" action="/login" method="post">
-    <fieldset>
-        <legend><fmt:message key="login.title"/></legend>
-        <div class="form-group">
-            <div class="col-lg-10">
-                <input name="j_username" type="text" class="form-control" id="inputUsername" placeholder="<fmt:message key="login.username"/>">
+<div class="wrapper">
+    <div class="box">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <div class="column col-sm-10 col-xs-11" style="width:100%" id="main">
+                <jsp:include page="common/loggedOut_navbar.jsp"/>
+                <div class="padding">
+                    <form id="form" class="form-horizontal" action="/login" method="post">
+                        <fieldset>
+                            <legend><fmt:message key="login.title"/></legend>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <input name="j_username" type="text" class="form-control" id="inputUsername" placeholder="<fmt:message key="login.username"/>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <input name="j_password" type="password" class="form-control" id="inputPassword" placeholder="<fmt:message key="login.password"/>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="reset" class="btn btn-default"><fmt:message key="button.cancel"/></button>
+                                    <button value="submit" type="submit" class="btn btn-primary"><fmt:message key="button.submit"/></button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-10">
-                <input name="j_password" type="password" class="form-control" id="inputPassword" placeholder="<fmt:message key="login.password"/>">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <button type="reset" class="btn btn-default"><fmt:message key="button.cancel"/></button>
-                <button value="submit" type="submit" class="btn btn-primary"><fmt:message key="button.submit"/></button>
-            </div>
-        </div>
-    </fieldset>
-</form>
+    </div>
+</div>
 </body>
 </html>

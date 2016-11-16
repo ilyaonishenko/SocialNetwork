@@ -1,15 +1,8 @@
-.navbar{
-    margin-bottom: 0px;
+.navbar-brand{
+    padding-top: 7px;
+    color: #efefef;
+    font-size: 27px;
 }
-.navbar-brand {
-    text-align: center;
-    float: none;
-    position: absolute;
-    left: 47%;
-    right: 50%;
-    font-size: x-large;
-}
-
-a.navbar-brand{
-    display: block;
+.navbar-header{
+    padding-top: 7px;
 }
