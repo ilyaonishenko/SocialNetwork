@@ -21,8 +21,6 @@ import java.util.Optional;
 public class FollowController extends BaseServlet {
     // TODO: 13.11.16 Обработка случая при неавторизированном пользователе на странице
     private HttpSession httpSession;
-    private Optional<User> optFollowUser;
-    private User followedUser;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -34,7 +32,7 @@ public class FollowController extends BaseServlet {
 
         log.info("user from session: "+user.getUsername() );
 
-        optFollowUser = userDAO.getByUsername(req.getParameter("username"));
+        Optional<User> optFollowUser = userDAO.getByUsername(req.getParameter("username"));
 
         // noinspection OptionalGetWithoutIsPresent
         long followId = optFollowUser.get().getId();
@@ -53,13 +51,14 @@ public class FollowController extends BaseServlet {
             throws ServletException, IOException {
 
         httpSession = req.getSession();
-        User user = (User) httpSession.getAttribute(USER);
+        User user = (User) httpSession.getAttribute(SUSER);
         log.info("session user: "+user);
 
         String username = req.getParameter("username");
 
         Optional<User> optFollowedUser = userDAO.getByUsername(username);
 
+        //noinspection OptionalGetWithoutIsPresent
         boolean answer = followingDAO.isFirstFollowSecond(user.getId(),optFollowedUser.get().getId());
 
         log.info("answer: "+String.valueOf(answer));
