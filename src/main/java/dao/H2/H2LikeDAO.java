@@ -69,6 +69,23 @@ public class H2LikeDAO implements LikeDAO {
         }
     }
 
+    @Override
+    @SneakyThrows
+    public boolean isLiked(Like like){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM Likes WHERE from_userId = ? AND to_postId = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, like.getFromUserId());
+            preparedStatement.setLong(2, like.getToPostId());
+
+            return preparedStatement.executeQuery().isBeforeFirst();
+        }
+    }
+
     @SneakyThrows
     private Collection<Like> createCollection(ResultSet rs){
 

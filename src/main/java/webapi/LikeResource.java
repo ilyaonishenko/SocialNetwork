@@ -70,7 +70,7 @@ public class LikeResource {
         return Response.ok(json).build();
     }
 
-    @POST
+    @GET
     @Path("remove")
     @Produces(APPLICATION_JSON)
     public Response removeLike(
@@ -87,7 +87,9 @@ public class LikeResource {
                 .toPostId(postId)
                 .build());
 
-        String json = JsonWrapper.toJson(answer);
+        log.info("naswer: "+answer);
+        Long likesCount = likeDAO.countByPostId(postId);
+        String json = JsonWrapper.toJson(likesCount);
 
         return Response.ok(json).build();
     }
@@ -127,5 +129,24 @@ public class LikeResource {
                 .collect(Collectors.toCollection(HashSet::new));
 
         return Response.ok(JsonWrapper.toJson(posts)).build();
+    }
+    @GET
+    @Path("isliked")
+    @Produces(APPLICATION_JSON)
+    public Response isLicked(
+            @QueryParam("userId") long userId,
+            @QueryParam("postId") long postId)
+            throws JsonProcessingException{
+
+        log.info("check is clicked with user: {} and post: {}", userId, postId);
+
+        Like.LikeBuilder likeBuilder = Like.builder();
+
+        boolean isLiked = likeDAO.isLiked(likeBuilder
+                                            .toPostId(postId)
+                                            .fromUserId(userId)
+                                            .build());
+
+        return Response.ok(JsonWrapper.toJson(isLiked)).build();
     }
 }

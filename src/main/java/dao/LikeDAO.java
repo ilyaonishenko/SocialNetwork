@@ -13,6 +13,8 @@ public interface LikeDAO {
 
     Collection<Like> getAll();
 
+    boolean isLiked(Like like);
+
     boolean addLike(Like like);
 
     boolean removeLike(Like like);

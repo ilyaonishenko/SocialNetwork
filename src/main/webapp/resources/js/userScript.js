@@ -235,14 +235,28 @@ class Like{
             alert("auth");
         else{
             $.ajax({
-                url: '/webapi/likes/add',
+                url: '/webapi/likes/isliked',
                 type: 'GET',
                 data: {
                     'userId': visitorId,
                     'postId': postId
                 },
                 success: function (answer) {
-                    container.innerHTML = "+"+answer;
+                    var url;
+                    if (answer===true)
+                        url = '/webapi/likes/remove';
+                    else url = '/webapi/likes/add';
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        data: {
+                            'userId': visitorId,
+                            'postId': postId
+                        },
+                        success: function (likes) {
+                            container.innerHTML = "+"+likes;
+                        }
+                    })
                 }
             })
         }
