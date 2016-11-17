@@ -61,6 +61,7 @@ class PostHandler {
 
     loadUserPosts() {
         console.log("loading");
+        console.log("visitorId = "+visitorId);
         var me = this;
         me.offsetId = 0;
         $.ajax({
@@ -74,22 +75,8 @@ class PostHandler {
             },
             dataType: 'json',
             success: function (views) {
-                // views.forEach(function (view) {
-                //     var line = document.createElement("p");
-                //     line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
-                //     var like = document.createElement("p");
-                //     like.innerHTML = "Likes: " + view.likesCount;
-                //     var comments = document.createElement("p");
-                //     comments.innerHTML = "Comments: " + view.commentsCount;
-                //     me.postContainer.appendChild(line);
-                //     me.postContainer.appendChild(like);
-                //     me.postContainer.appendChild(comments);
-                //     if(me.offsetId < view.post.id)
-                //         me.offsetId = view.post.id;
-                // });
-                // PostHandler.createContainers(views, me.offsetId, me.postContainer);
                 views.forEach(function (view) {
-                    PostHandler.createContainers(view, me.postContainer);
+                    PostHandler.createContainers(view, me.postContainer, visitorId);
                     if(me.offsetId < view.post.id)
                             me.offsetId = view.post.id;
                 });
@@ -112,23 +99,8 @@ class PostHandler {
             dataType: 'json',
             timeout: 11000,
             success: function (views) {
-                // views.forEach(function (view) {
-                //     var line = document.createElement("p");
-                //     line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
-                //     var like = document.createElement("p");
-                //     like.innerHTML = "Likes: " + view.likesCount;
-                //     var comments = document.createElement("p");
-                //     comments.innerHTML = "Comments: " + view.commentsCount;
-                //     var postView = document.createElement('div');
-                //     postView.appendChild(line);
-                //     postView.appendChild(like);
-                //     postView.appendChild(comments);
-                //     postContainer.insertBefore(postView, postContainer.firstChild);
-                //     if(offsetId < view.post.id)
-                //         offsetId = view.post.id;
-                // });
                 views.forEach(function (view) {
-                    PostHandler.createContainers(view, postContainer);
+                    PostHandler.createContainers(view, postContainer, visitorId);
                     if(offsetId < view.post.id)
                             offsetId = view.post.id;
                 });
@@ -141,9 +113,10 @@ class PostHandler {
         })
     }
 
-    static createContainers(view, postContainer) {
+    static createContainers(view, postContainer, visitorId) {
         var panel = document.createElement("div");
         panel.className = "panel panel-default";
+        panel.id = view.post.id;
         var pHeading = document.createElement("div");
         pHeading.className = "panel-heading";
         var anchor = document.createElement("a");
@@ -157,6 +130,7 @@ class PostHandler {
         pHeading.appendChild(h4);
         panel.appendChild(pHeading);
         var pBody = document.createElement("div");
+        pBody.id = view.post.id;
         pBody.className = "panel-body";
         pBody.innerHTML = "<p/>"+view.post.text+"<hr>";
         var datetime = document.createElement("div");
@@ -164,6 +138,10 @@ class PostHandler {
         datetime.style = "text-align: right";
         pBody.appendChild(datetime);
         var likes = document.createElement("button");
+        // likes.onclick = "liker.makeLike("+'\''+view.post.id+'\''+")";
+        $(pBody).on('click','button',function(){
+            Like.makeLike(visitorId,view.post.id, likes);
+        });
         likes.className = "btn btn-default";
         likes.innerHTML = "+"+view.likesCount;
         pBody.appendChild(likes);
@@ -248,5 +226,25 @@ class Timeline{
                 Timeline.updateTimeline(userId, offsetId, limit, postContainer);
             }
         })
+    }
+}
+class Like{
+    static makeLike(visitorId, postId, container){
+        console.log("like with "+postId+" and "+visitorId);
+        if(this.visitorId === null)
+            alert("auth");
+        else{
+            $.ajax({
+                url: '/webapi/likes/add',
+                type: 'GET',
+                data: {
+                    'userId': visitorId,
+                    'postId': postId
+                },
+                success: function (answer) {
+                    container.innerHTML = "+"+answer;
+                }
+            })
+        }
     }
 }

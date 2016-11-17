@@ -67,7 +67,7 @@ INSERT into Likes (from_userId, to_postId) VALUES (2,3);
 INSERT into Likes (from_userId, to_postId) VALUES (3,3);
 INSERT into Likes (from_userId, to_postId) VALUES (4,3);
 INSERT into Likes (from_userId, to_postId) VALUES (1,1);
-INSERT into Likes (from_userId, to_postId) VALUES (1,4);
+-- INSERT into Likes (from_userId, to_postId) VALUES (1,4);
 INSERT into Likes (from_userId, to_postId) VALUES (2,2);
 INSERT into Likes (from_userId, to_postId) VALUES (4,2);
 

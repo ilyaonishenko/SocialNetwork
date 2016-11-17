@@ -45,7 +45,7 @@ public class LikeResource {
     }
 
 
-    @POST
+    @GET
     @Path("add")
     @Produces(APPLICATION_JSON)
     public Response addLike(
@@ -62,7 +62,10 @@ public class LikeResource {
                 .toPostId(postId)
                 .build());
 
-        String json = JsonWrapper.toJson(answer);
+        log.info("naswer: "+answer);
+        Long likesCount = likeDAO.countByPostId(postId);
+        log.info("likeCount: "+likesCount);
+        String json = JsonWrapper.toJson(likesCount);
 
         return Response.ok(json).build();
     }

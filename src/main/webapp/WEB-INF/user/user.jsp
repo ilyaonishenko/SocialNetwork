@@ -107,9 +107,10 @@
 </body>
 <script>
     var follow = new FollowThings(username = "${user.username}", visitor = "${sUser.username}");
+    addEventListener ("DOMContentLoaded", follow.doStuff, false);
+    <%--var liker = new Like('${sUser.id}');--%>
     var postHandler = new PostHandler(userId = "${user.id}", visitorId = "${sUser.id}",
             postContainer = document.getElementById("posts"));
-    addEventListener ("DOMContentLoaded", follow.doStuff, false);
     addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false)
 </script>
 </html>
