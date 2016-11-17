@@ -60,6 +60,7 @@ class PostHandler {
     }
 
     loadUserPosts() {
+        console.log("loading");
         var me = this;
         me.offsetId = 0;
         $.ajax({
@@ -73,18 +74,24 @@ class PostHandler {
             },
             dataType: 'json',
             success: function (views) {
+                // views.forEach(function (view) {
+                //     var line = document.createElement("p");
+                //     line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
+                //     var like = document.createElement("p");
+                //     like.innerHTML = "Likes: " + view.likesCount;
+                //     var comments = document.createElement("p");
+                //     comments.innerHTML = "Comments: " + view.commentsCount;
+                //     me.postContainer.appendChild(line);
+                //     me.postContainer.appendChild(like);
+                //     me.postContainer.appendChild(comments);
+                //     if(me.offsetId < view.post.id)
+                //         me.offsetId = view.post.id;
+                // });
+                // PostHandler.createContainers(views, me.offsetId, me.postContainer);
                 views.forEach(function (view) {
-                    var line = document.createElement("p");
-                    line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
-                    var like = document.createElement("p");
-                    like.innerHTML = "Likes: " + view.likesCount;
-                    var comments = document.createElement("p");
-                    comments.innerHTML = "Comments: " + view.commentsCount;
-                    me.postContainer.appendChild(line);
-                    me.postContainer.appendChild(like);
-                    me.postContainer.appendChild(comments);
+                    PostHandler.createContainers(view, me.postContainer);
                     if(me.offsetId < view.post.id)
-                        me.offsetId = view.post.id;
+                            me.offsetId = view.post.id;
                 });
                 PostHandler.updateUserPosts(me.userId, me.visitorId, me.offsetId, 10, me.postContainer);
             }
@@ -105,20 +112,25 @@ class PostHandler {
             dataType: 'json',
             timeout: 11000,
             success: function (views) {
+                // views.forEach(function (view) {
+                //     var line = document.createElement("p");
+                //     line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
+                //     var like = document.createElement("p");
+                //     like.innerHTML = "Likes: " + view.likesCount;
+                //     var comments = document.createElement("p");
+                //     comments.innerHTML = "Comments: " + view.commentsCount;
+                //     var postView = document.createElement('div');
+                //     postView.appendChild(line);
+                //     postView.appendChild(like);
+                //     postView.appendChild(comments);
+                //     postContainer.insertBefore(postView, postContainer.firstChild);
+                //     if(offsetId < view.post.id)
+                //         offsetId = view.post.id;
+                // });
                 views.forEach(function (view) {
-                    var line = document.createElement("p");
-                    line.innerHTML = "<strong>" + view.post.text + "</strong> by " + view.user.username + "<br>";
-                    var like = document.createElement("p");
-                    like.innerHTML = "Likes: " + view.likesCount;
-                    var comments = document.createElement("p");
-                    comments.innerHTML = "Comments: " + view.commentsCount;
-                    var postView = document.createElement('div');
-                    postView.appendChild(line);
-                    postView.appendChild(like);
-                    postView.appendChild(comments);
-                    postContainer.insertBefore(postView, postContainer.firstChild);
+                    PostHandler.createContainers(view, postContainer);
                     if(offsetId < view.post.id)
-                        offsetId = view.post.id;
+                            offsetId = view.post.id;
                 });
                 PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
             },
@@ -127,6 +139,40 @@ class PostHandler {
                 PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
             }
         })
+    }
+
+    static createContainers(view, postContainer) {
+        var panel = document.createElement("div");
+        panel.className = "panel panel-default";
+        var pHeading = document.createElement("div");
+        pHeading.className = "panel-heading";
+        var anchor = document.createElement("a");
+        anchor.href = "#";
+        anchor.className = "pull-right";
+        anchor.innerHTML = "Open post";
+        var h4 = document.createElement("h4");
+        h4.innerHTML = "@"+view.user.username;
+        // pHeading.innerHTML = "<h4>@" + view.user.username + "</h4>";
+        pHeading.appendChild(anchor);
+        pHeading.appendChild(h4);
+        panel.appendChild(pHeading);
+        var pBody = document.createElement("div");
+        pBody.className = "panel-body";
+        pBody.innerHTML = "<p/>"+view.post.text+"<hr>";
+        var datetime = document.createElement("div");
+        datetime.innerHTML = view.post.time+" "+view.post.time;
+        datetime.style = "text-align: right";
+        pBody.appendChild(datetime);
+        var likes = document.createElement("button");
+        likes.className = "btn btn-default";
+        likes.innerHTML = "+"+view.likesCount;
+        pBody.appendChild(likes);
+        var comments = document.createElement("div");
+        comments.style="float:right";
+        comments.innerHTML = view.commentsCount+" comments";
+        pBody.appendChild(comments);
+        panel.appendChild(pBody);
+        postContainer.insertBefore(panel, postContainer.firstChild);
     }
 }
 
