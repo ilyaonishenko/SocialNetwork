@@ -146,6 +146,7 @@ public class LikeResource {
                                             .toPostId(postId)
                                             .fromUserId(userId)
                                             .build());
+        log.info("answer is {}", isLiked);
 
         return Response.ok(JsonWrapper.toJson(isLiked)).build();
     }

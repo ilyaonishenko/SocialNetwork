@@ -142,7 +142,13 @@ class PostHandler {
         $(pBody).on('click','button',function(){
             Like.makeLike(visitorId,view.post.id, likes);
         });
-        likes.className = "btn btn-default";
+        var answ = PostHandler.isLiked(view.post.id, visitorId)
+        answ.then(function (res) {
+            if (res === true)
+                likes.className = "btn btn-danger";
+            else likes.className = "btn btn-default";
+
+        });
         likes.innerHTML = "+"+view.likesCount;
         pBody.appendChild(likes);
         var comments = document.createElement("div");
@@ -151,6 +157,23 @@ class PostHandler {
         pBody.appendChild(comments);
         panel.appendChild(pBody);
         postContainer.insertBefore(panel, postContainer.firstChild);
+    }
+
+    static isLiked(postId, userId){
+        console.log('function called');
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: '/webapi/likes/isliked',
+                type: 'GET',
+                data: {
+                    'userId': userId,
+                    'postId': postId
+                },
+                success: function (answer) {
+                    resolve(answer);
+                },
+            })
+        });
     }
 }
 
@@ -225,9 +248,16 @@ class Like{
                 },
                 success: function (answer) {
                     var url;
-                    if (answer===true)
+                    var color;
+                    var me = this;
+                    if (answer===true) {
                         url = '/webapi/likes/remove';
-                    else url = '/webapi/likes/add';
+                        me.color = 'btn btn-default';
+                    }
+                    else {
+                        url = '/webapi/likes/add';
+                        me.color = 'btn btn-danger';
+                    }
                     $.ajax({
                         url: url,
                         type: 'GET',
@@ -237,6 +267,7 @@ class Like{
                         },
                         success: function (likes) {
                             container.innerHTML = "+"+likes;
+                            container.className = me.color
                         }
                     })
                 }
