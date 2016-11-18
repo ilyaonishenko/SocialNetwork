@@ -124,7 +124,7 @@ class PostHandler {
         anchor.className = "pull-right";
         anchor.innerHTML = "Open post";
         var h4 = document.createElement("h4");
-        h4.innerHTML = "@"+view.user.username;
+        h4.innerHTML = "<a href='/user/"+view.user.username+"'>@"+view.user.username+"</a>";
         // pHeading.innerHTML = "<h4>@" + view.user.username + "</h4>";
         pHeading.appendChild(anchor);
         pHeading.appendChild(h4);
@@ -175,15 +175,7 @@ class Timeline{
             dataType: 'json',
             success: function (views) {
                 views.forEach(function (view) {
-                    var line = document.createElement("p");
-                    line.innerHTML = "<strong>" + view.post.text + "</strong> by "+view.user.username+"<br>";
-                    var like = document.createElement("p");
-                    like.innerHTML = "Likes: "+view.likesCount;
-                    var comments = document.createElement("p");
-                    comments.innerHTML = "Comments: "+view.commentsCount;
-                    self.postContainer.appendChild(line);
-                    self.postContainer.appendChild(like);
-                    self.postContainer.appendChild(comments);
+                    PostHandler.createContainers(view, self.postContainer, userId);
                     if(self.offsetId < view.post.id)
                         self.offsetId = view.post.id;
                 });
@@ -205,17 +197,7 @@ class Timeline{
             timeout: 11000,
             success: function (views) {
                 views.forEach(function (view) {
-                    var line = document.createElement("p");
-                    line.innerHTML = "<strong>" + view.post.text + "</strong> by "+view.user.username+"<br>";
-                    var like = document.createElement("p");
-                    like.innerHTML = "Likes: "+view.likesCount;
-                    var comments = document.createElement("p");
-                    comments.innerHTML = "Comments: "+view.commentsCount;
-                    var postView = document.createElement('div');
-                    postView.appendChild(line);
-                    postView.appendChild(like);
-                    postView.appendChild(comments);
-                    postContainer.insertBefore(postView, postContainer.firstChild);
+                    PostHandler.createContainers(view, postContainer, userId);
                     if(offsetId < view.post.id)
                         offsetId = view.post.id;
                 });
