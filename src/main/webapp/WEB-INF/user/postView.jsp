@@ -36,43 +36,42 @@
                     <div class="full col-sm-9">
                         <div class="row">
                             <%--right--%>
-                                <div class="col-sm-7">
-                                    <div class="panel panel-default" id="${postView.post.id}">
-                                        <div class="panel panel-heading">
-                                            <h4>
-                                                <a href='/user/${postView.user.username}'>@${postView.user.username}</a>
-                                            </h4>
-                                        </div>
-                                        <div class="panel panel-body" id="${postView.post.id}">
-                                            <p/>${postView.post.text}
-                                            <hr>
-                                            <p style="text-align: right">${postView.post.time} ${postView.post.date}</p>
-                                            <form>
-                                                <div class="input-group">
-                                                    <div class="input-group-btn" id="$${postView.post.id}">
-                                                        <button id="likes" class="btn btn-default" onclick="Like.makeLike('${sUser.id}','${postView.post.id}', document.getElementById('$${postView.post.id}'))">+${postView.likesCount}</button>
-                                                    </div>
-                                                    <input type="text" class="form-control" placeholder="Add a comment..">
+                            <div class="col-sm-7">
+                                <div class="panel panel-default" id="${postView.post.id}">
+                                    <div class="panel panel-heading">
+                                        <h4>
+                                            <a href='/user/${postView.user.username}'>@${postView.user.username}</a>
+                                        </h4>
+                                        <span class="date sub-text">${postView.post.time} ${postView.post.date}</span>
+                                    </div>
+                                    <div class="panel panel-body" id="${postView.post.id}">
+                                        <p/>${postView.post.text}
+                                        <hr>
+                                        <form>
+                                            <div class="input-group">
+                                                <div class="input-group-btn" id="$${postView.post.id}">
+                                                    <button id="likes" class="btn btn-default"
+                                                            onclick="Like.makeLike('${sUser.id}','${postView.post.id}', document.getElementById('$${postView.post.id}'))">
+                                                        +${postView.likesCount}</button>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div class="panel panel-footer">
-                                            <div class="comment-cont" id="1">
-                                                <h5 class="comment-username">Username</h5>
-                                                <p class="comment-text">SOME TEXT HERE WILL BE NOW</p>
-                                                <p class="comment-date">TIME AND DATE</p>
                                             </div>
-                                            <hr>
-                                            <div class="comment-cont" id="2">
-                                                <h5 class="comment-username">Username</h5>
-                                                <p class="comment-text">SOME TEXT HERE WILL BE NOW</p>
-                                                <p class="comment-date">TIME AND DATE</p>
-                                            </div>
-                                            <hr>
+                                        </form>
+                                    </div>
+                                    <div class="actionBox">
+                                        <div id="comments">
+
                                         </div>
+                                        <form class="form-inline" role="form">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Your comment"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-default">Add</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            <%--right ended--%>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,6 +88,11 @@
                 likes.className = "btn btn-danger";
             else likes.className = "btn btn-default";
     })}
+    function startComment() {
+        var cController = new CommentController('${sUser.id}','${postView.post.id}', document.getElementById('comments'));
+        cController.viewComments();
+    }
     addEventListener ("DOMContentLoaded",checkLikes, false);
+    addEventListener ("DOMContentLoaded",startComment, false);
 </script>
 </html>

@@ -279,7 +279,7 @@ class Like{
 class CommentController{
 
     constructor(userId, postId, container){
-        console.log('commentController constructor');
+        console.log('commentController constructor with '+postId+' us '+userId );
         this.userId = userId;
         this.postId = postId;
         this.container = container;
@@ -289,17 +289,52 @@ class CommentController{
     loadComments(){
         console.log('loading comments');
         var me = this;
-        $.ajax({
-            url: '/webapi/comments/'+me.postId,
-            type: 'GET',
-            success: function (comments) {
-                me.list.append(comments);
-            }
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: '/webapi/comments/'+me.postId,
+                type: 'GET',
+                success: function (comments) {
+                    resolve(comments);
+                }
+            })
         })
     }
 
-    viewComments(){
-        this.loadComments();
-
+    viewComments() {
+        console.log("postId: "+this.postId);
+        var me = this;
+        this.loadComments().then(function (res) {
+            me.list = res;
+            var chandler = document.createElement('ul');
+            chandler.className = "commentList";
+            console.log(me.list);
+            me.list.forEach(function (l) {
+                console.log(l);
+                var li = document.createElement('li');
+                var imgHandler = document.createElement('div');
+                imgHandler.className = 'commenterImage';
+                var img = document.createElement('img');
+                img.src = "../../resources/img/quest.gif";
+                imgHandler.appendChild(img);
+                li.appendChild(imgHandler);
+                var texthandler = document.createElement('div');
+                texthandler.className =  'commentText';
+                var username = document.createElement('span');
+                username.className = 'commenter-username';
+                username.innerHTML = l.id;
+                texthandler.appendChild(username);
+                var text = document.createElement('p');
+                text.innerHTML = l.text;
+                texthandler.appendChild(text);
+                var datetime = document.createElement('span');
+                datetime.className = 'date sub-text';
+                datetime.innerHTML = l.date+' '+l.time;
+                texthandler.appendChild(datetime);
+                li.appendChild(texthandler);
+                chandler.appendChild(li);
+            });
+            me.container.appendChild(chandler);
+        })
     }
+
 }
