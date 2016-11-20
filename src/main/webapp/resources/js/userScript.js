@@ -120,7 +120,7 @@ class PostHandler {
         var pHeading = document.createElement("div");
         pHeading.className = "panel-heading";
         var anchor = document.createElement("a");
-        anchor.href = "#";
+        anchor.href = "/post/"+view.post.id;
         anchor.className = "pull-right";
         anchor.innerHTML = "Open post";
         var h4 = document.createElement("h4");
