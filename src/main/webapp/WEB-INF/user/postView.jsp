@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<c:url value='../../resources/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../../resources/css/styles.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../../resources/css/navbar.css'/>"/>
-    <link rel="stylesheet" href="<c:url value='../../resources/css/page.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='../../resources/css/post.css'/>"/>
 </head>
 <body>
 <div class="wrapper">
@@ -45,10 +45,15 @@
                                         <div class="panel panel-body" id="${postView.post.id}">
                                             <p/>${postView.post.text}
                                             <hr>
-                                            <div style="text-align: right">
-                                                ${postView.post.time} ${postView.post.date}
-                                            </div>
-                                                <button>${postView.likesCount}</button>
+                                            <p style="text-align: right">${postView.post.time} ${postView.post.date}</p>
+                                            <form>
+                                                <div class="input-group">
+                                                    <div class="input-group-btn" id="$${postView.post.id}">
+                                                        <button id="likes" class="btn btn-default" onclick="Like.makeLike('${sUser.id}','${postView.post.id}', document.getElementById('$${postView.post.id}'))">+${postView.likesCount}</button>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Add a comment..">
+                                                </div>
+                                            </form>
                                         </div>
                                         <div class="panel panel-footer">
                                             <p/> Hello world!
@@ -63,6 +68,15 @@
         </div>
     </div>
 </div>
-
 </body>
+<script>
+    function checkLikes() {
+        var likes = document.getElementById('likes');
+        PostHandler.isLiked('${postView.post.id}','${sUser.id}').then(function (res) {
+            if (res === true)
+                likes.className = "btn btn-danger";
+            else likes.className = "btn btn-default";
+    })}
+    addEventListener ("DOMContentLoaded",checkLikes, false);
+</script>
 </html>
