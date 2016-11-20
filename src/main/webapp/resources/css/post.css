@@ -3,3 +3,19 @@ margin-right: auto;
 margin-left: auto;
 float: none;
 }
+.comment-username{
+    float: left;
+    height: 100%;
+    width: 25%;
+}
+.comment-date{
+    float: right;
+    width: 18%;
+}
+.comment-text{
+    float: inherit;
+    width: 100%;
+}
+.comment-cont{
+    height:10%;
+}

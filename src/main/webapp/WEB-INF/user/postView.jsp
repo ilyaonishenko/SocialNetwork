@@ -1,3 +1,4 @@
+<%--suppress ELValidationInJSP --%>
 <%--
   Created by IntelliJ IDEA.
   User: wopqw
@@ -56,7 +57,18 @@
                                             </form>
                                         </div>
                                         <div class="panel panel-footer">
-                                            <p/> Hello world!
+                                            <div class="comment-cont" id="1">
+                                                <h5 class="comment-username">Username</h5>
+                                                <p class="comment-text">SOME TEXT HERE WILL BE NOW</p>
+                                                <p class="comment-date">TIME AND DATE</p>
+                                            </div>
+                                            <hr>
+                                            <div class="comment-cont" id="2">
+                                                <h5 class="comment-username">Username</h5>
+                                                <p class="comment-text">SOME TEXT HERE WILL BE NOW</p>
+                                                <p class="comment-date">TIME AND DATE</p>
+                                            </div>
+                                            <hr>
                                         </div>
                                     </div>
                                 </div>

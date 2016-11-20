@@ -275,3 +275,31 @@ class Like{
         }
     }
 }
+
+class CommentController{
+
+    constructor(userId, postId, container){
+        console.log('commentController constructor');
+        this.userId = userId;
+        this.postId = postId;
+        this.container = container;
+        this.list = [];
+    }
+
+    loadComments(){
+        console.log('loading comments');
+        var me = this;
+        $.ajax({
+            url: '/webapi/comments/'+me.postId,
+            type: 'GET',
+            success: function (comments) {
+                me.list.append(comments);
+            }
+        })
+    }
+
+    viewComments(){
+        this.loadComments();
+
+    }
+}

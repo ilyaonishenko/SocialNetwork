@@ -2,6 +2,7 @@ package dao;
 
 import model.Comment;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public interface CommentDAO {
 
         return getAll().stream()
                 .filter(c -> c.getPostId() == postId)
-                .collect(Collectors.toCollection(HashSet::new));
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     default Collection<Comment> getCommentsFromUser(long userId){
