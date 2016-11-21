@@ -103,4 +103,13 @@ public class CommentResource {
                 p -> p.split("=")[1]
         ));
     }
+
+    @DELETE
+    @Path("delete/{commentId}")
+    @Consumes(APPLICATION_JSON)
+    public void delete(@PathParam("commentId") long commentId){
+
+        log.info("delete comment with id: "+commentId);
+        commentDAO.deleteComment(commentId);
+    }
 }

@@ -56,14 +56,14 @@ public class H2CommentDAO implements CommentDAO {
 
     @Override
     @SneakyThrows
-    public boolean deleteComment(Comment comment) {
+    public boolean deleteComment(long commentId) {
 
         try(Connection connection = connectionPool.getConnection()){
 
             String sql = "DELETE FROM Comment WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setLong(1, comment.getId());
+            preparedStatement.setLong(1, commentId);
 
             return preparedStatement.executeUpdate()>0;
         }

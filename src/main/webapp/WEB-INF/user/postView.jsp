@@ -59,7 +59,6 @@
                                     </div>
                                     <div class="actionBox">
                                         <div id="comments">
-
                                         </div>
                                         <form class="form-inline" id="commentForm" onsubmit="return false;">
                                             <div class="form-group">

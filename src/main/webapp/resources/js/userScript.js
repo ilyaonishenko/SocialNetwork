@@ -327,6 +327,7 @@ class CommentController{
     static createContainer(container, comment){
         console.log(comment);
         var li = document.createElement('li');
+        li.id = comment.id;
         var imgHandler = document.createElement('div');
         imgHandler.className = 'commenterImage';
         var img = document.createElement('img');
@@ -337,7 +338,7 @@ class CommentController{
         texthandler.className =  'commentText';
         var username = document.createElement('span');
         username.className = 'commenter-username';
-        username.innerHTML = comment.id;
+        username.innerHTML = comment.userId;
         texthandler.appendChild(username);
         var text = document.createElement('p');
         text.innerHTML = comment.text;
@@ -345,7 +346,19 @@ class CommentController{
         var datetime = document.createElement('span');
         datetime.className = 'date sub-text';
         datetime.innerHTML = comment.date+' '+comment.time;
+        var del = document.createElement('button');
+        del.className = "delete";
+        del.innerHTML = 'delete';
+        del.id = comment.id;
+        // del.onclick = CommentController.deleteComment(del);
+        // $(pBody).on('click','button',function(){
+        //     Like.makeLike(visitorId,view.post.id, likes);
+        // });
+        $(texthandler).on('click','button', function () {
+            CommentController.deleteComment(del)
+        });
         texthandler.appendChild(datetime);
+        texthandler.appendChild(del);
         li.appendChild(texthandler);
         container.appendChild(li);
     }
@@ -374,6 +387,18 @@ class CommentController{
             error: function (err) {
                 console.log(err);
                 CommentController.updateComments(postId, offsetId, limit, container1, container2);
+            }
+        })
+    }
+
+    static deleteComment(container){
+        var id = container.id;
+        console.log('delete comment: '+id);
+        $.ajax({
+            url: '/webapi/comments/delete/'+id,
+            type: 'DELETE',
+            success: function (answe) {
+                window.location.reload();
             }
         })
     }

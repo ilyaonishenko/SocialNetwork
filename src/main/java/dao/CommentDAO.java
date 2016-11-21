@@ -16,7 +16,7 @@ public interface CommentDAO {
 
     boolean addComment(Comment comment);
 
-    boolean deleteComment(Comment comment);
+    boolean deleteComment(long commentId);
 
     boolean isReadyToUpdate(long postId, long offsetId);
 

@@ -57,3 +57,10 @@ float: none;
     border-top:1px dotted #bbb;
     padding:10px;
 }
+.delete {
+    float: right;
+    text-align: right;
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
