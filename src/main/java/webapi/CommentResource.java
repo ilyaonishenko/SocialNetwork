@@ -37,9 +37,12 @@ public class CommentResource {
     @GET
     @Path("{postId}")
     @Produces(APPLICATION_JSON)
-    public Response getCommentsByPost(@PathParam("postId") long postId) throws JsonProcessingException {
+    public Response getCommentsByPost(@PathParam("postId") long postId,
+                                      @QueryParam("offsetId") long offsetId,
+                                      @QueryParam("limit") long limit)
+            throws JsonProcessingException {
 
-        ArrayList<Comment> comments = (ArrayList<Comment>) commentDAO.getCommentsFromPost(postId);
+        ArrayList<Comment> comments = (ArrayList<Comment>) commentDAO.getCommentsFromPost(postId, offsetId, limit);
 
         String json = JsonWrapper.toJson(comments);
 
@@ -66,5 +69,26 @@ public class CommentResource {
         commentDAO.addComment(newComment);
 
         return Response.ok(JsonWrapper.toJson(newComment)).build();
+    }
+
+    @GET
+    @Path("update")
+    @Produces
+    public Response update(@QueryParam("postId") long postId,
+                           @QueryParam("offsetId") long offsetId,
+                           @QueryParam("limit") long limit)
+            throws InterruptedException, JsonProcessingException {
+
+        log.info("update comments");
+        log.info("offsetId: {}", offsetId);
+
+        while(!commentDAO.isReadyToUpdate(postId, offsetId)){
+            Thread.sleep(10000);
+        }
+
+        log.info("going to update");
+        ArrayList<Comment> comments = (ArrayList<Comment>) commentDAO.getCommentsFromPost(postId, offsetId, limit);
+
+        return Response.ok(JsonWrapper.toJson(comments)).build();
     }
 }

@@ -278,11 +278,13 @@ class Like{
 
 class CommentController{
 
-    constructor(userId, postId, container){
+    constructor(userId, postId, offsetId, container){
         console.log('commentController constructor with '+postId+' us '+userId );
         this.userId = userId;
         this.postId = postId;
         this.container = container;
+        this.offsetId = offsetId;
+        this.limit = 10;
         this.list = [];
     }
 
@@ -293,6 +295,10 @@ class CommentController{
             $.ajax({
                 url: '/webapi/comments/'+me.postId,
                 type: 'GET',
+                data: {
+                    'offsetId': me.offsetId,
+                    'limit': me.limit
+                },
                 success: function (comments) {
                     resolve(comments);
                 }
@@ -309,32 +315,66 @@ class CommentController{
             chandler.className = "commentList";
             console.log(me.list);
             me.list.forEach(function (l) {
-                console.log(l);
-                var li = document.createElement('li');
-                var imgHandler = document.createElement('div');
-                imgHandler.className = 'commenterImage';
-                var img = document.createElement('img');
-                img.src = "../../resources/img/quest.gif";
-                imgHandler.appendChild(img);
-                li.appendChild(imgHandler);
-                var texthandler = document.createElement('div');
-                texthandler.className =  'commentText';
-                var username = document.createElement('span');
-                username.className = 'commenter-username';
-                username.innerHTML = l.id;
-                texthandler.appendChild(username);
-                var text = document.createElement('p');
-                text.innerHTML = l.text;
-                texthandler.appendChild(text);
-                var datetime = document.createElement('span');
-                datetime.className = 'date sub-text';
-                datetime.innerHTML = l.date+' '+l.time;
-                texthandler.appendChild(datetime);
-                li.appendChild(texthandler);
-                chandler.appendChild(li);
+                CommentController.createContainer(chandler, l);
+                if (me.offsetId < l.id)
+                    me.offsetId = l.id;
             });
             me.container.appendChild(chandler);
+            CommentController.updateComments(me.postId, me.offsetId, me.limit, chandler, me.container);
         })
     }
 
+    static createContainer(container, comment){
+        console.log(comment);
+        var li = document.createElement('li');
+        var imgHandler = document.createElement('div');
+        imgHandler.className = 'commenterImage';
+        var img = document.createElement('img');
+        img.src = "../../resources/img/quest.gif";
+        imgHandler.appendChild(img);
+        li.appendChild(imgHandler);
+        var texthandler = document.createElement('div');
+        texthandler.className =  'commentText';
+        var username = document.createElement('span');
+        username.className = 'commenter-username';
+        username.innerHTML = comment.id;
+        texthandler.appendChild(username);
+        var text = document.createElement('p');
+        text.innerHTML = comment.text;
+        texthandler.appendChild(text);
+        var datetime = document.createElement('span');
+        datetime.className = 'date sub-text';
+        datetime.innerHTML = comment.date+' '+comment.time;
+        texthandler.appendChild(datetime);
+        li.appendChild(texthandler);
+        container.appendChild(li);
+    }
+
+    static updateComments(postId, offsetId, limit, container1, container2){
+        console.log('offsetId: '+offsetId);
+        $.ajax({
+            url:'/webapi/comments/update',
+            type: 'GET',
+            data:{
+                'postId': postId,
+                'offsetId': offsetId,
+                'limit': limit
+            },
+            dataType: 'json',
+            timeout: 11000,
+            success: function (array) {
+                array.forEach(function (l) {
+                    CommentController.createContainer(container1, l);
+                    if (offsetId < l.id)
+                        offsetId = l.id;
+                });
+                container2.appendChild(container1);
+                CommentController.updateComments(postId, offsetId, limit, container1, container2);
+            },
+            error: function (err) {
+                console.log(err);
+                CommentController.updateComments(postId, offsetId, limit, container1, container2);
+            }
+        })
+    }
 }

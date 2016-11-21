@@ -61,12 +61,12 @@
                                         <div id="comments">
 
                                         </div>
-                                        <form class="form-inline" role="form">
+                                        <form class="form-inline" name="myForm" id="commentForm" action="/post/${postView.post.id}">
                                             <div class="form-group">
-                                                <input class="form-control" type="text" placeholder="Your comment"/>
+                                                <input class="form-control" name="text" type="text" placeholder="Your comment"/>
                                             </div>
                                             <div class="form-group">
-                                                <button class="btn btn-default">Add</button>
+                                                <button class="btn btn-default" onclick="addComment(this.form)">Add</button>
                                             </div>
                                         </form>
                                     </div>
@@ -89,8 +89,22 @@
             else likes.className = "btn btn-default";
     })}
     function startComment() {
-        var cController = new CommentController('${sUser.id}','${postView.post.id}', document.getElementById('comments'));
+        var cController = new CommentController('${sUser.id}','${postView.post.id}', 0, document.getElementById('comments'));
         cController.viewComments();
+    }
+    function addComment(form) {
+        console.log('sending from sendComment');
+        var text = form.text.value;
+        console.log('text: '+text);
+        $.ajax({
+            url: '/webapi/comments/add',
+            type: 'GET',
+            data:{
+                'userId':'${sUser.id}',
+                'postId':'${postView.post.id}',
+                'text': text
+            }
+        })
     }
     addEventListener ("DOMContentLoaded",checkLikes, false);
     addEventListener ("DOMContentLoaded",startComment, false);

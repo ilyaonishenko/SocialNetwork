@@ -69,6 +69,22 @@ public class H2CommentDAO implements CommentDAO {
         }
     }
 
+    @Override
+    @SneakyThrows
+    public boolean isReadyToUpdate(long postId, long offsetId){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM Comment WHERE to_postId = ? AND id > ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, postId);
+            preparedStatement.setLong(2, offsetId);
+
+            return preparedStatement.executeQuery().isBeforeFirst();
+        }
+    }
+
     @SneakyThrows
     private Collection<Comment> createCollection(ResultSet rs){
 

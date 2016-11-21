@@ -18,10 +18,14 @@ public interface CommentDAO {
 
     boolean deleteComment(Comment comment);
 
-    default Collection<Comment> getCommentsFromPost(long postId){
+    boolean isReadyToUpdate(long postId, long offsetId);
+
+    default Collection<Comment> getCommentsFromPost(long postId, long offsetId, long limit){
 
         return getAll().stream()
                 .filter(c -> c.getPostId() == postId)
+                .filter(c -> c.getId() > offsetId)
+                .limit(limit)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -38,4 +42,5 @@ public interface CommentDAO {
                 .filter(c -> c.getPostId() == postId)
                 .count();
     }
+
 }
