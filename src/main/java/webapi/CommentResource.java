@@ -11,10 +11,13 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -49,31 +52,30 @@ public class CommentResource {
         return Response.ok(json).build();
     }
 
-    @GET
+    @POST
     @Path("add")
-    @Produces(APPLICATION_JSON)
-    public Response addComment(
-            @QueryParam("userId") long userId,
-            @QueryParam("postId") long postId,
-            @QueryParam("text") String text) throws JsonProcessingException {
+    @Consumes(APPLICATION_JSON)
+    public void addComment(final String params){
+
+        log.info("adding comment with text {}",params);
+
+        HashMap<String, String> map = (HashMap<String, String>) parse(params);
 
         Comment.CommentBuilder commentBuilder = Comment.builder();
 
-        Comment newComment = commentBuilder.userId(userId)
-                                .postId(postId)
-                                .text(text)
+        Comment newComment = commentBuilder.userId((Long.parseLong(map.get("userId"))))
+                                .postId(Long.parseLong(map.get("postId")))
+                                .text(map.get("text"))
                                 .date(LocalDate.now())
                                 .time(LocalTime.now())
                                 .build();
-
+        log.info("we have comment: {}", newComment);
         commentDAO.addComment(newComment);
-
-        return Response.ok(JsonWrapper.toJson(newComment)).build();
     }
 
     @GET
     @Path("update")
-    @Produces
+    @Produces(APPLICATION_JSON)
     public Response update(@QueryParam("postId") long postId,
                            @QueryParam("offsetId") long offsetId,
                            @QueryParam("limit") long limit)
@@ -90,5 +92,15 @@ public class CommentResource {
         ArrayList<Comment> comments = (ArrayList<Comment>) commentDAO.getCommentsFromPost(postId, offsetId, limit);
 
         return Response.ok(JsonWrapper.toJson(comments)).build();
+    }
+
+    private Map<String,String> parse(String params){
+
+        String[] param = params.split("&");
+
+        return Stream.of(param).collect(Collectors.toMap(
+                p -> p.split("=")[0],
+                p -> p.split("=")[1]
+        ));
     }
 }

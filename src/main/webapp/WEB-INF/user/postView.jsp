@@ -61,7 +61,7 @@
                                         <div id="comments">
 
                                         </div>
-                                        <form class="form-inline" name="myForm" id="commentForm" action="/post/${postView.post.id}">
+                                        <form class="form-inline" id="commentForm" onsubmit="return false;">
                                             <div class="form-group">
                                                 <input class="form-control" name="text" type="text" placeholder="Your comment"/>
                                             </div>
@@ -98,11 +98,16 @@
         console.log('text: '+text);
         $.ajax({
             url: '/webapi/comments/add',
-            type: 'GET',
+            type: 'POST',
             data:{
                 'userId':'${sUser.id}',
                 'postId':'${postView.post.id}',
                 'text': text
+            },
+            contentType: 'application/json',
+            dataType: "json",
+            success: function (answer) {
+                window.location.reload();
             }
         })
     }
