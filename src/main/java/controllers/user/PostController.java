@@ -36,7 +36,7 @@ public class PostController extends BaseServlet {
 //        String url = req.getHeader("Referer").split(req.getServerName()+":"+req.getServerPort()+"/s/")[1];
         String url =req.getServerName()+":"+req.getServerPort()+"/home";
 
-                Post.PostBuilder postBuilder = Post.builder();
+        Post.PostBuilder postBuilder = Post.builder();
 
         String text = req.getParameter("post");
         String expandable = req.getParameter("expandable");
@@ -51,9 +51,10 @@ public class PostController extends BaseServlet {
                 .privacy(Optional.ofNullable(privacy).isPresent())
                 .build();
 
+        log.info("post: "+post);
         postDAO.addPost(post);
 
 //        req.getRequestDispatcher("/home/").forward(req, resp);
-        resp.sendRedirect(url);
+        resp.sendRedirect("/home/");
     }
 }

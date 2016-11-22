@@ -12,10 +12,11 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -176,6 +177,26 @@ public class PostResource {
         return Response.ok(json).build();
     }
 
+    @POST
+    @Path("add")
+    @Consumes(APPLICATION_JSON)
+    public void addPost(final String params){
+
+        HashMap<String, String> map = (HashMap<String, String>) parse(params);
+
+        Post.PostBuilder postBuilder = Post.builder();
+
+        Post newPost = postBuilder.authorId(Long.parseLong(map.get("userId")))
+                .date(LocalDate.now())
+                .time(LocalTime.now())
+                .expandable(Boolean.parseBoolean(map.get("expandable")))
+                .privacy(Boolean.parseBoolean(map.get("privacy")))
+                .text(map.get("text"))
+                .build();
+
+        postDAO.addPost(newPost);
+    }
+
     private Collection<PostView> createPostViews(Collection<Post> posts){
 
         Collection<PostView> postViews = new ArrayList<>();
@@ -192,6 +213,16 @@ public class PostResource {
                         .build()));
 
         return postViews;
+    }
+
+    private Map<String,String> parse(String params){
+
+        String[] param = params.split("&");
+
+        return Stream.of(param).collect(Collectors.toMap(
+                p -> p.split("=")[0],
+                p -> p.split("=")[1]
+        ));
     }
 
 //    @POST

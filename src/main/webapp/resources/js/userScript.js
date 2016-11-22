@@ -221,8 +221,11 @@ class Timeline{
             success: function (views) {
                 views.forEach(function (view) {
                     PostHandler.createContainers(view, postContainer, userId);
+                    //noinspection JSUnresolvedVariable
                     if(offsetId < view.post.id)
-                        offsetId = view.post.id;
+                        { //noinspection JSUnresolvedVariable
+                            offsetId = view.post.id;
+                        }
                 });
                 Timeline.updateTimeline(userId, offsetId, limit, postContainer);
             },

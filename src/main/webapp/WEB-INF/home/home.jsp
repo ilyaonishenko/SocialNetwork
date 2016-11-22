@@ -53,6 +53,16 @@
                         <div class="row">
                             <%--right--%>
                             <div class="col-sm-7">
+                                <div class="well">
+                                    <form class="form-horizontal" role="form" method="post" action="/s/createpost">
+                                        <h4>What's New</h4>
+                                        <div class="form-group" style="padding:14px;">
+                                            <textarea class="form-control" name="post" placeholder="Say something kind"></textarea>
+                                            <input type="checkbox" name="privacy" class="sub-text">Privacy</input>
+                                        </div>
+                                        <button class="btn btn-primary pull-right" value="submit" type="submit">Post</button>
+                                    </form>
+                                </div>
                                 <div id="timeline">
 
                                 </div>
@@ -71,6 +81,26 @@
     var userId = '${user.id}';
     var postContainer  = document.getElementById('timeline');
     var timeline = new Timeline(userId, postContainer);
+    <%--function post(form) {--%>
+        <%--console.log("we are going to post a post");--%>
+        <%--var text = form.text.value;--%>
+        <%--console.log("with text: "+text);--%>
+        <%--$.ajax({--%>
+            <%--url: '/webapi/posts/add',--%>
+            <%--type: 'POST',--%>
+            <%--data: {--%>
+                <%--'userId': '${sUser.id}',--%>
+                <%--'text': text,--%>
+                <%--'privacy': false,--%>
+                <%--'expandable': false--%>
+            <%--},--%>
+            <%--contentType: 'application/json',--%>
+            <%--dataType: "json",--%>
+            <%--success: function (answer) {--%>
+                <%--window.location.reload();--%>
+            <%--}--%>
+        <%--})--%>
+    <%--}--%>
     addEventListener("DOMContentLoaded", timeline.loadTimeline, false);
 </script>
 </html>

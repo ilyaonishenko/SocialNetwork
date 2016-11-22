@@ -94,6 +94,15 @@ public class CommentResource {
         return Response.ok(JsonWrapper.toJson(comments)).build();
     }
 
+    @DELETE
+    @Path("delete/{commentId}")
+    @Consumes(APPLICATION_JSON)
+    public void delete(@PathParam("commentId") long commentId){
+
+        log.info("delete comment with id: "+commentId);
+        commentDAO.deleteComment(commentId);
+    }
+
     private Map<String,String> parse(String params){
 
         String[] param = params.split("&");
@@ -102,14 +111,5 @@ public class CommentResource {
                 p -> p.split("=")[0],
                 p -> p.split("=")[1]
         ));
-    }
-
-    @DELETE
-    @Path("delete/{commentId}")
-    @Consumes(APPLICATION_JSON)
-    public void delete(@PathParam("commentId") long commentId){
-
-        log.info("delete comment with id: "+commentId);
-        commentDAO.deleteComment(commentId);
     }
 }
