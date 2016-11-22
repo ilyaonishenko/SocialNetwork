@@ -100,6 +100,7 @@
             type: 'POST',
             data:{
                 'userId':'${sUser.id}',
+                'username': '${sUser.username}',
                 'postId':'${postView.post.id}',
                 'text': text
             },

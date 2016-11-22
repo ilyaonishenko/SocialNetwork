@@ -3,6 +3,7 @@ package webapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import common.JsonWrapper;
 import dao.CommentDAO;
+import dao.UserDAO;
 import listeners.Initer;
 import lombok.extern.slf4j.Slf4j;
 import model.Comment;
@@ -29,12 +30,15 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class CommentResource {
 
     private static CommentDAO commentDAO;
+    private static UserDAO userDAO;
 
     @Context
     public void init(ServletContext servletContext){
 
         if(commentDAO == null)
             commentDAO = (CommentDAO) servletContext.getAttribute(Initer.COMMENT_DAO);
+        if(userDAO == null)
+            userDAO = (UserDAO) servletContext.getAttribute(Initer.USER_DAO);
     }
 
     @GET
@@ -46,6 +50,7 @@ public class CommentResource {
             throws JsonProcessingException {
 
         ArrayList<Comment> comments = (ArrayList<Comment>) commentDAO.getCommentsFromPost(postId, offsetId, limit);
+
 
         String json = JsonWrapper.toJson(comments);
 
@@ -64,6 +69,7 @@ public class CommentResource {
         Comment.CommentBuilder commentBuilder = Comment.builder();
 
         Comment newComment = commentBuilder.userId((Long.parseLong(map.get("userId"))))
+                                .username(map.get("username"))
                                 .postId(Long.parseLong(map.get("postId")))
                                 .text(map.get("text"))
                                 .date(LocalDate.now())
@@ -111,5 +117,14 @@ public class CommentResource {
                 p -> p.split("=")[0],
                 p -> p.split("=")[1]
         ));
+    }
+
+    @GET
+    @Path("getusername/{userId}")
+    @Produces(APPLICATION_JSON)
+    public Response getUsernameByUserId(@PathParam("userId") long userId) throws JsonProcessingException {
+
+        log.info("get username by userId");
+        return Response.ok(JsonWrapper.toJson(userDAO.getUsernameByUserId(userId))).build();
     }
 }

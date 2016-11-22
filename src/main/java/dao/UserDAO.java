@@ -28,6 +28,14 @@ public interface UserDAO {
                 .findAny();
     }
 
+    default String getUsernameByUserId(long userId){
+
+        //noinspection OptionalGetWithoutIsPresent
+        return getAll().stream()
+                .filter(u -> u.getId() == userId)
+                .findAny().get().getUsername();
+    }
+
     default boolean isRegistered(String username, String hash){
 
         return getAll().stream()

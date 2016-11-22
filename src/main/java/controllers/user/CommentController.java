@@ -39,6 +39,7 @@ public class CommentController extends BaseServlet {
         Comment comment = commentBuilder
                 .postId(postId)
                 .text(text)
+                .username(user.getUsername())
                 .userId(user.getId())
                 .date(LocalDate.now())
                 .time(LocalTime.now())

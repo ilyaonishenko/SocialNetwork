@@ -341,7 +341,7 @@ class CommentController{
         texthandler.className =  'commentText';
         var username = document.createElement('span');
         username.className = 'commenter-username';
-        username.innerHTML = comment.userId;
+        username.innerHTML = comment.username;  //qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
         texthandler.appendChild(username);
         var text = document.createElement('p');
         text.innerHTML = comment.text;

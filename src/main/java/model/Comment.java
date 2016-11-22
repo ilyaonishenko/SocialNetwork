@@ -19,6 +19,7 @@ public class Comment {
 
     private long id;
     private long userId;
+    private String username;
     private long postId;
     private String text;
     private LocalDate date;

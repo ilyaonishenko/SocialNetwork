@@ -39,15 +39,16 @@ public class H2CommentDAO implements CommentDAO {
 
         try(Connection connection = connectionPool.getConnection()){
 
-            String sql = "INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (?,?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setLong(1, comment.getUserId());
-            preparedStatement.setLong(2, comment.getPostId());
-            preparedStatement.setString(3, comment.getText());
-            preparedStatement.setDate(4, Date.valueOf(comment.getDate()));
-            preparedStatement.setTime(5, Time.valueOf(comment.getTime()));
+            preparedStatement.setString(2, comment.getUsername());
+            preparedStatement.setLong(3, comment.getPostId());
+            preparedStatement.setString(4, comment.getText());
+            preparedStatement.setDate(5, Date.valueOf(comment.getDate()));
+            preparedStatement.setTime(6, Time.valueOf(comment.getTime()));
 
             return preparedStatement.executeUpdate()>0;
 
@@ -97,6 +98,7 @@ public class H2CommentDAO implements CommentDAO {
                     commentBuilder
                             .id(rs.getLong("id"))
                             .userId(rs.getLong("from_userId"))
+                            .username(rs.getString("from_username"))
                             .postId(rs.getLong("to_postId"))
                             .text(rs.getString("text"))
                             .date(rs.getDate("date").toLocalDate())

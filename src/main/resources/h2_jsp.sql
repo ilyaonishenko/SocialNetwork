@@ -75,16 +75,18 @@ INSERT into Likes (from_userId, to_postId) VALUES (4,2);
 CREATE TABLE Comment (
   id INT PRIMARY KEY AUTO_INCREMENT,
   from_userId INT NOT NULL,
+  from_username VARCHAR(255) NOT NULL,
   to_postId INT NOT NULL,
   text VARCHAR(200) NOT NULL,
   date DATE NOT NULL,
   time TIME NOT NULL,
   FOREIGN KEY (from_userId) REFERENCES User(id),
+  FOREIGN KEY (from_username) REFERENCES User(username),
   FOREIGN KEY (to_postId) REFERENCES Post(id)
 );
 
-INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (2, 3, 'AYO! I am the moderator', '2016-01-01', '00:01:00');
-INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (3, 3, 'Hello! I am a user', '2016-01-01', '00:10:00');
-INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (1, 4, 'WELCOME TO THE CLUB', '2016-01-01', '01:00:00');
-INSERT INTO Comment (from_userId, to_postId, text, date, time) VALUES (4, 1, 'GTFO', '2016-01-01', '05:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (2, 'peter', 3, 'AYO! I am the moderator', '2016-01-01', '00:01:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (3, 'Andrew', 3, 'Hello! I am a user', '2016-01-01', '00:10:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, 'WELCOME TO THE CLUB', '2016-01-01', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (4, 'alex', 1, 'GTFO', '2016-01-01', '05:00:00');
 
