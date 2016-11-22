@@ -45,7 +45,7 @@
                 <a href="/home/"><i class="glyphicon glyphicon-home"></i> <fmt:message key="header.home"/></a>
             </li>
             <li>
-                <a href="#"><i class="glyphicon glyphicon-plus"></i> <fmt:message key="header.post"/></a>
+                <a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> <fmt:message key="header.post"/></a>
             </li>
             <li>
                 <a href="/user/"><i class="glyphicon glyphicon-user"></i> <fmt:message key="header.profile"/></a>
@@ -60,4 +60,28 @@
             </li>
         </ul>
     </nav>
+</div>
+<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                Update Status
+            </div>
+            <form class="form center-block" role="form" method="post" action="/s/createpost">
+            <div class="modal-body">
+                    <div class="form-group">
+                        <textarea class="form-control input-lg" name="post" autofocus="" placeholder="Say something kind"></textarea>
+                        <input type="checkbox" name="privacy" class="sub-text">Privacy</input>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <button value="submit" type="submit" class="btn btn-primary btn-sm"  aria-hidden="true">Post</button>
+                    <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
 </div>

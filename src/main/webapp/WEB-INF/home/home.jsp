@@ -16,6 +16,8 @@
     <title>HomePage</title>
     <%--<% HashSet<User> roles = (HashSet<String>)session.getAttribute("ROLE");%>--%>
     <script type="text/javascript" src="<c:url value='../../resources/js/jquery-3.1.0.min.js'/>"></script>
+    <script type="text/javascript" src="<c:url value="../../resources/js/bootstrap.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value='../../resources/js/scripts.js'/>"></script>
     <script type="text/javascript" src="<c:url value="../../resources/js/userScript.js"/>"></script>
     <link rel="stylesheet" href="<c:url value='../../resources/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../../resources/css/styles.css'/>"/>
@@ -60,7 +62,7 @@
                                             <textarea class="form-control" name="post" placeholder="Say something kind"></textarea>
                                             <input type="checkbox" name="privacy" class="sub-text">Privacy</input>
                                         </div>
-                                        <button class="btn btn-primary pull-right" value="submit" type="submit">Post</button>
+                                        <button class="btn btn-primary pull-right" value="submit" type="submit">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
                                     </form>
                                 </div>
                                 <div id="timeline">
@@ -75,7 +77,6 @@
         </div>
     </div>
 </div>
-
 </body>
 <script>
     var userId = '${user.id}';
