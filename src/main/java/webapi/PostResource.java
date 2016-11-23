@@ -199,7 +199,7 @@ public class PostResource {
 
     private Collection<PostView> createPostViews(Collection<Post> posts){
 
-        Collection<PostView> postViews = new ArrayList<>();
+        ArrayList<PostView> postViews = new ArrayList<>();
 
         PostView.PostViewBuilder postViewBuilder = PostView.builder();
 
@@ -212,6 +212,9 @@ public class PostResource {
                         .commentsCount(commentDAO.countByPostId(p.getId()))
                         .build()));
 
+//        postViews.stream().sorted(Comparator.comparing(pV -> pV.getPost().getId()));
+        postViews.sort(Comparator.comparing(pv -> pv.getPost().getId()));
+        postViews.forEach(pv -> log.info("id: {}", pv.getPost().getId()));
         return postViews;
     }
 

@@ -24,23 +24,30 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/mainPage.css'/>"/>
 </head>
 <body>
-<div class="wrapper">
-    <div class="box">
-        <div class="row row-offcanvas row-offcanvas-left">
-            <div class="column col-sm-10 col-xs-11" style="width:100%" id="main">
-                <jsp:include page="WEB-INF/common/loggedOut_navbar.jsp"/>
-                <div class="padding">
-                    <div class="full col-sm-9">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <div class="panel panel-default">
-                                    <h2 class="">We run the news</h2>
-                                    <div class="panel-body">
-                                        <hr class="">
-                                        <h3>Texter is the best social network to spread the news.</h3>
-                                        <hr class="">
-                                        <p><a class="btn btn-primary btn-lg" href="/register"><fmt:message key="index.join"/></a>
-                                        <h4><a href="/login"><fmt:message key="index.login"/></a></h4>
+<c:choose>
+    <c:when test="${not (empty sUser)}">
+        <c:redirect url="/home/"/>
+    </c:when>
+    <c:otherwise>
+        <div class="wrapper">
+            <div class="box">
+                <div class="row row-offcanvas row-offcanvas-left">
+                    <div class="column col-sm-10 col-xs-11" style="width:100%" id="main">
+                        <jsp:include page="WEB-INF/common/loggedOut_navbar.jsp"/>
+                        <div class="padding">
+                            <div class="full col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="panel panel-default">
+                                            <h2 class="">We run the news</h2>
+                                            <div class="panel-body">
+                                                <hr class="">
+                                                <h3>Texter is the best social network to spread the news.</h3>
+                                                <hr class="">
+                                                <p><a class="btn btn-primary btn-lg" href="/register"><fmt:message key="index.join"/></a>
+                                                <h4><a href="/login"><fmt:message key="index.login"/></a></h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +56,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </c:otherwise>
+</c:choose>
+
 </body>
 </html>
