@@ -15,6 +15,7 @@
     <title>${user.username}</title>
     <script type="text/javascript" src="<c:url value='../../resources/js/jquery-3.1.0.min.js'/>"></script>
     <script type="text/javascript" src="<c:url value="../../resources/js/userScript.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="../../resources/js/moment.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value='../../resources/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../../resources/css/styles.css'/>"/>
     <link rel="stylesheet" href="<c:url value='../../resources/css/navbar.css'/>"/>

@@ -44,8 +44,8 @@
                                                 <hr class="">
                                                 <h3>Texter is the best social network to spread the news.</h3>
                                                 <hr class="">
-                                                <p><a class="btn btn-primary btn-lg" href="/register"><fmt:message key="index.join"/></a>
-                                                <h4><a href="/login"><fmt:message key="index.login"/></a></h4>
+                                                <p><a class="btn btn-primary btn-lg" href="<c:url value="/register"/>"><fmt:message key="index.join"/></a>
+                                                <h4><a href="<c:url value="/login"/>"><fmt:message key="index.login"/></a></h4>
                                             </div>
                                         </div>
                                     </div>

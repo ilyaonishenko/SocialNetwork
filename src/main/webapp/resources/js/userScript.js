@@ -76,6 +76,7 @@ class PostHandler {
             dataType: 'json',
             success: function (views) {
                 views.forEach(function (view) {
+                    console.log(view);
                     PostHandler.createContainers(view, me.postContainer, visitorId);
                     if(me.offsetId < view.post.id)
                             me.offsetId = view.post.id;
@@ -134,7 +135,7 @@ class PostHandler {
         pBody.className = "panel-body";
         pBody.innerHTML = "<p/>"+view.post.text+"<hr>";
         var datetime = document.createElement("div");
-        datetime.innerHTML = view.post.time+" "+view.post.time;
+        datetime.innerHTML = TimeParser.parseDate(view.post.date)+"<br>"+TimeParser.parseTime(view.post.time);
         datetime.style = "text-align: right";
         pBody.appendChild(datetime);
         var likes = document.createElement("button");
@@ -142,7 +143,7 @@ class PostHandler {
         $(pBody).on('click','button',function(){
             Like.makeLike(visitorId,view.post.id, likes);
         });
-        var answ = PostHandler.isLiked(view.post.id, visitorId)
+        var answ = PostHandler.isLiked(view.post.id, visitorId);
         answ.then(function (res) {
             if (res === true)
                 likes.className = "btn btn-danger";
@@ -404,5 +405,35 @@ class CommentController{
                 window.location.reload();
             }
         })
+    }
+}
+class TimeParser{
+
+    static parseDate(date){
+        var newDate = "";
+        newDate += date.dayOfMonth+" ";
+        newDate += date.month+" ";
+        newDate += date.year;
+
+        return newDate;
+    }
+
+    static parseTime(time){
+        var h = "";
+        var m = '';
+        var s = '';
+        if ((''+time.hour).length===1) {
+            h = '0' + time.hour;
+        } else h = time.hour;
+        h+=':';
+        if ((''+time.minute).length===1) {
+            m = '0' + time.minute;
+        } else m = time.minute;
+        m +=':';
+        if ((''+time.second).length===1) {
+            s = '0' + time.second;
+        } else s = time.second;
+        console.log(h+m+s);
+        return h+m+s;
     }
 }
