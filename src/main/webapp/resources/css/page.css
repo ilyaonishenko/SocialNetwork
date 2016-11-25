@@ -3,4 +3,21 @@
     /*margin-left: auto;*/
     /*float: none;*/
 /*}*/
+.commenterImage {
+    width:30px;
+    margin-right:10px;
+    /*height:100%;*/
+    float:left;
+}
+.commenterImage img {
+    width:100%;
+    border-radius:60%;
+}
+
+.col-sm-7#follows {
+    margin-right: auto;
+    margin-left: auto;
+    float: none;
+    width: 40%;
+}
 
