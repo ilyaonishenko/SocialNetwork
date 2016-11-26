@@ -155,6 +155,23 @@ public class H2PostDAO implements PostDAO {
         }
     }
 
+    @Override
+    @SneakyThrows
+    public int countUserPosts(long userId) {
+
+        try (Connection connection = connectionPool.getConnection()) {
+
+            String sql = "SELECT COUNT(id) FROM Post WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, userId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next())
+                return rs.getInt(1);
+            else return -1;
+        }
+    }
+
     @SneakyThrows
     private Collection<Post> createCollection(ResultSet rs){
 

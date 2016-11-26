@@ -23,4 +23,6 @@ public interface PostDAO {
     boolean isPostsReadyToUpdate(long userId, long offsetId);
 
     boolean isTimelineReadyToUpdate(long userId, long offsetId);
+
+    int countUserPosts(long userId);
 }

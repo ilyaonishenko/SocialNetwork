@@ -3,6 +3,7 @@ package controllers.user;
 import common.BaseServlet;
 import lombok.extern.slf4j.Slf4j;
 import model.User;
+import model.UserView;
 import security.StringEncryptUtil;
 
 import javax.servlet.ServletException;
@@ -34,7 +35,13 @@ public class UserController extends BaseServlet {
 
         if(optUser.isPresent()){
             User user = optUser.get();
-            req.setAttribute(USER, user);
+            UserView.UserViewBuilder userViewBuilder = UserView.builder();
+            UserView userView = userViewBuilder.user(user)
+                    .posts(postDAO.countUserPosts(user.getId()))
+                    .followers(followingDAO.countFollowersById(user.getId()))
+                    .followings(followingDAO.countFollowingsById(user.getId()))
+                    .build();
+            req.setAttribute(USER, userView);
             if (!optSUser.isPresent()){
                 log.info("not isPresent");
                 httpSession.setAttribute(SUSER, null);

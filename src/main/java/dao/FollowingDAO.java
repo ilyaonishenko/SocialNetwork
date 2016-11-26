@@ -22,4 +22,14 @@ public interface FollowingDAO {
     void addFollowing(Following following);
 
     void deleteFollowing(Following following);
+
+    default int countFollowersById(long followId){
+
+        return getFollowersById(followId).size();
+    }
+
+    default int countFollowingsById(long followerId){
+
+        return getFollowingsById(followerId).size();
+    }
 }

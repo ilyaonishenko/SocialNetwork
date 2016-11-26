@@ -9,10 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="model.User" %>
-<jsp:useBean id="user" type="model.User" scope="request"/>
+<jsp:useBean id="user" type="model.UserView" scope="request"/>
 <html>
 <head>
-    <title>${user.username}</title>
+    <title>${user.user.username}</title>
     <script type="text/javascript" src="<c:url value='../../resources/js/jquery-3.1.0.min.js'/>"></script>
     <script type="text/javascript" src="<c:url value="../../resources/js/userScript.js"/>"></script>
     <script type="text/javascript" src="<c:url value="../../resources/js/moment.min.js"/>"></script>
@@ -66,16 +66,29 @@
                             <%--left--%>
                             <div class="col-sm-5">
                                 <div class="panel panel-default">
-                                    <div class="panel-thumbnail"><img src="../../resources/img/quest.gif"
-                                                                      class="img-responsive"></div>
+                                    <div class="panel-heading">
+                                        <h4><a href="/user/${user.user.username}">@${user.user.username}</a></h4>
+                                    </div>
                                     <div class="panel-body">
-                                        <p class="lead">${user.firstName} ${user.lastName}</p>
-                                        <p>${user.username}</p>
-                                        <p>info about followers and followings</p>
-                                        <a id="followButton" class="btn btn-primary" onclick="follow.followClick('${user.username}')">Follow</a>
+                                        <div style="border-radius: 30%; float: left" class="panel-thumbnail">
+                                            <img src="../../resources/img/quest.gif" class="img-responsive">
+                                        </div>
+                                        <div style="float: right">
+                                            <p class="lead">${user.user.firstName} ${user.user.lastName}</p>
+                                            <p>description about this guy</p>
+                                            <a id="followButton" class="btn btn-primary"
+                                               onclick="follow.followClick('${user.user.username}')">Follow</a>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <ul id="pff">
+                                            <li><h5 class="badge"><a href="/user/${user.user.username}">posts: ${user.posts}</a> </h5></li>
+                                            <li><h5 class="badge"><a href="/followings/${user.user.username}">following: ${user.followings}</a></h5></li>
+                                            <li><h5 class="badge"><a href="/followers/${user.user.username}">followers: ${user.followers}</a></h5></li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
+                                <div class="panel panel-default" >
                                     <div class="panel-heading"><h4>Recommendations</h4></div>
                                     <div class="panel-body">
                                         And so on
@@ -107,10 +120,10 @@
 </div>
 </body>
 <script>
-    var follow = new FollowThings(username = "${user.username}", visitor = "${sUser.username}");
+    var follow = new FollowThings(username = "${user.user.username}", visitor = "${sUser.username}");
     addEventListener ("DOMContentLoaded", follow.doStuff, false);
     <%--var liker = new Like('${sUser.id}');--%>
-    var postHandler = new PostHandler(userId = "${user.id}", visitorId = "${sUser.id}",
+    var postHandler = new PostHandler(userId = "${user.user.id}", visitorId = "${sUser.id}",
             postContainer = document.getElementById("posts"));
     addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false)
 </script>

@@ -48,7 +48,7 @@
                             <div class="col-sm-7" id="follows">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-                                        <p class="lead">${user.username}'s followers</p>
+                                        <p class="lead">${user.username} following</p>
                                     </div>
                                 </div>
                             </div>
