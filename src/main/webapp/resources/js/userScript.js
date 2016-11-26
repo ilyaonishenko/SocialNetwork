@@ -135,7 +135,7 @@ class PostHandler {
         pBody.className = "panel-body";
         pBody.innerHTML = "<p/>"+view.post.text+"<hr>";
         var datetime = document.createElement("div");
-        datetime.innerHTML = TimeParser.parseDate(view.post.date)+"<br>"+TimeParser.parseTime(view.post.time);
+        datetime.innerHTML = TimeParser.parseTime(view.post.time)+"<br>"+TimeParser.parseDate(view.post.date);
         datetime.style = "text-align: right";
         pBody.appendChild(datetime);
         var likes = document.createElement("button");
