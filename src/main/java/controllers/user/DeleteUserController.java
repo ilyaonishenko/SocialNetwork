@@ -15,7 +15,7 @@ import java.io.IOException;
  * Created by wopqw on 26.11.16.
  */
 @Slf4j
-@WebServlet("/s/delete")
+@WebServlet("/s/deleteuser")
 public class DeleteUserController extends BaseServlet {
 
     @Override

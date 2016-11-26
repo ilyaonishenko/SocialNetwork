@@ -50,7 +50,7 @@
                                         </div>
                                         <br>
                                         <div>
-                                            <form class="form-horizontal" action="/s/updateprofile" method="post">
+                                            <form class="form-horizontal" action="<c:url value="/s/updateprofile"/>" method="post">
                                                 <fieldset>
                                                     <div class="form-group">
                                                         <label for="inputEmail" class="col-lg-2 control-label"><fmt:message key="register.email"/>:</label>
@@ -82,7 +82,7 @@
                                                 </fieldset>
                                             </form>
 
-                                            <form action="<c:url value="/s/delete"/>" method="post">
+                                            <form action="<c:url value="/s/deleteuser"/>" method="post">
                                             <h4>
                                                 Or you can delete your page:
                                                 <button value="submit" type="submit" class="btn btn-danger">
