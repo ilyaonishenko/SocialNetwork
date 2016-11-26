@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 
 /**
  * Created by wopqw on 30.10.16.
@@ -87,5 +88,60 @@ public class H2UserDAO implements UserDAO {
 
             preparedStatement.execute();
         }
+    }
+
+    @Override
+    @SneakyThrows
+    public Optional<User> getById(long id){
+
+        try (Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM User WHERE id=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, id);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            User.UserBuilder userBuilder = User.builder();
+
+            Optional<User> optUser = Optional.empty();
+
+            if (rs.next()){
+                userBuilder.email(rs.getString("email"))
+                        .id(rs.getLong("id"))
+                        .username(rs.getString("username"))
+                        .firstName(rs.getString("first_name"))
+                        .lastName(rs.getString("last_name"))
+                        .password(rs.getString("password"));
+                optUser = Optional.of(userBuilder.build());
+            }
+
+            return optUser;
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public User updateUser(User user){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "UPDATE User SET username = ?, email = ?, first_name = ?, last_name = ?  WHERE id=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getFirstName());
+            preparedStatement.setString(4, user.getLastName());
+            preparedStatement.setLong(5, user.getId());
+
+            preparedStatement.execute();
+        }
+
+        //noinspection OptionalGetWithoutIsPresent
+        return getById(user.getId()).get();
     }
 }

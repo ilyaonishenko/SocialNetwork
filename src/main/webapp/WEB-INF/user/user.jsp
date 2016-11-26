@@ -8,7 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="model.User" %>
 <jsp:useBean id="user" type="model.UserView" scope="request"/>
 <html>
 <head>
@@ -67,7 +66,14 @@
                             <div class="col-sm-5">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4><a href="/user/${user.user.username}">@${user.user.username}</a></h4>
+                                        <h4>
+                                            <a href="/user/${user.user.username}">@${user.user.username}</a>
+                                            <c:if test="${sUser.id == user.user.id}">
+                                                <a href="<c:url value="/s/updateprofile"/>">
+                                                    <i class="glyphicon glyphicon-cog" style="float: right;"></i>
+                                                </a>
+                                            </c:if>
+                                        </h4>
                                     </div>
                                     <div class="panel-body">
                                         <div style="border-radius: 30%; float: left" class="panel-thumbnail">

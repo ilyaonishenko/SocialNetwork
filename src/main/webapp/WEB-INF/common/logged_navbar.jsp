@@ -48,7 +48,7 @@
                 <a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> <fmt:message key="header.post"/></a>
             </li>
             <li>
-                <a href="/user/"><i class="glyphicon glyphicon-user"></i> <fmt:message key="header.profile"/></a>
+                <a href="/user/${sUser.username}"><i class="glyphicon glyphicon-user"></i> <fmt:message key="header.profile"/></a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
