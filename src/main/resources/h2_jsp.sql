@@ -16,7 +16,7 @@ CREATE TABLE Roles (
   username VARCHAR(255) NOT NULL,
   role  VARCHAR(15)  NOT NULL,
   PRIMARY KEY (username, role),
-  FOREIGN KEY (username) REFERENCES User (username)
+  FOREIGN KEY (username) REFERENCES User (username) ON DELETE CASCADE
 );
 
 INSERT INTO Roles (username, role) VALUES ('ivan', 'admin');
@@ -30,7 +30,7 @@ CREATE TABLE Following (
   follower_id INT NOT NULL,
   follow_id INT NOT NULL,
   PRIMARY KEY (follow_id, follower_id),
-  FOREIGN KEY (follower_id) REFERENCES User(id)
+  FOREIGN KEY (follower_id) REFERENCES User(id) ON DELETE CASCADE
 );
 
 INSERT INTO Following (follower_id, follow_id) VALUES (4,1);
@@ -46,6 +46,7 @@ CREATE TABLE Post(
   text VARCHAR(200) NOT NULL,
   privacy BOOL NOT NULL,
   expandable BOOL NOT NULL,
+  FOREIGN KEY (authorId) REFERENCES User(id) ON DELETE CASCADE
 );
 
 INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (3,'2016-01-01','00:05:00','LOOOOOOOLOOOOL',FALSE ,FALSE );
@@ -57,8 +58,8 @@ CREATE TABLE Likes (
   from_userId INT NOT NULL,
   to_postId INT NOT NULL,
   PRIMARY KEY (from_userId, to_postId),
-  FOREIGN KEY (from_userId) REFERENCES User(id),
-  FOREIGN KEY (to_postId) REFERENCES Post(id)
+  FOREIGN KEY (from_userId) REFERENCES User(id) ON DELETE CASCADE,
+  FOREIGN KEY (to_postId) REFERENCES Post(id) ON DELETE CASCADE
 
 );
 
@@ -80,9 +81,9 @@ CREATE TABLE Comment (
   text VARCHAR(200) NOT NULL,
   date DATE NOT NULL,
   time TIME NOT NULL,
-  FOREIGN KEY (from_userId) REFERENCES User(id),
-  FOREIGN KEY (from_username) REFERENCES User(username),
-  FOREIGN KEY (to_postId) REFERENCES Post(id)
+  FOREIGN KEY (from_userId) REFERENCES User(id) ON DELETE CASCADE,
+  FOREIGN KEY (from_username) REFERENCES User(username) ON DELETE CASCADE,
+  FOREIGN KEY (to_postId) REFERENCES Post(id) ON DELETE CASCADE
 );
 
 INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (2, 'peter', 3, 'AYO! I am the moderator', '2016-01-01', '00:01:00');

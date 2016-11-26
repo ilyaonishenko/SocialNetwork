@@ -81,6 +81,15 @@
                                                     </div>
                                                 </fieldset>
                                             </form>
+
+                                            <form action="<c:url value="/s/delete"/>" method="post">
+                                            <h4>
+                                                Or you can delete your page:
+                                                <button value="submit" type="submit" class="btn btn-danger">
+                                                    Delete page
+                                                </button>
+                                            </h4>
+                                            </form>
                                         <%--<div style="float: right">--%>
                                             <%--<p class="lead">${user.user.firstName} ${user.user.lastName}</p>--%>
                                             <%--<p>description about this guy</p>--%>

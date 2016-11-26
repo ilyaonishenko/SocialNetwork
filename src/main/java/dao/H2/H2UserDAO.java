@@ -144,4 +144,20 @@ public class H2UserDAO implements UserDAO {
         //noinspection OptionalGetWithoutIsPresent
         return getById(user.getId()).get();
     }
+
+    @Override
+    @SneakyThrows
+    public void deleteUser(User user){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "DELETE FROM User WHERE id=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, user.getId());
+
+            preparedStatement.execute();
+        }
+    }
 }
