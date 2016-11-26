@@ -340,16 +340,16 @@ class CommentController{
             chandler.className = "commentList";
             console.log(me.list);
             me.list.forEach(function (l) {
-                CommentController.createContainer(chandler, l);
+                CommentController.createContainer(chandler, l, me.userId);
                 if (me.offsetId < l.id)
                     me.offsetId = l.id;
             });
             me.container.appendChild(chandler);
-            CommentController.updateComments(me.postId, me.offsetId, me.limit, chandler, me.container);
+            CommentController.updateComments(me.postId, me.offsetId, me.limit, chandler, me.container, me.userId);
         })
     }
 
-    static createContainer(container, comment){
+    static createContainer(container, comment, userId){
         console.log(comment);
         let li = document.createElement('li');
         li.id = comment.id;
@@ -371,24 +371,50 @@ class CommentController{
         let datetime = document.createElement('span');
         datetime.className = 'date sub-text';
         datetime.innerHTML = comment.date+' '+comment.time;
-        let del = document.createElement('button');
-        del.className = "delete";
-        del.innerHTML = 'delete';
-        del.id = comment.id;
+        // if (view.post.authorId == visitorId){
+        //     console.log("delete pretty ready");
+        //     let form = document.createElement('form');
+        //     form.method = 'post';
+        //     form.action = '/webapi/posts/delete/'+view.post.id;
+        //     form.className = 'pull-right';
+        //     let anchor2 = document.createElement("button");
+        //     anchor2.value = "submit";
+        //     anchor2.type = "submit";
+        //     anchor2.className ='class="btn btn-link"';
+        //     anchor2.innerHTML = '<i class="glyphicon glyphicon-remove"></i>';
+        //     $(form).on('click','button',function(){
+        //         console.log("sending");
+        //         setTimeout(function(){
+        //             window.location.reload(true);
+        //         },100);
+        //     });
+        //     form.appendChild(anchor2);
+        //     pBody.appendChild(form);
+        // }
+
         // del.onclick = CommentController.deleteComment(del);
         // $(pBody).on('click','button',function(){
         //     Like.makeLike(visitorId,view.post.id, likes);
         // });
-        $(texthandler).on('click','button', function () {
-            CommentController.deleteComment(del)
-        });
         texthandler.appendChild(datetime);
-        texthandler.appendChild(del);
+        if(comment.userId == userId){
+            let del = document.createElement('button');
+            del.className = "delete";
+            del.innerHTML = '<i class="glyphicon glyphicon-remove"></i>';
+            del.id = comment.id;
+            texthandler.appendChild(del);
+            $(texthandler).on('click','button', function () {
+                CommentController.deleteComment(del);
+                setTimeout(function(){
+                    window.location.reload(true);
+                },100);
+            });
+        }
         li.appendChild(texthandler);
         container.appendChild(li);
     }
 
-    static updateComments(postId, offsetId, limit, container1, container2){
+    static updateComments(postId, offsetId, limit, container1, container2, userId){
         console.log('offsetId: '+offsetId);
         $.ajax({
             url:'/webapi/comments/update',
@@ -402,16 +428,16 @@ class CommentController{
             timeout: 11000,
             success: function (array) {
                 array.forEach(function (l) {
-                    CommentController.createContainer(container1, l);
+                    CommentController.createContainer(container1, l, userId);
                     if (offsetId < l.id)
                         offsetId = l.id;
                 });
                 container2.appendChild(container1);
-                CommentController.updateComments(postId, offsetId, limit, container1, container2);
+                CommentController.updateComments(postId, offsetId, limit, container1, container2, userId);
             },
             error: function (err) {
                 console.log(err);
-                CommentController.updateComments(postId, offsetId, limit, container1, container2);
+                CommentController.updateComments(postId, offsetId, limit, container1, container2, userId);
             }
         })
     }
