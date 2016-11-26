@@ -62,7 +62,7 @@ class PostHandler {
     loadUserPosts() {
         console.log("loading");
         console.log("visitorId = "+visitorId);
-        var me = this;
+        let me = this;
         me.offsetId = 0;
         $.ajax({
             url: '/webapi/posts/',
@@ -208,7 +208,7 @@ class Timeline{
     }
 
     loadTimeline(){
-        var self = this;
+        let self = this;
         self.offsetId = 0;
         $.ajax({
             url: '/webapi/posts/timeline/',
@@ -273,9 +273,8 @@ class Like{
                     'postId': postId
                 },
                 success: function (answer) {
-                    var url;
-                    var color;
-                    var me = this;
+                    let url;
+                    let me = this;
                     if (answer===true) {
                         url = '/webapi/likes/remove';
                         me.color = 'btn btn-default';
@@ -316,7 +315,7 @@ class CommentController{
 
     loadComments(){
         console.log('loading comments');
-        var me = this;
+        let me = this;
         return new Promise(function (resolve, reject) {
             $.ajax({
                 url: '/webapi/comments/'+me.postId,
@@ -334,10 +333,10 @@ class CommentController{
 
     viewComments() {
         console.log("postId: "+this.postId);
-        var me = this;
+        let me = this;
         this.loadComments().then(function (res) {
             me.list = res;
-            var chandler = document.createElement('ul');
+            let chandler = document.createElement('ul');
             chandler.className = "commentList";
             console.log(me.list);
             me.list.forEach(function (l) {
@@ -352,27 +351,27 @@ class CommentController{
 
     static createContainer(container, comment){
         console.log(comment);
-        var li = document.createElement('li');
+        let li = document.createElement('li');
         li.id = comment.id;
-        var imgHandler = document.createElement('div');
+        let imgHandler = document.createElement('div');
         imgHandler.className = 'commenterImage';
-        var img = document.createElement('img');
+        let img = document.createElement('img');
         img.src = "../../resources/img/quest.gif";
         imgHandler.appendChild(img);
         li.appendChild(imgHandler);
-        var texthandler = document.createElement('div');
+        let texthandler = document.createElement('div');
         texthandler.className =  'commentText';
-        var username = document.createElement('span');
+        let username = document.createElement('span');
         username.className = 'commenter-username';
         username.innerHTML = comment.username;  //qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
         texthandler.appendChild(username);
-        var text = document.createElement('p');
+        let text = document.createElement('p');
         text.innerHTML = comment.text;
         texthandler.appendChild(text);
-        var datetime = document.createElement('span');
+        let datetime = document.createElement('span');
         datetime.className = 'date sub-text';
         datetime.innerHTML = comment.date+' '+comment.time;
-        var del = document.createElement('button');
+        let del = document.createElement('button');
         del.className = "delete";
         del.innerHTML = 'delete';
         del.id = comment.id;
@@ -418,7 +417,7 @@ class CommentController{
     }
 
     static deleteComment(container){
-        var id = container.id;
+        let id = container.id;
         console.log('delete comment: '+id);
         $.ajax({
             url: '/webapi/comments/delete/'+id,
@@ -432,7 +431,7 @@ class CommentController{
 class TimeParser{
 
     static parseDate(date){
-        var newDate = "";
+        let newDate = "";
         newDate += date.dayOfMonth+" ";
         newDate += date.month+" ";
         newDate += date.year;
@@ -441,9 +440,9 @@ class TimeParser{
     }
 
     static parseTime(time){
-        var h = "";
-        var m = '';
-        var s = '';
+        let h = "";
+        let m = '';
+        let s = '';
         if ((''+time.hour).length===1) {
             h = '0' + time.hour;
         } else h = time.hour;
