@@ -115,35 +115,57 @@ class PostHandler {
     }
 
     static createContainers(view, postContainer, visitorId) {
-        var panel = document.createElement("div");
+        let panel = document.createElement("div");
         panel.className = "panel panel-default";
+        if (view.post.authorId == visitorId){
+            console.log("delete pretty ready");
+            let form = document.createElement('form');
+            form.method = 'post';
+            form.action = '/webapi/posts/delete/'+view.post.id;
+            form.className = 'pull-right';
+            let anchor2 = document.createElement("button");
+            anchor2.value = "submit";
+            anchor2.type = "submit";
+            anchor2.className ='class="btn btn-link"';
+            anchor2.innerHTML = '<i class="glyphicon glyphicon-remove"></i>';
+            $(form).on('click','button',function(){
+                console.log("sending");
+                setTimeout(function(){
+                    window.location.reload(true);
+                },100);
+            });
+            form.appendChild(anchor2);
+            panel.appendChild(form);
+        }
         panel.id = view.post.id;
-        var pHeading = document.createElement("div");
+        let pHeading = document.createElement("div");
         pHeading.className = "panel-heading";
-        var anchor = document.createElement("a");
+        let anchor = document.createElement("a");
         anchor.href = "/post/"+view.post.id;
+        anchor.style = "margin-top: 5px";
         anchor.className = "pull-right";
         anchor.innerHTML = "Open post";
-        var h4 = document.createElement("h4");
+        console.log("authorId: "+view.post.authorId);
+        let h4 = document.createElement("h4");
         h4.innerHTML = "<a href='/user/"+view.user.username+"'>@"+view.user.username+"</a>";
         // pHeading.innerHTML = "<h4>@" + view.user.username + "</h4>";
         pHeading.appendChild(anchor);
         pHeading.appendChild(h4);
         panel.appendChild(pHeading);
-        var pBody = document.createElement("div");
+        let pBody = document.createElement("div");
         pBody.id = view.post.id;
         pBody.className = "panel-body";
         pBody.innerHTML = "<p/>"+view.post.text+"<hr>";
-        var datetime = document.createElement("div");
+        let datetime = document.createElement("div");
         datetime.innerHTML = TimeParser.parseTime(view.post.time)+"<br>"+TimeParser.parseDate(view.post.date);
         datetime.style = "text-align: right";
         pBody.appendChild(datetime);
-        var likes = document.createElement("button");
+        let likes = document.createElement("button");
         // likes.onclick = "liker.makeLike("+'\''+view.post.id+'\''+")";
         $(pBody).on('click','button',function(){
             Like.makeLike(visitorId,view.post.id, likes);
         });
-        var answ = PostHandler.isLiked(view.post.id, visitorId);
+        let answ = PostHandler.isLiked(view.post.id, visitorId);
         answ.then(function (res) {
             if (res === true)
                 likes.className = "btn btn-danger";
@@ -152,7 +174,7 @@ class PostHandler {
         });
         likes.innerHTML = "+"+view.likesCount;
         pBody.appendChild(likes);
-        var comments = document.createElement("div");
+        let comments = document.createElement("div");
         comments.style="float:right";
         comments.innerHTML = view.commentsCount+" comments";
         pBody.appendChild(comments);

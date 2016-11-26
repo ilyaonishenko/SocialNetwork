@@ -193,4 +193,21 @@ public class H2PostDAO implements PostDAO {
 
         return posts;
     }
+
+
+    @Override
+    @SneakyThrows
+    public void deletePost(long postId){
+
+        try (Connection connection = connectionPool.getConnection()){
+
+            String sql = "DELETE FROM Post WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, postId);
+
+            preparedStatement.execute();
+        }
+    }
 }

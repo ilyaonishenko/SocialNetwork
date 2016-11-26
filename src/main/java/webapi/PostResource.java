@@ -126,6 +126,14 @@ public class PostResource {
         }
     }
 
+    @POST
+    @Path("delete/{postId}")
+    public void deletePostById(@PathParam("postId") long postId){
+
+        log.info("deleting post");
+        postDAO.deletePost(postId);
+    }
+
     @GET
     @Path("update")
     @Produces(APPLICATION_JSON)
