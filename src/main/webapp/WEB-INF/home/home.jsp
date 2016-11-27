@@ -53,15 +53,29 @@
                     <div class="full col-sm-9">
                         <div class="row">
                             <%--right--%>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="follows">
                                 <div class="well">
                                     <form class="form-horizontal" role="form" method="post" action="/s/createpost">
                                         <h4>What's New</h4>
                                         <div class="form-group" style="padding:14px;">
-                                            <textarea class="form-control" name="post" placeholder="Say something kind"></textarea>
-                                            <input type="checkbox" name="privacy" class="sub-text">Privacy</input>
+                                            <textarea class="form-control" name="post"
+                                                      placeholder="Say something kind"></textarea>
+                                            <%--<input type="checkbox" name="privacy" class="sub-text">Privacy</input>--%>
                                         </div>
-                                        <button class="btn btn-primary pull-right" value="submit" type="submit">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                                        <button class="btn btn-primary pull-right" value="submit" type="submit">Post
+                                        </button>
+                                        <ul class="list-inline">
+                                            <li>
+                                                <div>
+                                                    <input name="privacy" type='checkbox' id='checkbox-1' class='tags-checkbox sr-only'/>
+                                                    <label for='checkbox-1'>
+                                                        <i class='glyphicon glyphicon-eye-open'></i>
+                                                        <i class='glyphicon glyphicon-eye-close'></i>
+                                                        <span class='sub-text'>privacy</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </form>
                                 </div>
                                 <div id="timeline">

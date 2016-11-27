@@ -72,13 +72,24 @@
             <div class="modal-body">
                     <div class="form-group">
                         <textarea class="form-control input-lg" name="post" autofocus="" placeholder="Say something kind"></textarea>
-                        <input type="checkbox" name="privacy" class="sub-text">Privacy</input>
+                        <%--<input type="checkbox" name="privacy" class="sub-text">Privacy</input>--%>
                     </div>
             </div>
             <div class="modal-footer">
                 <div>
                     <button value="submit" type="submit" class="btn btn-primary btn-sm"  aria-hidden="true">Post</button>
-                    <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                    <ul class="pull-left list-inline">
+                        <li>
+                            <div>
+                                <input name="privacy" type='checkbox' id='checkbox-1' class='tags-checkbox sr-only'/>
+                                <label for='checkbox-1'>
+                                    <i class='glyphicon glyphicon-eye-open'></i>
+                                    <i class='glyphicon glyphicon-eye-close'></i>
+                                    <span class='sub-text'>privacy</span>
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             </form>
