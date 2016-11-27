@@ -313,7 +313,7 @@ class Like{
 
 class CommentController{
 
-    constructor(userId, postId, offsetId, container){
+    constructor(userId, postId, offsetId, container, userRoles){
         console.log('commentController constructor with '+postId+' us '+userId );
         this.userId = userId;
         this.postId = postId;
@@ -321,6 +321,10 @@ class CommentController{
         this.offsetId = offsetId;
         this.limit = 10;
         this.list = [];
+        console.log(userRoles);
+        // this.userRoles = JSON.parse(userRoles);
+        this.userRoles = JSON.parse(JSON.stringify(userRoles || null ));
+        console.log(this.userRoles);
     }
 
     loadComments(){
@@ -350,16 +354,16 @@ class CommentController{
             chandler.className = "commentList";
             console.log(me.list);
             me.list.forEach(function (l) {
-                CommentController.createContainer(chandler, l, me.userId);
+                CommentController.createContainer(chandler, l, me.userId, me.userRoles);
                 if (me.offsetId < l.id)
                     me.offsetId = l.id;
             });
             me.container.appendChild(chandler);
-            CommentController.updateComments(me.postId, me.offsetId, me.limit, chandler, me.container, me.userId);
+            CommentController.updateComments(me.postId, me.offsetId, me.limit, chandler, me.container, me.userId, me.userRoles);
         })
     }
 
-    static createContainer(container, comment, userId){
+    static createContainer(container, comment, userId, userRoles){
         console.log(comment);
         let li = document.createElement('li');
         li.id = comment.id;
@@ -407,7 +411,7 @@ class CommentController{
         //     Like.makeLike(visitorId,view.post.id, likes);
         // });
         texthandler.appendChild(datetime);
-        if(comment.userId == userId){
+        if(comment.userId == userId || userRoles.length > 1){
             let del = document.createElement('button');
             del.className = "delete";
             del.innerHTML = '<i class="glyphicon glyphicon-remove"></i>';
@@ -424,7 +428,7 @@ class CommentController{
         container.appendChild(li);
     }
 
-    static updateComments(postId, offsetId, limit, container1, container2, userId){
+    static updateComments(postId, offsetId, limit, container1, container2, userId, userRoles){
         console.log('offsetId: '+offsetId);
         $.ajax({
             url:'/webapi/comments/update',
@@ -438,16 +442,16 @@ class CommentController{
             timeout: 11000,
             success: function (array) {
                 array.forEach(function (l) {
-                    CommentController.createContainer(container1, l, userId);
+                    CommentController.createContainer(container1, l, userId, userRoles);
                     if (offsetId < l.id)
                         offsetId = l.id;
                 });
                 container2.appendChild(container1);
-                CommentController.updateComments(postId, offsetId, limit, container1, container2, userId);
+                CommentController.updateComments(postId, offsetId, limit, container1, container2, userId, userRoles);
             },
             error: function (err) {
                 console.log(err);
-                CommentController.updateComments(postId, offsetId, limit, container1, container2, userId);
+                CommentController.updateComments(postId, offsetId, limit, container1, container2, userId, userRoles);
             }
         })
     }

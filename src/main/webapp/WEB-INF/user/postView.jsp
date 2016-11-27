@@ -81,19 +81,20 @@
 </body>
 <script>
     function checkLikes() {
-        var likes = document.getElementById('likes');
+        let likes = document.getElementById('likes');
         PostHandler.isLiked('${postView.post.id}','${sUser.id}').then(function (res) {
             if (res === true)
                 likes.className = "btn btn-danger";
             else likes.className = "btn btn-default";
     })}
+
     function startComment() {
-        var cController = new CommentController('${sUser.id}','${postView.post.id}', 0, document.getElementById('comments'));
+        let cController = new CommentController('${sUser.id}','${postView.post.id}', 0, document.getElementById('comments'), '${userRoles}');
         cController.viewComments();
     }
     function addComment(form) {
         console.log('sending from sendComment');
-        var text = form.text.value;
+        let text = form.text.value;
         console.log('text: '+text);
         $.ajax({
             url: '/webapi/comments/add',
