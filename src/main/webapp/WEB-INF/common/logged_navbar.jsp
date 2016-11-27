@@ -42,7 +42,7 @@
         </form>
         <ul class="nav navbar-nav">
             <li>
-                <a href="/home/"><i class="glyphicon glyphicon-home"></i> <fmt:message key="header.home"/></a>
+                <a href="<c:url value="/home/"/>"><i class="glyphicon glyphicon-home"></i> <fmt:message key="header.home"/></a>
             </li>
             <li>
                 <a href="#postModal" role="button" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> <fmt:message key="header.post"/></a>
@@ -53,10 +53,10 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/changelocale">EN/RU</a>
+                <a href="<c:url value="/changelocale"/>">EN/RU</a>
             </li>
             <li>
-                <a href="/logout"><i class="glyphicon glyphicon-log-out"></i> <fmt:message key="header.logout"/></a>
+                <a href="<c:url value="/logout"/>"><i class="glyphicon glyphicon-log-out"></i> <fmt:message key="header.logout"/></a>
             </li>
         </ul>
     </nav>
@@ -68,7 +68,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 Update Status
             </div>
-            <form class="form center-block" role="form" method="post" action="/s/createpost">
+            <form class="form center-block" role="form" method="post" action="<c:url value="/s/createpost"/>">
             <div class="modal-body">
                     <div class="form-group">
                         <textarea class="form-control input-lg" name="post" autofocus="" placeholder="Say something kind"></textarea>
