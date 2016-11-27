@@ -79,8 +79,6 @@ public class PostResource {
         return Response.ok(json).build();
     }
 
-    // TODO: 27.11.16 Посмотреть на работу ролей 
-
     @GET
     @Path("timeline/")
     @Produces(APPLICATION_JSON)

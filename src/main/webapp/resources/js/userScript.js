@@ -210,8 +210,6 @@ class Timeline{
     loadTimeline(){
         let self = this;
         self.offsetId = 0;
-        console.log("userId: "+userId);
-        console.log("isAdmin: "+isAdmin);
         $.ajax({
             url: '/webapi/posts/timeline/',
             type: 'GET',
@@ -223,16 +221,16 @@ class Timeline{
             dataType: 'json',
             success: function (views) {
                 views.forEach(function (view) {
-                    if (self.isAdmin) {
+                    if (isAdmin == true) {
                         console.log("is admin");
                         PostHandler.createContainers(view, postContainer, view.post.authorId);
                     } else {
                         PostHandler.createContainers(view, postContainer, userId);
                     }
-                    if(self.offsetId < view.post.id)
-                        self.offsetId = view.post.id;
+                    if(offsetId < view.post.id)
+                        offsetId = view.post.id;
                 });
-                Timeline.updateTimeline(self.userId, self.offsetId, 10, self.postContainer, self.isAdmin);
+                Timeline.updateTimeline(userId, offsetId, 10, postContainer, isAdmin);
             }
         })
     }
