@@ -199,37 +199,44 @@ class PostHandler {
         });
     }
 }
-
 class Timeline{
 
-    constructor(userId, postContainer){
+    constructor(userId, postContainer, isAdmin){
         this.userId = userId;
         this.postContainer = postContainer;
+        this.isAdmin = isAdmin;
     }
 
     loadTimeline(){
         let self = this;
         self.offsetId = 0;
+        console.log("userId: "+userId);
+        console.log("isAdmin: "+isAdmin);
         $.ajax({
             url: '/webapi/posts/timeline/',
             type: 'GET',
             data: {
-                userId: this.userId,
-                offsetId: self.offsetId,
+                userId: userId,
+                offsetId: offsetId,
                 limit: 10
             },
             dataType: 'json',
             success: function (views) {
                 views.forEach(function (view) {
-                    PostHandler.createContainers(view, self.postContainer, userId);
+                    if (self.isAdmin) {
+                        console.log("is admin");
+                        PostHandler.createContainers(view, postContainer, view.post.authorId);
+                    } else {
+                        PostHandler.createContainers(view, postContainer, userId);
+                    }
                     if(self.offsetId < view.post.id)
                         self.offsetId = view.post.id;
                 });
-                Timeline.updateTimeline(self.userId, self.offsetId, 10, self.postContainer);
+                Timeline.updateTimeline(self.userId, self.offsetId, 10, self.postContainer, self.isAdmin);
             }
         })
     }
-    static updateTimeline(userId, offsetId, limit, postContainer){
+    static updateTimeline(userId, offsetId, limit, postContainer, isAdmin){
         console.log(offsetId);
         $.ajax({
             url: '/webapi/posts/updatetimeline',
@@ -243,18 +250,23 @@ class Timeline{
             timeout: 11000,
             success: function (views) {
                 views.forEach(function (view) {
-                    PostHandler.createContainers(view, postContainer, userId);
+                    if (isAdmin == true) {
+                        console.log("is admin");
+                        PostHandler.createContainers(view, postContainer, view.post.authorId);
+                    } else {
+                        PostHandler.createContainers(view, postContainer, userId);
+                    }
                     //noinspection JSUnresolvedVariable
                     if(offsetId < view.post.id)
                         { //noinspection JSUnresolvedVariable
                             offsetId = view.post.id;
                         }
                 });
-                Timeline.updateTimeline(userId, offsetId, limit, postContainer);
+                Timeline.updateTimeline(userId, offsetId, limit, postContainer, isAdmin);
             },
             error: function (err) {
                 console.log(err);
-                Timeline.updateTimeline(userId, offsetId, limit, postContainer);
+                Timeline.updateTimeline(userId, offsetId, limit, postContainer, isAdmin);
             }
         })
     }

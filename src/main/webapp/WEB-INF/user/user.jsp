@@ -84,6 +84,13 @@
                                             <p>description about this guy</p>
                                             <a id="followButton" class="btn btn-primary"
                                                onclick="follow.followClick('${user.user.username}')">Follow</a>
+                                            <c:if test="${userRoles.size()==3}">
+                                                <form style="margin-right: auto; margin-left: auto" action="<c:url value="/s/deleteuser"/>">
+                                                    <button value="submit" type="submit" class="btn btn-danger">
+                                                        Delete page
+                                                    </button>
+                                                </form>
+                                            </c:if>
                                         </div>
                                     </div>
                                     <div class="panel-footer">
@@ -129,7 +136,11 @@
     var follow = new FollowThings(username = "${user.user.username}", visitor = "${sUser.username}");
     addEventListener ("DOMContentLoaded", follow.doStuff, false);
     <%--var liker = new Like('${sUser.id}');--%>
-    var postHandler = new PostHandler(userId = "${user.user.id}", visitorId = "${sUser.id}",
+    let visitorId = "${sUser.id}";
+    <c:if test="${userRoles.size()>1}">
+        visitorId = "${user.user.id}";
+    </c:if>
+    var postHandler = new PostHandler(userId = "${user.user.id}", visitorId,
             postContainer = document.getElementById("posts"));
     addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false)
 </script>

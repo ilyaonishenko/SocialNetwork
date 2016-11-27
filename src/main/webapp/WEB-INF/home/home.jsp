@@ -7,8 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="model.UserRole" %>
-<%@ page import="java.util.HashSet" %>
 <jsp:useBean id="user" type="model.User" scope="request"/>
 <jsp:useBean id="userRoles" class="java.util.HashSet" scope="request"/>
 <html>
@@ -80,9 +78,15 @@
 </div>
 </body>
 <script>
-    var userId = '${user.id}';
-    var postContainer  = document.getElementById('timeline');
-    var timeline = new Timeline(userId, postContainer);
+    let userId = '${user.id}';
+    let postContainer  = document.getElementById('timeline');
+    let isAdmin = false;
+    
+    <c:if test="${userRoles.size()>1}">
+        isAdmin = true;
+    </c:if>
+    
+    let timeline = new Timeline(userId, postContainer, isAdmin);
     <%--function post(form) {--%>
         <%--console.log("we are going to post a post");--%>
         <%--var text = form.text.value;--%>
