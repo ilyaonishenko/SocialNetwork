@@ -13,6 +13,8 @@
 <head>
     <title>${user.user.username}</title>
     <script type="text/javascript" src="<c:url value='../../resources/js/jquery-3.1.0.min.js'/>"></script>
+    <script type="text/javascript" src="<c:url value="../../resources/js/bootstrap.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value='../../resources/js/scripts.js'/>"></script>
     <script type="text/javascript" src="<c:url value="../../resources/js/userScript.js"/>"></script>
     <script type="text/javascript" src="<c:url value="../../resources/js/moment.min.js"/>"></script>
     <link rel="stylesheet" href="<c:url value='../../resources/css/bootstrap.min.css'/>"/>
@@ -82,7 +84,7 @@
                                         <div style="float: right">
                                             <p class="lead">${user.user.firstName} ${user.user.lastName}</p>
                                             <p>description about this guy</p>
-                                            <a id="followButton" class="btn btn-primary"
+                                            <a id="followButton${user.user.username}" class="btn btn-primary"
                                                onclick="follow.followClick('${user.user.username}')">Follow</a>
                                             <c:if test="${userRoles.size()==3}">
                                                 <form style="margin-right: auto; margin-left: auto" action="<c:url value="/s/deleteuser"/>">

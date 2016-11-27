@@ -58,7 +58,7 @@
                                     <div class="panel-heading">
                                         <div class="commenterImage"><img src="../../resources/img/quest.gif"></div>
                                         <h4><a href="/user/<%=u.getUsername()%>"><%=u.getUsername()%></a></h4>
-                                        <a style="float: right; margin-top: -35px;" id="followButton" class="btn btn-primary" onclick="follow.followClick('<%=u.getUsername()%>')">Follow</a>
+                                        <a style="float: right; margin-top: -35px;" id="followButton<%=u.getUsername()%>" class="btn btn-primary" onclick="FollowThings.followClick('<%=u.getUsername()%>')">Follow</a>
                                     </div>
                                     <div class="panel-body">
                                         <%=u.getFirstName()%> <%=u.getLastName()%>
@@ -76,7 +76,10 @@
 </div>
 </body>
 <script>
-    var follow = new FollowThings(username = "${user.username}", visitor = "${sUser.username}");
-    addEventListener ("DOMContentLoaded", follow.doStuff, false);
+    <% for (User u : followingUsers) {%>
+    $("#<%=u.getUsername()%>").ready(function () {
+        FollowThings.doStuff('<%=u.getUsername()%>', visitor = "${sUser.username}");
+    });
+    <%}%>
 </script>
 </html>

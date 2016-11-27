@@ -24,7 +24,7 @@
 <body>
 <jsp:useBean id="user" type="model.User" scope="request"/>
 <jsp:useBean id="followers" class="java.util.HashSet" scope="request"/>
->
+
 <% HashSet<User> followerUsers = (HashSet<User>) followers;%>
 
 <div class="wrapper">
@@ -52,19 +52,19 @@
                                 </div>
                                 <% for (User u : followerUsers) {%>
                                 <div class="col-sm-7" id="follows">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-default" id="'<%=u.getUsername()%>'">
                                         <div class="panel-heading">
                                             <div class="commenterImage"><img src="../../resources/img/quest.gif"></div>
                                             <h4><a href="/user/<%=u.getUsername()%>"><%=u.getUsername()%></a></h4>
-                                            <a style="float: right; margin-top: -35px;" id="followButton" class="btn btn-primary" onclick="follow.followClick('<%=u.getUsername()%>')">Follow</a>
+                                            <a style="float: right; margin-top: -35px;" id="followButton<%=u.getUsername()%>" class="btn btn-primary" onclick="FollowThings.followClick('<%=u.getUsername()%>')">Follow</a>
                                         </div>
                                         <div class="panel-body">
                                             <%=u.getFirstName()%> <%=u.getLastName()%>
                                         </div>
                                     </div>
                                 </div>
-                            <%}%>
-                            <%--right ended--%>
+                                <%}%>
+                                <%--right ended--%>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,10 @@
 </div>
 </body>
 <script>
-    var follow = new FollowThings(username = "${user.username}", visitor = "${sUser.username}");
-    addEventListener ("DOMContentLoaded", follow.doStuff, false);
+    <% for (User u : followerUsers) {%>
+    $("#<%=u.getUsername()%>").ready(function () {
+        FollowThings.doStuff('<%=u.getUsername()%>', visitor = "${sUser.username}");
+    });
+    <%}%>
 </script>
 </html>

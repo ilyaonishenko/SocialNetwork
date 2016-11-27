@@ -4,15 +4,17 @@
 class FollowThings {
 
     constructor(username, visitor){
+        console.log(username);
         this.username = username;
         this.visitor = visitor;
     }
 
-    static handleAnswer(data) {
+    static handleAnswer(data, username) {
+        console.log("handle answeerr "+data);
         if (data === "true") {
-            document.getElementById("followButton").className = "btn btn-danger";
+            document.getElementById("followButton"+username).className = "btn btn-danger";
         } else {
-            document.getElementById("followButton").className = "btn btn-primary";
+            document.getElementById("followButton"+username).className = "btn btn-primary";
         }
     }
 
@@ -20,27 +22,47 @@ class FollowThings {
     doStuff() {
         console.log(this.username);
         console.log(this.visitor);
+        let me = this;
         if(this.username === this.visitor){
-            document.getElementById("followButton").style.display = "none";
+            document.getElementById("followButton"+me.username).style.display = "none";
         } else {
             $.ajax({
                 url: "/s/follow",
                 type: "GET",
                 data: {"username": this.username},
                 success: function (result) {
-                    FollowThings.handleAnswer(result)
+                    FollowThings.handleAnswer(result, me.username)
+                }
+            })
+        }
+    }
+
+    static doStuff(username, visitor) {
+        if(username === visitor){
+            document.getElementById("followButton"+username).style.display = "none";
+        } else {
+            $.ajax({
+                url: "/s/follow",
+                type: "GET",
+                data: {"username": username},
+                success: function (result) {
+                    FollowThings.handleAnswer(result, username)
                 }
             })
         }
     }
 
     followClick(data) {
+        FollowThings.followClick(data);
+    }
+
+    static followClick(data) {
         $.ajax({
             url: "/s/follow",
             type: "POST",
             data: {'username': data},
             success: function (result) {
-                FollowThings.handleAnswer(result);
+                FollowThings.handleAnswer(result, data);
             },
             error: function (e) {
                 alert("Error!");
