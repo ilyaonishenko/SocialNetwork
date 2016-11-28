@@ -65,11 +65,18 @@ public class PostResource {
             throws JsonProcessingException {
 
         log.info("getPostsByUser");
+        log.info("visitorId: "+visitorId);
 
         // TODO: 06.11.16 make limitation by sql-query
         ArrayList<Post> posts = postDAO.getAllByUser(userId, offsetId, limit).stream()
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        if(visitorId == 0){
+
+            posts = sortByPrivacy(posts);
+        }
+
+        log.info(Arrays.toString(posts.toArray()));
         Collection<PostView> postViews = createPostViews(posts);
 
         log.info(String.valueOf(postViews.size()));
@@ -155,6 +162,11 @@ public class PostResource {
         ArrayList<Post> posts = postDAO.getAllByUser(userId, offsetId, limit).stream()
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        if(visitorId == 0){
+
+            posts = sortByPrivacy(posts);
+        }
+
         Collection<PostView> postViews = createPostViews(posts);
 
         log.info(String.valueOf(postViews.size()));
@@ -238,6 +250,14 @@ public class PostResource {
                 p -> p.split("=")[0],
                 p -> p.split("=")[1]
         ));
+    }
+
+    private ArrayList<Post> sortByPrivacy(Collection<Post> posts){
+
+        log.info("sorting by privacy");
+        return posts.stream()
+                .filter(p -> !p.isPrivacy())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 //    @POST
