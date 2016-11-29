@@ -8,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="postView" type="model.PostView" scope="request"/>
 <html>
 <head>
@@ -65,7 +66,7 @@
                                                 <input class="form-control" name="text" type="text" placeholder="Your comment"/>
                                             </div>
                                             <div class="form-group">
-                                                <button class="btn btn-default" onclick="addComment(this.form)">Add</button>
+                                                <button class="btn btn-default" onclick="addComment(this.form)"><fmt:message key="postView.add"/> </button>
                                             </div>
                                         </form>
                                     </div>

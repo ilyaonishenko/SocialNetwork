@@ -8,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="user" type="model.UserView" scope="request"/>
 <html>
 <head>
@@ -85,12 +86,12 @@
                                             <p class="lead">${user.user.firstName} ${user.user.lastName}</p>
                                             <p>description about this guy</p>
                                             <a id="followButton${user.user.username}" class="btn btn-primary"
-                                               onclick="follow.followClick('${user.user.username}')">Follow</a>
+                                               onclick="follow.followClick('${user.user.username}')"><fmt:message key="user.follow"/> </a>
                                             <c:if test="${userRoles.size()==3}">
                                                 <form style="margin-right: auto; margin-left: auto" action="<c:url value="/s/deleteuser"/>" method="post">
                                                     <input hidden="hidden" value="${user.user.username}" name="d_username">
                                                     <button value="submit" type="submit" class="btn btn-danger">
-                                                        Delete page
+                                                        <fmt:message key="updateUser.delete"/>
                                                     </button>
                                                 </form>
                                             </c:if>
@@ -98,9 +99,9 @@
                                     </div>
                                     <div class="panel-footer">
                                         <ul id="pff">
-                                            <li><h5 class="badge"><a href="/user/${user.user.username}">posts: ${user.posts}</a> </h5></li>
-                                            <li><h5 class="badge"><a href="/followings/${user.user.username}">following: ${user.followings}</a></h5></li>
-                                            <li><h5 class="badge"><a href="/followers/${user.user.username}">followers: ${user.followers}</a></h5></li>
+                                            <li><h5 class="badge"><a href="/user/${user.user.username}"><fmt:message key="posts.posts"/> ${user.posts}</a> </h5></li>
+                                            <li><h5 class="badge"><a href="/followings/${user.user.username}"><fmt:message key="followings.followings"/> ${user.followings}</a></h5></li>
+                                            <li><h5 class="badge"><a href="/followers/${user.user.username}"><fmt:message key="followers.followers"/> ${user.followers}</a></h5></li>
                                         </ul>
                                     </div>
                                 </div>

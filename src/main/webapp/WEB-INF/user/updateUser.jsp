@@ -34,7 +34,7 @@
                             <div class="col-sm-5" id="updateprofile">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4>Update profile information</h4>
+                                        <h4><fmt:message key="updateUser.updateProfile"/> </h4>
                                     </div>
                                     <div class="panel-body">
                                         <c:if test="${updated == true}">
@@ -42,7 +42,7 @@
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
-                                                <strong>Well done!</strong> Information is updated.
+                                                <strong><fmt:message key="updateUser.welldone"/> </strong> <fmt:message key="updateUser.updated"/>
                                             </div>
                                         </c:if>
                                         <div class="panel-thumbnail">
@@ -84,9 +84,10 @@
 
                                             <form action="<c:url value="/s/deleteuser"/>" method="post">
                                             <h4>
-                                                Or you can delete your page:
+                                                <fmt:message key="updateUser.deletePage"/>
+                                                <input hidden="hidden" name="d_username" value="${sUser.username}">
                                                 <button value="submit" type="submit" class="btn btn-danger">
-                                                    Delete page
+                                                    <fmt:message key="updateUser.delete"/>
                                                 </button>
                                             </h4>
                                             </form>

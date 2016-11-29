@@ -27,9 +27,7 @@ public class DeleteUserController extends BaseServlet {
 
         Optional<User> optUser = userDAO.getByUsername(username);
 
-        if(optUser.isPresent()) {
-            userDAO.deleteUser(optUser.get());
-        }
+        optUser.ifPresent(user -> userDAO.deleteUser(user));
 
         doGet(req, resp);
     }
