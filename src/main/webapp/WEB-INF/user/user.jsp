@@ -87,7 +87,8 @@
                                             <a id="followButton${user.user.username}" class="btn btn-primary"
                                                onclick="follow.followClick('${user.user.username}')">Follow</a>
                                             <c:if test="${userRoles.size()==3}">
-                                                <form style="margin-right: auto; margin-left: auto" action="<c:url value="/s/deleteuser"/>">
+                                                <form style="margin-right: auto; margin-left: auto" action="<c:url value="/s/deleteuser"/>" method="post">
+                                                    <input hidden="hidden" value="${user.user.username}" name="d_username">
                                                     <button value="submit" type="submit" class="btn btn-danger">
                                                         Delete page
                                                     </button>

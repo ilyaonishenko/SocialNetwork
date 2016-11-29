@@ -8,8 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Created by wopqw on 26.11.16.
@@ -23,11 +23,13 @@ public class DeleteUserController extends BaseServlet {
 
         log.info("delete User doPost");
 
-        HttpSession httpSession = req.getSession();
+        String username = req.getParameter("d_username");
 
-        User user = (User) httpSession.getAttribute(SUSER);
+        Optional<User> optUser = userDAO.getByUsername(username);
 
-        userDAO.deleteUser(user);
+        if(optUser.isPresent()) {
+            userDAO.deleteUser(optUser.get());
+        }
 
         doGet(req, resp);
     }

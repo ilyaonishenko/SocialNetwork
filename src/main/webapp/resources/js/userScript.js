@@ -406,7 +406,7 @@ class CommentController{
         texthandler.appendChild(text);
         let datetime = document.createElement('span');
         datetime.className = 'date sub-text';
-        datetime.innerHTML = comment.date+' '+comment.time;
+        datetime.innerHTML = TimeParser.parseDate(comment.date)+' '+TimeParser.parseTime(comment.time);
         // if (view.post.authorId == visitorId){
         //     console.log("delete pretty ready");
         //     let form = document.createElement('form');
