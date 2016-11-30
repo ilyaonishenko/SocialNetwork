@@ -66,32 +66,35 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                Update Status
+                <fmt:message key="home.whats"/>
             </div>
             <form class="form center-block" role="form" method="post" action="<c:url value="/s/createpost"/>">
-            <div class="modal-body">
+                <div class="modal-body">
                     <div class="form-group">
-                        <textarea class="form-control input-lg" name="post" autofocus="" placeholder="Say something kind"></textarea>
+                        <textarea class="form-control input-lg" name="post" autofocus=""
+                                  placeholder="<fmt:message key="post.saysomething"/>"></textarea>
                         <%--<input type="checkbox" name="privacy" class="sub-text">Privacy</input>--%>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <div>
-                    <button value="submit" type="submit" class="btn btn-primary btn-sm"  aria-hidden="true">Post</button>
-                    <ul class="pull-left list-inline">
-                        <li>
-                            <div>
-                                <input name="privacy" type='checkbox' id='checkbox-1' class='tags-checkbox sr-only'/>
-                                <label for='checkbox-1'>
-                                    <i class='glyphicon glyphicon-eye-open'></i>
-                                    <i class='glyphicon glyphicon-eye-close'></i>
-                                    <span class='sub-text'>privacy</span>
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <div>
+                        <button value="submit" type="submit" class="btn btn-primary btn-sm" aria-hidden="true">
+                            <fmt:message key="header.post"/></button>
+                        <ul class="pull-left list-inline">
+                            <li>
+                                <div>
+                                    <input name="privacy" type='checkbox' id='checkbox-1'
+                                           class='tags-checkbox sr-only'/>
+                                    <label for='checkbox-1'>
+                                        <i class='glyphicon glyphicon-eye-open'></i>
+                                        <i class='glyphicon glyphicon-eye-close'></i>
+                                        <span class='sub-text'><fmt:message key="home.privacy"/> </span>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

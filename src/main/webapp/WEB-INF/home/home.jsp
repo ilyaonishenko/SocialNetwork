@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="user" type="model.User" scope="request"/>
 <jsp:useBean id="userRoles" class="java.util.HashSet" scope="request"/>
 <html>
@@ -55,23 +56,27 @@
                             <%--right--%>
                             <div class="col-sm-7" id="follows">
                                 <div class="well">
-                                    <form class="form-horizontal" role="form" method="post" action="/s/createpost">
-                                        <h4>What's New</h4>
+                                    <form class="form-horizontal" role="form" method="post"
+                                          action="<c:url value="/s/createpost"/>">
+                                        <h4><fmt:message key="home.whats"/></h4>
                                         <div class="form-group" style="padding:14px;">
                                             <textarea class="form-control" name="post"
-                                                      placeholder="Say something kind"></textarea>
+                                                      placeholder="<fmt:message key="post.saysomething"/>"></textarea>
                                             <%--<input type="checkbox" name="privacy" class="sub-text">Privacy</input>--%>
                                         </div>
-                                        <button class="btn btn-primary pull-right" value="submit" type="submit">Post
+                                        <button class="btn btn-primary pull-right" value="submit" type="submit">
+                                            <fmt:message key="header.post"/>
                                         </button>
                                         <ul class="list-inline">
                                             <li>
                                                 <div>
-                                                    <input name="privacy" type='checkbox' id='checkbox-1' class='tags-checkbox sr-only'/>
+                                                    <input name="privacy" type='checkbox' id='checkbox-1'
+                                                           class='tags-checkbox sr-only'/>
                                                     <label for='checkbox-1'>
                                                         <i class='glyphicon glyphicon-eye-open'></i>
                                                         <i class='glyphicon glyphicon-eye-close'></i>
-                                                        <span class='sub-text'>privacy</span>
+                                                        <span class='sub-text'><fmt:message
+                                                                key="home.privacy"/> </span>
                                                     </label>
                                                 </div>
                                             </li>
