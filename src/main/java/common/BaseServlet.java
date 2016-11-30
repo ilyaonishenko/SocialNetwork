@@ -22,6 +22,10 @@ public class BaseServlet extends HttpServlet {
     protected static final String POST = "post";
     protected static final String LIKE = "like";
     protected static final String COMMENT = "comment";
+    protected static final String THROWABLE = "throwable";
+    protected static final String SERVLETNAME = "servletName";
+    protected static final String REQUSET_URI = "requestUri";
+    protected static final String STATUS_CODE = "statusCode";
 
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;

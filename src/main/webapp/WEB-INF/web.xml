@@ -24,4 +24,19 @@
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>namesBundle</param-value>
     </context-param>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorHandler/</location>
+    </error-page>
+    <error-page>
+        <error-code>505</error-code>
+        <location>/errorHandler/</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/errorHandler/</location>
+    </error-page>
+
 </web-app>
