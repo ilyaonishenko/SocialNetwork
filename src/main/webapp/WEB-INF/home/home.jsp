@@ -69,10 +69,10 @@
                                         </button>
                                         <ul class="list-inline">
                                             <li>
-                                                <div>
-                                                    <input name="privacy" type='checkbox' id='checkbox-1'
-                                                           class='tags-checkbox sr-only'/>
-                                                    <label for='checkbox-1'>
+                                                <div id="costyl">
+                                                    <input name="privacy" type='checkbox' id='checkbox-2'
+                                                           class='tages-checkbox sr-only'/>
+                                                    <label for='checkbox-2'>
                                                         <i class='glyphicon glyphicon-eye-open'></i>
                                                         <i class='glyphicon glyphicon-eye-close'></i>
                                                         <span class='sub-text'><fmt:message
@@ -106,26 +106,13 @@
     </c:if>
     
     let timeline = new Timeline(userId, postContainer, isAdmin);
-    <%--function post(form) {--%>
-        <%--console.log("we are going to post a post");--%>
-        <%--var text = form.text.value;--%>
-        <%--console.log("with text: "+text);--%>
-        <%--$.ajax({--%>
-            <%--url: '/webapi/posts/add',--%>
-            <%--type: 'POST',--%>
-            <%--data: {--%>
-                <%--'userId': '${sUser.id}',--%>
-                <%--'text': text,--%>
-                <%--'privacy': false,--%>
-                <%--'expandable': false--%>
-            <%--},--%>
-            <%--contentType: 'application/json',--%>
-            <%--dataType: "json",--%>
-            <%--success: function (answer) {--%>
-                <%--window.location.reload();--%>
-            <%--}--%>
-        <%--})--%>
-    <%--}--%>
+    function changePrivacy(label) {
+        if(label.innerHTML == "<i class='glyphicon glyphicon-eye-open'></i>"){
+            label.innerHTML = "<i class='glyphicon glyphicon-eye-close'></i>"
+        } else {
+            label.innerHTML = "<i class='glyphicon glyphicon-eye-open'></i>";
+        }
+    }
     addEventListener("DOMContentLoaded", timeline.loadTimeline, false);
 </script>
 </html>

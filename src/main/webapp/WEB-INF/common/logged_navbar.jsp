@@ -82,7 +82,7 @@
                             <fmt:message key="header.post"/></button>
                         <ul class="pull-left list-inline">
                             <li>
-                                <div>
+                                <div id="costyl2">
                                     <input name="privacy" type='checkbox' id='checkbox-1'
                                            class='tags-checkbox sr-only'/>
                                     <label for='checkbox-1'>
