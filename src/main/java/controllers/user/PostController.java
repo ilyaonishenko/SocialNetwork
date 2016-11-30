@@ -29,6 +29,8 @@ public class PostController extends BaseServlet {
 
         // TODO: 14.11.16 beautiful post form
 
+        req.setCharacterEncoding("UTF-8");
+
         HttpSession httpSession = req.getSession();
 
         User user = (User) httpSession.getAttribute(SUSER);
