@@ -7,8 +7,8 @@ import lombok.SneakyThrows;
 import model.Comment;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * Created by wopqw on 09.11.16.
@@ -105,10 +105,29 @@ public class H2CommentDAO implements CommentDAO {
         }
     }
 
+    @Override
+    @SneakyThrows
+    public Collection<Comment> getCommentsFromPost(long postId, long offsetId, long limit){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM Comment WHERE to_postId = ? AND id > ? LIMIT ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, postId);
+            preparedStatement.setLong(2, offsetId);
+            preparedStatement.setLong(3, limit);
+
+            final ResultSet rs = preparedStatement.executeQuery();
+
+            return createCollection(rs);
+        }
+    }
+
     @SneakyThrows
     private Collection<Comment> createCollection(ResultSet rs){
 
-        Collection<Comment> comments = new HashSet<>();
+        Collection<Comment> comments = new ArrayList<>();
 
         Comment.CommentBuilder commentBuilder = Comment.builder();
 
