@@ -86,6 +86,25 @@ public class H2CommentDAO implements CommentDAO {
         }
     }
 
+    @Override
+    @SneakyThrows
+    public long countByPostId(long postId){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT COUNT(id) FROM Comment WHERE to_postId = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, postId);
+
+            final ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next())
+                return rs.getInt(1);
+            return 0;
+        }
+    }
+
     @SneakyThrows
     private Collection<Comment> createCollection(ResultSet rs){
 
