@@ -152,4 +152,42 @@ public class H2FollowingDAO implements FollowingDAO {
             preparedStatement.executeUpdate();
         }
     }
+
+    @Override
+    @SneakyThrows
+    public int countFollowersById(long followId){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT COUNT(follower_id) FROM Following WHERE follow_id = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, followId);
+
+            final ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next())
+                return rs.getInt(1);
+            return 0;
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public int countFollowingsById(long followerId){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT COUNT(follow_id) FROM Following WHERE follower_id = ?";
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, followerId);
+
+            final ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next())
+                return rs.getInt(1);
+            return 0;
+        }
+    }
 }
