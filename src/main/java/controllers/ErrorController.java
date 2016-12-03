@@ -36,6 +36,7 @@ public class ErrorController extends BaseServlet {
         int statusCode = (int) req.getAttribute("javax.servlet.error.status_code");
         String servletName = (String) req.getAttribute("javax.servlet.error.servlet_name");
         String requestUri = (String) req.getAttribute("javax.servlet.error.request_uri");
+        String errorMsg = (String) req.getAttribute("javax.servlet.error.message");
 
         if(requestUri == null) {
             requestUri = "Unknown";
@@ -73,6 +74,14 @@ public class ErrorController extends BaseServlet {
         }).ifNotPresent(() -> {
             log.info("no requestUri");
             req.setAttribute(REQUSET_URI, "no request uri");
+        });
+
+        OptionalConsumer.of(Optional.of(errorMsg)).ifPresent(msg ->{
+            log.info(msg);
+            req.setAttribute(ERROR_MSG, errorMsg);
+        }).ifNotPresent(() -> {
+            log.info("no error msg");
+            req.setAttribute(ERROR_MSG, "no error msg");
         });
 
         log.info("process to error jsp");

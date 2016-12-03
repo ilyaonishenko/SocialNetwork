@@ -1,6 +1,7 @@
 package controllers.auth;
 
 import common.BaseServlet;
+import common.Validator;
 import lombok.extern.slf4j.Slf4j;
 import model.Role;
 import model.User;
@@ -14,7 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by wopqw on 01.11.16.
@@ -53,15 +57,27 @@ public class RegisterController extends BaseServlet {
             e.printStackTrace();
         }
 
-        userDAO.addUser(userBuilder
+        User authUser = userBuilder
                 .id(0L)
                 .username(username)
                 .password(hash)
                 .email(reqParameterMap.get("email")[0])
                 .firstName(reqParameterMap.get("firstName")[0])
                 .lastName(reqParameterMap.get("lastName")[0])
-                .build()
-        );
+                .build();
+
+        if(!Validator.validateUsername(username)){
+            log.info("illegal username");
+            resp.sendError(406, "Invalid username");
+            return;
+        }
+        if(!Validator.validateEmail(authUser.getEmail())){
+            log.info("illegal email");
+            resp.sendError(406, "invalid email");
+            return;
+        }
+
+        userDAO.addUser(authUser);
 
         UserRole userRole = new UserRole(username, Role.USER.toString());
         userRoleDAO.addUserRole(userRole);

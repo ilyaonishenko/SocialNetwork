@@ -12,6 +12,7 @@
 <jsp:useBean id="statusCode" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="servletName" scope="request" type="java.lang.String"/>
 <jsp:useBean id="requestUri" scope="request" type="java.lang.String"/>
+<jsp:useBean id="errorMsg" scope="request" type="java.lang.String"/>
 <html>
 <head>
     <title>Error!</title>
@@ -23,5 +24,6 @@
 <p>the problem with uri: ${requestUri}</p>
 <p>with servlet: ${servletName}</p>
 <p>exception: ${throwable}</p>
+<p>error message: ${errorMsg}</p>
 </body>
 </html>

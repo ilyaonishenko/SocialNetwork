@@ -26,6 +26,7 @@ public class BaseServlet extends HttpServlet {
     protected static final String SERVLETNAME = "servletName";
     protected static final String REQUSET_URI = "requestUri";
     protected static final String STATUS_CODE = "statusCode";
+    protected static final String ERROR_MSG = "errorMsg";
 
     @SuppressWarnings("WeakerAccess")
     protected UserDAO userDAO;
