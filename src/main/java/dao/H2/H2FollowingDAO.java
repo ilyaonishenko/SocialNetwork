@@ -168,7 +168,7 @@ public class H2FollowingDAO implements FollowingDAO {
 
             if(rs.next())
                 return rs.getInt(1);
-            return 0;
+            return 0;   
         }
     }
 
