@@ -24,8 +24,14 @@ import java.util.Optional;
 @WebServlet(urlPatterns = {"/login"})
 public class LoginController extends BaseServlet {
 
+    private static final String PREV_PAGE = "prevPage";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String prevPage = (String) req.getAttribute("javax.servlet.forward.request_uri");
+        log.info("prevPage: "+prevPage);
+        req.setAttribute(PREV_PAGE, prevPage);
         req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
     }
 
@@ -39,8 +45,12 @@ public class LoginController extends BaseServlet {
         String username = reqParameterMap.get("j_username")[0];
         String password = reqParameterMap.get("j_password")[0];
 
-        String nextURL = Optional.ofNullable(
-                (String) httpSession.getAttribute("next")).orElse("/home/");
+//        String nextURL = Optional.ofNullable(
+//                (String) httpSession.getAttribute("next")).orElse("/home/");
+
+        String nextURL = "/home/";
+
+        log.info("nextURL: "+nextURL);
 
         Optional<User> userOpt = userDAO.getByUsername(username);
         HashSet<UserRole> userRoles = (HashSet<UserRole>) userRoleDAO.getByUsername(username);
@@ -67,6 +77,7 @@ public class LoginController extends BaseServlet {
         }
     }
 
+    // TODO: 03.12.16 move to secUtils
     private boolean secCheck(String username, String password){
 
         try {

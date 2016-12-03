@@ -25,13 +25,13 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/register"><i class="glyphicon glyphicon-home"></i> <fmt:message key="header.register"/></a>
+                <a href="<c:url value="/register"/>"><i class="glyphicon glyphicon-home"></i> <fmt:message key="header.register"/></a>
             </li>
             <li>
-                <a href="/login"><i class="glyphicon glyphicon-plus"></i> <fmt:message key="header.login"/></a>
+                <a href="<c:url value="/login"/>"><i class="glyphicon glyphicon-plus"></i> <fmt:message key="header.login"/></a>
             </li>
             <li>
-                <a href="/changelocale"> EN/RU</a>
+                <a href="<c:url value="/changelocale"/>"> EN/RU</a>
             </li>
         </ul>
     </nav>
