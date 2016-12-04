@@ -68,12 +68,15 @@ public class PostResource {
         log.info("visitorId: "+visitorId);
 
         // TODO: 06.11.16 make limitation by sql-query
-        ArrayList<Post> posts = postDAO.getAllByUser(userId, offsetId, limit).stream()
-                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Post> posts;
 
         if(visitorId == 0){
 
-            posts = sortByPrivacy(posts);
+            posts = (ArrayList<Post>) postDAO.getNotPrivateUserPosts(userId, offsetId, limit);
+        } else {
+
+            posts = postDAO.getAllByUser(userId, offsetId, limit).stream()
+                    .collect(Collectors.toCollection(ArrayList::new));
         }
 
         log.info(Arrays.toString(posts.toArray()));

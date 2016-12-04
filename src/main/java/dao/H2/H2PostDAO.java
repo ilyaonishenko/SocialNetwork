@@ -210,4 +210,22 @@ public class H2PostDAO implements PostDAO {
             preparedStatement.execute();
         }
     }
+
+    @Override
+    @SneakyThrows
+    public Collection<Post> getNotPrivateUserPosts(long userId, long offsetId, int limit){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT id, authorId, date, time, text, privacy, expandable "+
+                    "FROM Post WHERE (authorId = ? AND id>? AND privacy = FALSE) ORDER BY id DESC LIMIT ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, offsetId);
+            preparedStatement.setInt(3, limit);
+
+            return createCollection(preparedStatement.executeQuery());
+        }
+    }
 }

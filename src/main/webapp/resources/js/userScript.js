@@ -3,7 +3,7 @@
  */
 class FollowThings {
 
-    constructor(username, visitor){
+    constructor(username, visitor = null){
         console.log(username);
         this.username = username;
         this.visitor = visitor;
@@ -21,9 +21,10 @@ class FollowThings {
 
     doStuff() {
         console.log(this.username);
-        console.log(this.visitor);
+        console.log("visitor: "+this.visitor);
+        console.log("len: "+this.visitor.length);
         let me = this;
-        if(this.username === this.visitor){
+        if(this.username === this.visitor || this.username == null || this.visitor.length===0){
             document.getElementById("followButton"+me.username).style.display = "none";
         } else {
             $.ajax({
@@ -73,12 +74,12 @@ class FollowThings {
 
 class PostHandler {
 
-    constructor(userId, visitorId, postContainer) {
+    constructor(userId, visitorId = 0, postContainer) {
 
         this.userId = userId;
         this.visitorId = visitorId;
         this.postContainer = postContainer;
-
+        this.firstOffset = 0;
     }
 
     loadUserPosts() {
@@ -97,12 +98,19 @@ class PostHandler {
             },
             dataType: 'json',
             success: function (views) {
+                let count = 0;
                 views.forEach(function (view) {
+                    count += 1;
                     console.log(view);
                     PostHandler.createContainers(view, me.postContainer, visitorId);
                     if(me.offsetId < view.post.id)
                             me.offsetId = view.post.id;
+                    me.firstOffset = me.offsetId-10;
                 });
+                console.log('count: '+count);
+                if(count >=10) {
+                    document.getElementById('buttonMore').style.display = "block";
+                }
                 PostHandler.updateUserPosts(me.userId, me.visitorId, me.offsetId, 10, me.postContainer);
             }
         })
@@ -127,16 +135,40 @@ class PostHandler {
                     if(offsetId < view.post.id)
                             offsetId = view.post.id;
                 });
-                PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
+                // PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
             },
             error: function (err) {
                 console.log(err);
+                console.log("error");
                 PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
             }
         })
     }
 
-    static createContainers(view, postContainer, visitorId) {
+    loadPrevPosts(){
+        console.log("loading prev posts");
+        let me = this;
+        me.firstOffset = firstOffset-10;
+        $.ajax({
+            url: '/webapi/posts/',
+            type: 'GET',
+            data: {
+                userId: this.userId,
+                visitorId: this.visitorId,
+                offsetId: me.firstOffset,
+                limit: 10
+            },
+            dataType: 'json',
+            success: function (views) {
+                views.forEach(function (view) {
+                    console.log(view);
+                    PostHandler.createContainers(view, me.postContainer, visitorId, false);
+                });
+            }
+        })
+    }
+
+    static createContainers(view, postContainer, visitorId, forward = true) {
         let panel = document.createElement("div");
         panel.className = "panel panel-default";
         if (view.post.authorId == visitorId){
@@ -201,7 +233,14 @@ class PostHandler {
         comments.innerHTML = view.commentsCount+" comments";
         pBody.appendChild(comments);
         panel.appendChild(pBody);
-        postContainer.insertBefore(panel, postContainer.firstChild);
+        if (forward === true) {
+            console.log('forward is true');
+            postContainer.insertBefore(panel, postContainer.firstChild);
+        }
+        else {
+            console.log('forward is not true');
+            postContainer.appendChild(panel);
+        }
     }
 
     static isLiked(postId, userId){

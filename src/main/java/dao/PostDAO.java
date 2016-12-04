@@ -27,4 +27,6 @@ public interface PostDAO {
     int countUserPosts(long userId);
 
     void deletePost(long postId);
+
+    Collection<Post> getNotPrivateUserPosts(long userId, long offsetId, int limit);
 }

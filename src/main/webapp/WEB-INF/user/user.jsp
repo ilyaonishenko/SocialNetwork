@@ -118,6 +118,9 @@
                                 <div id="posts">
 
                                 </div>
+                                <a id="buttonMore" style=" display:none; margin-left: auto; margin-right: auto" onclick="loadMore()" class="btn btn-info">
+                                    <fmt:message key="post.loadmore"/>
+                                </a>
                                 <%--<c:choose>--%>
                                     <%--<c:when test="${not (empty sUser)}">--%>
                                         <%--<jsp:include page="../common/logged_postview.jsp"/>--%>
@@ -137,15 +140,20 @@
 </div>
 </body>
 <script>
-    var follow = new FollowThings(username = "${user.user.username}", visitor = "${sUser.username}");
+    let follow = new FollowThings(username = "${user.user.username}", visitor = "${sUser.username}");
     addEventListener ("DOMContentLoaded", follow.doStuff, false);
     <%--var liker = new Like('${sUser.id}');--%>
-    let visitorId = "${sUser.id}";
+    let visitoreId = "${sUser.id}";
     <c:if test="${userRoles.size()>1}">
-        visitorId = "${user.user.id}";
+    visitoreId = "${user.user.id}";
     </c:if>
-    var postHandler = new PostHandler(userId = "${user.user.id}", visitorId,
+    console.log("visitor id is: "+visitoreId);
+    let postHandler = new PostHandler(userId = "${user.user.id}", visitorId = visitoreId,
             postContainer = document.getElementById("posts"));
+
+    function loadMore() {
+        postHandler.loadPrevPosts();
+    }
     addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false)
 </script>
 </html>
