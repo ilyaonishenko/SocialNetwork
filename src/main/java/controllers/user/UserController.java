@@ -49,7 +49,8 @@ public class UserController extends BaseServlet {
             }
             req.getRequestDispatcher("/WEB-INF/user/user.jsp").forward(req,resp);
         } else {
-            // TODO: 30.10.16 make error page
+            log.info("no such user");
+            resp.sendError(406, "No such user registered");
         }
     }
 }
