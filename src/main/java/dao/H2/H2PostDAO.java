@@ -161,7 +161,7 @@ public class H2PostDAO implements PostDAO {
 
         try (Connection connection = connectionPool.getConnection()) {
 
-            String sql = "SELECT COUNT(id) FROM Post WHERE id = ?";
+            String sql = "SELECT COUNT(id) FROM Post WHERE authorId = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, userId);
 

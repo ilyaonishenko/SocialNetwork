@@ -41,6 +41,7 @@ public class UserController extends BaseServlet {
                     .followers(followingDAO.countFollowersById(user.getId()))
                     .followings(followingDAO.countFollowingsById(user.getId()))
                     .build();
+            log.info("user posts: "+userView.getPosts());
             req.setAttribute(USER, userView);
             if (!optSUser.isPresent()){
                 log.info("not isPresent");
