@@ -114,6 +114,7 @@
                             </div>
                             <%--left ended--%>
                             <%--right--%>
+                                <input id="costyl3" hidden="hidden"/>
                             <div class="col-sm-7">
                                 <div id="posts">
 
@@ -150,10 +151,9 @@
     console.log("visitor id is: "+visitoreId);
     let postHandler = new PostHandler(userId = "${user.user.id}", visitorId = visitoreId,
             postContainer = document.getElementById("posts"));
-
+    addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false);
     function loadMore() {
         postHandler.loadPrevPosts();
     }
-    addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false)
 </script>
 </html>

@@ -79,13 +79,14 @@ class PostHandler {
         this.userId = userId;
         this.visitorId = visitorId;
         this.postContainer = postContainer;
-        this.firstOffset = 0;
+        this.ids = [];
     }
 
     loadUserPosts() {
         console.log("loading");
         console.log("visitorId = "+visitorId);
         let me = this;
+        let ids = [];
         me.offsetId = 0;
         $.ajax({
             url: '/webapi/posts/',
@@ -104,20 +105,29 @@ class PostHandler {
                     console.log(view);
                     PostHandler.createContainers(view, me.postContainer, visitorId);
                     if(me.offsetId < view.post.id)
-                            me.offsetId = view.post.id;
-                    me.firstOffset = me.offsetId-10;
+                    me.offsetId = view.post.id;
+                    ids.push(view.post.id);
                 });
+                document.getElementById('costyl3').value = PostHandler.findMin(ids);
                 console.log('count: '+count);
                 if(count >=10) {
                     document.getElementById('buttonMore').style.display = "block";
                 }
-                PostHandler.updateUserPosts(me.userId, me.visitorId, me.offsetId, 10, me.postContainer);
+                PostHandler.updateUserPosts(me.userId, me.visitorId, me.offsetId, 10, me.postContainer, ids);
             }
         })
     }
 
-    static updateUserPosts(userId, visitorId, offsetId, limit, postContainer) {
+    static findMin(array){
+        let min = Math.min.apply(null, array);
+        console.log("min: "+min+"qweyuyughfhgjhwqkjeqwhegqwyeqweqw");
+        return min;
+    }
+
+    static updateUserPosts(userId, visitorId, offsetId, limit, postContainer, ids) {
         console.log("offsetID: "+offsetId);
+        let me = this;
+        console.log("ids len: "+ids.length+"!!!!!!!!!!!!!!!!!!!!!!");
         $.ajax({
             url: '/webapi/posts/update',
             type: 'GET',
@@ -134,29 +144,35 @@ class PostHandler {
                     PostHandler.createContainers(view, postContainer, visitorId);
                     if(offsetId < view.post.id)
                             offsetId = view.post.id;
+                    ids.push(view.post.id);
                 });
                 // PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
-                setTimeout(PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer),10000)
+                document.getElementById('costyl3').value = PostHandler.findMin(ids);
+                setTimeout(PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer, ids),10000)
             },
             error: function (err) {
                 console.log(err);
                 console.log("error");
-                PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
+                document.getElementById('costyl3').value =  PostHandler.findMin(ids);
+                PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer, ids);
             }
         })
     }
 
     loadPrevPosts(){
         console.log("loading prev posts");
+        let offsetId = document.getElementById('costyl3').value;
+        console.log("new offsetId: "+offsetId);
         let me = this;
-        me.firstOffset = firstOffset-10;
+        let dis = [];
+        console.log('ids len: '+offsetId);
         $.ajax({
-            url: '/webapi/posts/',
+            url: '/webapi/posts/getprev',
             type: 'GET',
             data: {
                 userId: this.userId,
                 visitorId: this.visitorId,
-                offsetId: me.firstOffset,
+                offsetId: offsetId,
                 limit: 10
             },
             dataType: 'json',
@@ -164,7 +180,9 @@ class PostHandler {
                 views.forEach(function (view) {
                     console.log(view);
                     PostHandler.createContainers(view, me.postContainer, visitorId, false);
+                    dis.push(view.post.id)
                 });
+                document.getElementById('costyl3').value = PostHandler.findMin(dis);
             }
         })
     }
