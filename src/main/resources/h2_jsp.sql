@@ -118,6 +118,32 @@ CREATE TABLE Comment (
 
 INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (2, 'peter', 3, 'AYO! I am the moderator', '2016-01-01', '00:01:00');
 INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (3, 'Andrew', 3, 'Hello! I am a user', '2016-01-01', '00:10:00');
+
 INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, 'WELCOME TO THE CLUB', '2016-01-01', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '1', '2016-01-01', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '2', '2016-01-02', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '3', '2016-01-03', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '4', '2016-01-04', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '5', '2016-01-05', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '6', '2016-01-06', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '7', '2016-01-07', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '8', '2016-01-08', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '9', '2016-01-09', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '10', '2016-01-10', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '11', '2016-01-11', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '12', '2016-01-12', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '13', '2016-01-13', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '14', '2016-01-14', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '15', '2016-01-15', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '16', '2016-01-16', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '17', '2016-01-17', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '18', '2016-01-18', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '19', '2016-01-19', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '20', '2016-01-20', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '21', '2016-01-21', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '22', '2016-01-22', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '23', '2016-01-23', '01:00:00');
+INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (1, 'ivan', 4, '24', '2016-01-24', '01:00:00');
+
 INSERT INTO Comment (from_userId, from_username, to_postId, text, date, time) VALUES (4, 'alex', 1, 'GTFO', '2016-01-01', '05:00:00');
 
