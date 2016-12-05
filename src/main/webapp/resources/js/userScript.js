@@ -136,6 +136,7 @@ class PostHandler {
                             offsetId = view.post.id;
                 });
                 // PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
+                setTimeout(PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer),10000)
             },
             error: function (err) {
                 console.log(err);
