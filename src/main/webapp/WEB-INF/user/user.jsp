@@ -115,6 +115,7 @@
                             <%--left ended--%>
                             <%--right--%>
                                 <input id="costyl3" hidden="hidden"/>
+                                <input id="sizeOfDiv" hidden="hidden" value="0"/>
                             <div class="col-sm-7">
                                 <div id="posts">
 
@@ -153,7 +154,7 @@
             postContainer = document.getElementById("posts"));
     addEventListener ("DOMContentLoaded", postHandler.loadUserPosts, false);
     function loadMore() {
-        postHandler.loadPrevPosts();
+        postHandler.loadPrevPosts('${user.posts}');
     }
 </script>
 </html>

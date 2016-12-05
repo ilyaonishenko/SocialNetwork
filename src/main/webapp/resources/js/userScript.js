@@ -107,6 +107,7 @@ class PostHandler {
                     if(me.offsetId < view.post.id)
                     me.offsetId = view.post.id;
                     ids.push(view.post.id);
+                    PostHandler.increment();
                 });
                 document.getElementById('costyl3').value = PostHandler.findMin(ids);
                 console.log('count: '+count);
@@ -145,6 +146,7 @@ class PostHandler {
                     if(offsetId < view.post.id)
                             offsetId = view.post.id;
                     ids.push(view.post.id);
+                    PostHandler.increment();
                 });
                 // PostHandler.updateUserPosts(userId, visitorId, offsetId, limit, postContainer);
                 document.getElementById('costyl3').value = PostHandler.findMin(ids);
@@ -159,32 +161,43 @@ class PostHandler {
         })
     }
 
-    loadPrevPosts(){
-        console.log("loading prev posts");
-        let offsetId = document.getElementById('costyl3').value;
-        console.log("new offsetId: "+offsetId);
-        let me = this;
-        let dis = [];
-        console.log('ids len: '+offsetId);
-        $.ajax({
-            url: '/webapi/posts/getprev',
-            type: 'GET',
-            data: {
-                userId: this.userId,
-                visitorId: this.visitorId,
-                offsetId: offsetId,
-                limit: 10
-            },
-            dataType: 'json',
-            success: function (views) {
-                views.forEach(function (view) {
-                    console.log(view);
-                    PostHandler.createContainers(view, me.postContainer, visitorId, false);
-                    dis.push(view.post.id)
-                });
-                document.getElementById('costyl3').value = PostHandler.findMin(dis);
-            }
-        })
+    static increment(){
+        let val = parseInt(document.getElementById('sizeOfDiv').value);
+        document.getElementById('sizeOfDiv').value = val+1;
+    }
+
+    loadPrevPosts(postsNum){
+        console.log("elements: "+document.getElementById('sizeOfDiv').value);
+        if(document.getElementById('sizeOfDiv').value>=postsNum){
+            document.getElementById('buttonMore').style.display = 'none';
+        } else {
+            console.log("loading prev posts");
+            let offsetId = document.getElementById('costyl3').value;
+            console.log("new offsetId: " + offsetId);
+            let me = this;
+            let dis = [];
+            console.log('ids len: ' + offsetId);
+            $.ajax({
+                url: '/webapi/posts/getprev',
+                type: 'GET',
+                data: {
+                    userId: this.userId,
+                    visitorId: this.visitorId,
+                    offsetId: offsetId,
+                    limit: 10
+                },
+                dataType: 'json',
+                success: function (views) {
+                    views.forEach(function (view) {
+                        console.log(view);
+                        PostHandler.createContainers(view, me.postContainer, visitorId, false);
+                        dis.push(view.post.id);
+                        PostHandler.increment();
+                    });
+                    document.getElementById('costyl3').value = PostHandler.findMin(dis);
+                }
+            })
+        }
     }
 
     static createContainers(view, postContainer, visitorId, forward = true) {
