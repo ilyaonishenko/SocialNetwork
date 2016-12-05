@@ -267,4 +267,22 @@ public class H2PostDAO implements PostDAO {
             return createCollection(preparedStatement.executeQuery());
         }
     }
+
+    @Override
+    @SneakyThrows
+    public Collection<Post> searchPosts(String text){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM Post WHERE LOWER(text) LIKE LOWER(?)";
+
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            text = "%"+text+"%";
+
+            preparedStatement.setString(1, text);
+
+            return createCollection(preparedStatement.executeQuery());
+        }
+    }
 }

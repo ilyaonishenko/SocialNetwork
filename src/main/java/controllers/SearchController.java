@@ -2,6 +2,8 @@ package controllers;
 
 import common.BaseServlet;
 import lombok.extern.slf4j.Slf4j;
+import model.Comment;
+import model.Post;
 import model.User;
 
 import javax.servlet.ServletException;
@@ -28,8 +30,17 @@ public class SearchController extends BaseServlet {
 //        usersearch
 
         ArrayList<User> possibleUsers = (ArrayList<User>) userDAO.searchUser(text);
-
         req.setAttribute("possibleUsers", possibleUsers);
+
+//        postssearch
+
+        ArrayList<Post> possiblePosts = (ArrayList<Post>) postDAO.searchPosts(text);
+        req.setAttribute("possiblePosts", possiblePosts);
+
+//        commentssearch
+
+        ArrayList<Comment> possibleComments = (ArrayList<Comment>) commentDAO.searchComment(text);
+        req.setAttribute("possibleComments", possibleComments);
 
         req.getRequestDispatcher("/WEB-INF/searchResults.jsp").forward(req,resp);
     }

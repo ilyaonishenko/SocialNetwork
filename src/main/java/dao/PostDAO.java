@@ -33,4 +33,6 @@ public interface PostDAO {
     Collection<Post> getPrevByUser(long userId, long offsetId, int limit);
 
     Collection<Post> getNotPrivatePrevPosts(long userId, long offsetId, int limit);
+
+    Collection<Post> searchPosts(String text);
 }

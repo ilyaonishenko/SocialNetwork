@@ -124,6 +124,24 @@ public class H2CommentDAO implements CommentDAO {
         }
     }
 
+    @Override
+    @SneakyThrows
+    public Collection<Comment> searchComment(String text){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM Comment WHERE LOWER(text) LIKE LOWER(?)";
+
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            text = "%"+text+"%";
+
+            preparedStatement.setString(1, text);
+
+            return createCollection(preparedStatement.executeQuery());
+        }
+    }
+
     @SneakyThrows
     private Collection<Comment> createCollection(ResultSet rs){
 

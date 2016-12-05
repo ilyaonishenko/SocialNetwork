@@ -43,4 +43,6 @@ public interface CommentDAO {
                 .count();
     }
 
+    Collection<Comment> searchComment(String text);
+
 }
