@@ -49,4 +49,6 @@ public interface UserDAO {
     User updateUser(User user);
 
     void deleteUser(User user);
+
+    Collection<User> searchUser(String text);
 }

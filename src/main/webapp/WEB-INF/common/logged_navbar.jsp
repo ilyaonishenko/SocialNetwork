@@ -32,7 +32,7 @@
         <a href="/" class="navbar-brand">Texter</a>
     </div>
     <nav class="collapse navbar-collapse" role="navigation">
-        <form class="navbar-form navbar-left">
+        <form class="navbar-form navbar-left" method="get" action="/s/search/">
             <div class="input-group input-group-sm" style="max-width:360px;">
                 <input type="text" class="form-control" placeholder="<fmt:message key="header.search"/>" name="srch-term" id="srch-term">
                 <div class="input-group-btn">

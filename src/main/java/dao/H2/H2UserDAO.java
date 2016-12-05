@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -159,5 +160,46 @@ public class H2UserDAO implements UserDAO {
 
             preparedStatement.execute();
         }
+    }
+
+    @Override
+    @SneakyThrows
+    public Collection<User> searchUser(String text){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT * FROM User WHERE (LOWER(email) LIKE LOWER(?) OR LOWER(username) LIKE LOWER(?) " +
+                    "OR LOWER(first_name) LIKE LOWER(?) OR LOWER(last_name) LIKE LOWER(?))";
+
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            text = "%"+text+"%";
+
+            preparedStatement.setString(1,text);
+            preparedStatement.setString(2,text);
+            preparedStatement.setString(3,text);
+            preparedStatement.setString(4,text);
+
+            return createCollection(preparedStatement.executeQuery());
+        }
+    }
+
+    @SneakyThrows
+    private Collection<User> createCollection(ResultSet rs){
+
+        Collection<User> users = new ArrayList<>();
+        User.UserBuilder userBuilder = User.builder();
+
+        while(rs.next())
+            users.add(
+                    userBuilder
+                            .email(rs.getString("email"))
+                            .username(rs.getString("username"))
+                            .firstName(rs.getString("first_name"))
+                            .lastName(rs.getString("last_name"))
+                            .build()
+            );
+
+        return users;
     }
 }
