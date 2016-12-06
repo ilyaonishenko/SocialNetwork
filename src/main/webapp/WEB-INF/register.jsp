@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-10 col-lg-offset-2">
-                                        <button type="reset" class="btn btn-default"><fmt:message key="button.cancel"/></button>
+                                        <button type="reset" class="btn btn-default" onclick="history.go(-1);"><fmt:message key="button.cancel"/></button>
                                         <button value="submit" type="submit" class="btn btn-primary"><fmt:message key="button.submit"/></button>
                                     </div>
                                 </div>
