@@ -301,8 +301,10 @@ class Timeline{
     }
 
     loadTimeline(){
+        console.log("LOADING TIMELINE !!!");
         let self = this;
         self.offsetId = 0;
+        let ids = [];
         $.ajax({
             url: '/webapi/posts/timeline/',
             type: 'GET',
@@ -313,7 +315,9 @@ class Timeline{
             },
             dataType: 'json',
             success: function (views) {
+                let count = 0;
                 views.forEach(function (view) {
+                    count++;
                     if (isAdmin == true) {
                         console.log("is admin");
                         PostHandler.createContainers(view, postContainer, view.post.authorId);
@@ -322,12 +326,19 @@ class Timeline{
                     }
                     if(offsetId < view.post.id)
                         offsetId = view.post.id;
+                    ids.push(view.post.id);
+                    Timeline.increment();
                 });
-                Timeline.updateTimeline(userId, offsetId, 10, postContainer, isAdmin);
+                console.log("count is: "+count);
+                document.getElementById('costyl3').value = PostHandler.findMin(ids);
+                if(count >= 10) {
+                    document.getElementById("buttonMore").style.display = 'block';
+                }
+                Timeline.updateTimeline(userId, offsetId, 10, postContainer, isAdmin, ids);
             }
         })
     }
-    static updateTimeline(userId, offsetId, limit, postContainer, isAdmin){
+    static updateTimeline(userId, offsetId, limit, postContainer, isAdmin, ids){
         console.log(offsetId);
         $.ajax({
             url: '/webapi/posts/updatetimeline',
@@ -348,16 +359,21 @@ class Timeline{
                         PostHandler.createContainers(view, postContainer, userId);
                     }
                     //noinspection JSUnresolvedVariable
-                    if(offsetId < view.post.id)
-                        { //noinspection JSUnresolvedVariable
-                            offsetId = view.post.id;
-                        }
+                    if (offsetId < view.post.id) {
+                        //noinspection JSUnresolvedVariable
+                        offsetId = view.post.id;
+                    }
+                    ids.push(view.post.id);
+                    Timeline.increment();
+
                 });
-                Timeline.updateTimeline(userId, offsetId, limit, postContainer, isAdmin);
+                document.getElementById('costyl3').value = Timeline.findMin(ids);
+                Timeline.updateTimeline(userId, offsetId, limit, postContainer, isAdmin, ids);
             },
             error: function (err) {
                 console.log(err);
-                Timeline.updateTimeline(userId, offsetId, limit, postContainer, isAdmin);
+                document.getElementById('costyl3').value = Timeline.findMin(ids);
+                Timeline.updateTimeline(userId, offsetId, limit, postContainer, isAdmin, ids);
             }
         })
     }
@@ -367,8 +383,57 @@ class Timeline{
         document.getElementById('sizeOfDiv').value = val+1;
     }
 
-    loadPrevTimeline(){
+    static findMin(array){
+        let min = Math.min.apply(null, array);
+        console.log("min: "+min+"qweyuyughfhgjhwqkjeqwhegqwyeqweqw");
+        return min;
+    }
 
+    loadPrevTimeline(){
+        if (document.getElementById('sizeOfDiv').value >= document.getElementById('maxSizeOfDiv').value){
+            document.getElementById('buttonMore').style.display = 'none';
+        } else {
+            console.log("loading pre timeline");
+            let offsetId = document.getElementById('costyl3').value;
+            console.log("offsetID: " + offsetId);
+            let me = this;
+            let ids = [];
+            $.ajax({
+                url: '/webapi/posts/getprevtimeline',
+                type: 'GET',
+                data: {
+                    userId: this.userId,
+                    offsetId: offsetId,
+                    limit: 10
+                },
+                dataType: 'json',
+                success: function (views) {
+                    views.forEach(function (view) {
+                        console.log(view);
+                        if (isAdmin == true) {
+                            PostHandler.createContainers(view, postContainer, view.post.authorId, false);
+                        } else {
+                            PostHandler.createContainers(view, postContainer, userId, false);
+                        }
+                        ids.push(view.post.id);
+                        Timeline.increment();
+                    });
+                    document.getElementById('costyl3').value = Timeline.findMin(ids);
+                }
+            })
+        }
+    }
+
+    countAllPosts(){
+        console.log("counting all posts;");
+        $.ajax({
+            url: '/webapi/posts/getTimelineCount/'+userId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (postCount) {
+                document.getElementById('maxSizeOfDiv').value = postCount;
+            }
+        })
     }
 }
 class Like{

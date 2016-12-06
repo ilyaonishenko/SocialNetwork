@@ -267,7 +267,6 @@ public class PostResource {
     @Produces(APPLICATION_JSON)
     public Response getPrevTimeline(
             @QueryParam("userId") long userId,
-            @QueryParam("visitorId") long visitorId,
             @QueryParam("offsetId") long offsetId,
             @QueryParam("limit") int limit)
             throws JsonProcessingException {
@@ -286,6 +285,19 @@ public class PostResource {
         log.info(String.valueOf(postViews.size()));
 
         String json = JsonWrapper.toJson(postViews);
+
+        return Response.ok(json).build();
+    }
+
+    @GET
+    @Path("getTimelineCount/{userId}")
+    @Produces(APPLICATION_JSON)
+    public Response getTimelineCount(@PathParam("userId") long userId)
+            throws JsonProcessingException {
+
+        int timelineCount = postDAO.countPostsInTimeline(userId);
+
+        String json = JsonWrapper.toJson(timelineCount);
 
         return Response.ok(json).build();
     }

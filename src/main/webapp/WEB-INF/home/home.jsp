@@ -83,7 +83,9 @@
                                         </ul>
                                     </form>
                                 </div>
+                                <input id="costyl3" hidden="hidden"/>
                                 <input id="sizeOfDiv" hidden="hidden" value="0"/>
+                                <input id="maxSizeOfDiv" hidden="hidden" value="0"/>
                                 <div id="timeline">
 
                                 </div>
@@ -119,6 +121,7 @@
         }
     }
     addEventListener("DOMContentLoaded", timeline.loadTimeline, false);
+    addEventListener("DOMContentLoaded", timeline.countAllPosts, false);
     function loadMore() {
         timeline.loadPrevTimeline();
     }
