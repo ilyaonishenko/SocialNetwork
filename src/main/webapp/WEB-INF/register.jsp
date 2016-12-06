@@ -29,7 +29,7 @@
             <div class="column col-sm-10 col-xs-11" style="width:100%" id="main">
                 <jsp:include page="common/loggedOut_navbar.jsp"/>
                 <div class="padding">
-                        <form class="form-horizontal" action="/register" method="post">
+                        <form class="form-horizontal" action="<c:url value="/register"/>" method="post">
                             <fieldset>
                                 <legend><fmt:message key="register.title"/></legend>
                                 <div class="form-group">
