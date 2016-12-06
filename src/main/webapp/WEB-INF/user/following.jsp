@@ -8,8 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="java.util.HashSet" %>
-<%@ page import="model.User" %>
 <html>
 <head>
     <title>Following</title>
@@ -26,10 +24,6 @@
 <jsp:useBean id="user" type="model.User" scope="request"/>
 <jsp:useBean id="followings" class="java.util.HashSet" scope="request"/>
 
-<% HashSet<User> followingUsers = (HashSet<User>) followings;%>
-<% for(User u: followingUsers){%>
-<br><%=u.getUsername()%>
-<%}%>
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -53,20 +47,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <% for (User u : followingUsers) {%>
-                            <div class="col-sm-7" id="follows">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="commenterImage"><img src="../../resources/img/quest.gif"></div>
-                                        <h4><a href="/user/<%=u.getUsername()%>"><%=u.getUsername()%></a></h4>
-                                        <a style="float: right; margin-top: -35px;" id="followButton<%=u.getUsername()%>" class="btn btn-primary" onclick="FollowThings.followClick('<%=u.getUsername()%>')">Follow</a>
+                            <%--<% for (User u : followingUsers) {%>--%>
+                                <c:forEach items="${followings}" var="follow">
+                                    <div class="col-sm-7" id="follows">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="commenterImage"><img src="../../resources/img/quest.gif">
+                                                </div>
+                                                <h4><a href="/user/${follow.username}">${follow.username}
+                                                </a></h4>
+                                                <a style="float: right; margin-top: -35px;"
+                                                   id="followButton${follow.username}" class="btn btn-primary"
+                                                   onclick="FollowThings.followClick('${follow.username}')">Follow</a>
+                                            </div>
+                                            <div class="panel-body">
+                                                    ${follow.firstName} ${follow.lastName}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="panel-body">
-                                        <%=u.getFirstName()%> <%=u.getLastName()%>
-                                    </div>
-                                </div>
-                            </div>
-                            <%}%>
+                                </c:forEach>
                             <%--right ended--%>
                         </div>
                     </div>
@@ -77,10 +76,10 @@
 </div>
 </body>
 <script>
-    <% for (User u : followingUsers) {%>
-    $("#<%=u.getUsername()%>").ready(function () {
-        FollowThings.doStuff('<%=u.getUsername()%>', visitor = "${sUser.username}");
+    <c:forEach items="${followings}" var="following">
+    $('#${following.username}').ready(function () {
+        FollowThings.doStuff('${following.username}', visitor = "${sUser.username}");
     });
-    <%}%>
+    </c:forEach>
 </script>
 </html>
