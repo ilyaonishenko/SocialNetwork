@@ -1,7 +1,8 @@
 <%@ page import="model.Post" %>
 <%@ page import="model.User" %>
 <%@ page import="model.Comment" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%--
   Created by IntelliJ IDEA.
   User: wopqw
   Date: 05.12.16

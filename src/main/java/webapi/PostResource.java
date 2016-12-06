@@ -262,6 +262,34 @@ public class PostResource {
         return Response.ok(json).build();
     }
 
+    @GET
+    @Path("getprevtimeline/")
+    @Produces(APPLICATION_JSON)
+    public Response getPrevTimeline(
+            @QueryParam("userId") long userId,
+            @QueryParam("visitorId") long visitorId,
+            @QueryParam("offsetId") long offsetId,
+            @QueryParam("limit") int limit)
+            throws JsonProcessingException {
+        ArrayList<Post> posts;
+
+        posts = postDAO.getPrevTimeline(userId, offsetId, limit).stream()
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        log.info(Arrays.toString(posts.toArray()));
+
+        Collection<PostView> postViews = createPostViews(posts)
+                .stream()
+                .sorted((p1, p2) -> Long.compare(p2.getPost().getId(), p1.getPost().getId()))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        log.info(String.valueOf(postViews.size()));
+
+        String json = JsonWrapper.toJson(postViews);
+
+        return Response.ok(json).build();
+    }
+
     private Collection<PostView> createPostViews(Collection<Post> posts){
 
         ArrayList<PostView> postViews = new ArrayList<>();

@@ -83,9 +83,14 @@
                                         </ul>
                                     </form>
                                 </div>
+                                <input id="sizeOfDiv" hidden="hidden" value="0"/>
                                 <div id="timeline">
 
                                 </div>
+                            </div>
+                                <a id="buttonMore" style=" display:none; margin-left: auto; margin-right: auto" onclick="loadMore()" class="btn btn-info">
+                                    <fmt:message key="post.loadmore"/>
+                                </a>
                             </div>
                             <%--right ended--%>
                         </div>
@@ -114,5 +119,8 @@
         }
     }
     addEventListener("DOMContentLoaded", timeline.loadTimeline, false);
+    function loadMore() {
+        timeline.loadPrevTimeline();
+    }
 </script>
 </html>

@@ -270,6 +270,50 @@ public class H2PostDAO implements PostDAO {
 
     @Override
     @SneakyThrows
+    public Collection<Post> getPrevTimeline(long userId, long offsetId, int limit){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT id, authorId, date, time, text, privacy, expandable " +
+                    "FROM Post WHERE (authorId IN " +
+                    "(SELECT follow_id FROM Following WHERE follower_id = ?) OR authorId=?) AND " +
+                    "id<? ORDER BY id DESC LIMIT ?";
+
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1,userId);
+            preparedStatement.setLong(2,userId);
+            preparedStatement.setLong(3,offsetId);
+            preparedStatement.setInt(4,limit);
+
+            return createCollection(preparedStatement.executeQuery());
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public int countPostsInTimeline(long userId){
+
+        try(Connection connection = connectionPool.getConnection()){
+
+            String sql = "SELECT COUNT(id) FROM Post WHERE (authorId IN " +
+                    "(SELECT follow_id FROM Following WHERE follower_id = ?) OR authorId=?)";
+
+            final PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, userId);
+
+
+            final ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next())
+                return rs.getInt(1);
+            else return 0;
+        }
+    }
+
+    @Override
+    @SneakyThrows
     public Collection<Post> searchPosts(String text){
 
         try(Connection connection = connectionPool.getConnection()){

@@ -361,6 +361,15 @@ class Timeline{
             }
         })
     }
+
+    static increment(){
+        let val = parseInt(document.getElementById('sizeOfDiv').value);
+        document.getElementById('sizeOfDiv').value = val+1;
+    }
+
+    loadPrevTimeline(){
+
+    }
 }
 class Like{
     static makeLike(visitorId, postId, container){
