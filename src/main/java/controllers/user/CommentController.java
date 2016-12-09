@@ -26,6 +26,8 @@ public class CommentController extends BaseServlet {
 
         log.info("doPost createComment");
 
+        req.setCharacterEncoding("UTF-8");
+
         HttpSession httpSession = req.getSession();
 
         User user = (User) httpSession.getAttribute(SUSER);

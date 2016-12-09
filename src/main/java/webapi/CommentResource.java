@@ -111,11 +111,11 @@ public class CommentResource {
 
     private Map<String,String> parse(String params){
 
-        String[] param = params.split("&");
+        String[] param = params.split(",");
 
         return Stream.of(param).collect(Collectors.toMap(
-                p -> p.split("=")[0],
-                p -> p.split("=")[1]
+                p -> p.split(":")[0],
+                p -> p.split(":")[1]
         ));
     }
 

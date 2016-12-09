@@ -302,6 +302,7 @@ public class PostResource {
         return Response.ok(json).build();
     }
 
+    @SuppressWarnings("Duplicates")
     private Collection<PostView> createPostViews(Collection<Post> posts){
 
         ArrayList<PostView> postViews = new ArrayList<>();

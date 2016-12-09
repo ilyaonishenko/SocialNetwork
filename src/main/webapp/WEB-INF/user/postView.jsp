@@ -100,12 +100,12 @@
         $.ajax({
             url: '/webapi/comments/add',
             type: 'POST',
-            data:{
+            data:JSON.stringify({
                 'userId':'${sUser.id}',
                 'username': '${sUser.username}',
                 'postId':'${postView.post.id}',
                 'text': text
-            },
+            }),
             contentType: 'application/json',
             dataType: "json",
             success: function (answer) {
