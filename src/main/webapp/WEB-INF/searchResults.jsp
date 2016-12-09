@@ -32,11 +32,11 @@
                 <jsp:include page="common/logged_navbar.jsp"/>
                 <div class="row">
                     <div class="col-sm-3">
-                        <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary">Разделы</a>
+                        <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary"><fmt:message key="search.tabs"/> </a>
                         <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
-                            <li class="active"><a href="#vtab1" data-toggle="tab">Пользователи</a></li>
-                            <li><a href="#vtab2" data-toggle="tab">Посты</a></li>
-                            <li><a href="#vtab3" data-toggle="tab">Комментарии</a></li>
+                            <li class="active"><a href="#vtab1" data-toggle="tab"><fmt:message key="search.users"/></a></li>
+                            <li><a href="#vtab2" data-toggle="tab"><fmt:message key="search.posts"/></a></li>
+                            <li><a href="#vtab3" data-toggle="tab"><fmt:message key="search.comments"/></a></li>
                         </ul>
                     </div>
                     <div class="col-sm-7">
@@ -46,7 +46,7 @@
                                 <c:if test="${possibleUsers.size() != 0}">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
-                                            <p class="lead">Пользователи</p>
+                                            <p class="lead"><fmt:message key="search.users"/></p>
                                         </div>
                                     </div>
                                     <c:forEach items="${possibleUsers}" var="user">
@@ -72,14 +72,14 @@
                                 <c:if test="${possiblePosts.size() != 0}">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
-                                            <p class="lead">Посты:</p>
+                                            <p class="lead"><fmt:message key="search.posts"/></p>
                                         </div>
                                     </div>
                                     <c:forEach items="${possiblePosts}" var="postView">
                                         <div class="panel panel-default" id="'${postView.post.id}'">
                                             <div class="panel-heading">
                                                 <a href="/post/${postView.post.id}" class="pull-right"
-                                                   style="margin-top: 5px">Open post</a>
+                                                   style="margin-top: 5px"><fmt:message key="post.openPost"/></a>
                                                 <h4>
                                                     <a href="/user/${postView.user.username}">@${postView.user.username}
                                                     </a></h4>
@@ -111,14 +111,14 @@
                                 <c:if test="${possibleComments.size() !=0}">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
-                                            <p class="lead">Комментарии:</p>
+                                            <p class="lead"><fmt:message key="search.comments"/></p>
                                         </div>
                                     </div>
                                     <c:forEach items="${possibleComments}" var="comment">
                                         <div class="panel panel-default" id="'${comment.id}'">
                                             <div class="panel-heading">
                                                 <a href="/post/${comment.postId}" class="pull-right"
-                                                   style="margin-top: 5px">Go to post</a>
+                                                   style="margin-top: 5px"><fmt:message key="post.openPost"/></a>
                                                 <h4><a href="/user/${comment.username}">@${comment.username}
                                                 </a></h4>
                                             </div>
