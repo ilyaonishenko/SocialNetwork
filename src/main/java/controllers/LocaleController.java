@@ -26,7 +26,15 @@ public class LocaleController extends HttpServlet {
 
         log.info("changeLocale");
 
-        String url = req.getHeader("Referer").split(req.getServerName()+":"+req.getServerPort()+"/")[1];
+        final String[] referer = req.getHeader("Referer").split(req.getServerName() + ":" + req.getServerPort() + "/");
+
+        String url;
+
+        if(referer.length>1)
+            url = referer[1];
+        else url = "/";
+
+        log.info("change locale at: "+url);
 
         Optional<String> optional= Optional.ofNullable((String) req.getSession().getAttribute("locale"));
 
