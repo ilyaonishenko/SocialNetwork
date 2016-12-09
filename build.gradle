@@ -32,6 +32,7 @@ dependencies{
 
     // Jackson
     compile 'com.fasterxml.jackson.core:jackson-databind:+'
+    compile 'com.googlecode.json-simple:json-simple:+'
 
     // WebSockets
     compile 'org.apache.tomcat:tomcat-websocket-api:+'

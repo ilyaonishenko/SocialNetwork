@@ -7,6 +7,9 @@ import dao.UserDAO;
 import listeners.Initer;
 import lombok.extern.slf4j.Slf4j;
 import model.Comment;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
@@ -15,7 +18,6 @@ import javax.ws.rs.core.Response;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,18 +62,21 @@ public class CommentResource {
     @POST
     @Path("add")
     @Consumes(APPLICATION_JSON)
-    public void addComment(final String params){
+    public void addComment(final String params) throws ParseException {
 
         log.info("adding comment with text {}",params);
 
-        HashMap<String, String> map = (HashMap<String, String>) parse(params);
+        JSONParser parser = new JSONParser();
+        JSONObject map = (JSONObject) parser.parse(params);
+
+//        HashMap<String, String> map = (HashMap<String, String>) parse(params.toString());
 
         Comment.CommentBuilder commentBuilder = Comment.builder();
 
-        Comment newComment = commentBuilder.userId((Long.parseLong(map.get("userId"))))
-                                .username(map.get("username"))
-                                .postId(Long.parseLong(map.get("postId")))
-                                .text(map.get("text"))
+        Comment newComment = commentBuilder.userId(Long.valueOf((String) map.get("userId")))
+                                .username((String) map.get("username"))
+                                .postId(Long.valueOf((String) map.get("postId")))
+                                .text((String) map.get("text"))
                                 .date(LocalDate.now())
                                 .time(LocalTime.now())
                                 .build();
