@@ -19,7 +19,6 @@ import java.util.Optional;
 @Slf4j
 @WebServlet(urlPatterns = "/s/follow")
 public class FollowController extends BaseServlet {
-    // TODO: 13.11.16 Обработка случая при неавторизированном пользователе на странице
     private HttpSession httpSession;
 
     @Override
