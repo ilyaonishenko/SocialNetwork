@@ -82,7 +82,7 @@ INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (1,'20
 INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (1,'2016-01-29','00:00:31','28', TRUE, FALSE );
 INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (1,'2016-01-30','00:00:31','29', TRUE, FALSE );
 
-INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (2,'2016-01-01','00:01:00','Hey there! I am smth like moderator here',FALSE ,FALSE );
+INSERT INTO Post (authorId, date, time, text, privacy, expandable) VALUES (2,'2016-02-01','00:01:00','Hey there! I am smth like moderator here',FALSE ,FALSE );
 
 CREATE TABLE Likes (
   from_userId INT NOT NULL,

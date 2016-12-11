@@ -544,7 +544,7 @@ class CommentController{
         texthandler.className =  'commentText';
         let username = document.createElement('span');
         username.className = 'commenter-username';
-        username.innerHTML = comment.username;  //qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+        username.innerHTML = '<a href="/user/'+comment.username+'">@'+comment.username+'</a>';
         texthandler.appendChild(username);
         let text = document.createElement('p');
         text.innerHTML = comment.text;
