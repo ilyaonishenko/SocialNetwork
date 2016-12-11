@@ -90,10 +90,7 @@ public class RegisterController extends BaseServlet {
             httpSession.setAttribute(SUSER,user);
             log.info("method: "+req.getMethod());
             httpSession.setAttribute(USER_ROLE, new HashSet<>(Collections.singletonList(userRole)));
-//            req.getRequestDispatcher("/home/").forward(req,resp);
-            String url =req.getServerName()+":"+req.getServerPort()+"/home";
-            resp.sendRedirect(url);
-
+            resp.sendRedirect("/home");
         } else {
             req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req,resp);
         }
