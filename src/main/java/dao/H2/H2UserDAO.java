@@ -21,7 +21,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class H2UserDAO implements UserDAO {
 
-    // TODO: 01.11.16 create UnitTest
     private ConnectionPool connectionPool;
 
     @Override

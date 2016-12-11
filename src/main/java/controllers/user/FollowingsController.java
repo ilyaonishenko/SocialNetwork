@@ -43,7 +43,9 @@ public class FollowingsController extends BaseServlet {
             req.setAttribute(USER, user);
             req.setAttribute(FOLLOWINGS,followingUsers);
             req.getRequestDispatcher("/WEB-INF/user/following.jsp").forward(req, resp);
+        } else {
+            log.info("no such user");
+            resp.sendError(550, "no such user");
         }
-        // TODO: 03.11.16 error no such user
     }
 }

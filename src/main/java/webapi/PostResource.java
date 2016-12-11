@@ -49,11 +49,10 @@ public class PostResource {
         }
         if (likeDAO == null)
             likeDAO = (LikeDAO) servletContext.getAttribute(Initer.LIKE_DAO);
+
         if (commentDAO == null)
             commentDAO = (CommentDAO) servletContext.getAttribute(Initer.COMMENT_DAO);
     }
-
-    // TODO: 08.11.16 Add likes
 
     @GET
     @Produces(APPLICATION_JSON)
@@ -67,7 +66,6 @@ public class PostResource {
         log.info("getPostsByUser");
         log.info("visitorId: "+visitorId);
 
-        // TODO: 06.11.16 make limitation by sql-query
         ArrayList<Post> posts;
 
         if(visitorId == 0){
@@ -237,7 +235,6 @@ public class PostResource {
         log.info("getPrevByUser");
         log.info("visitorId: "+visitorId);
 
-        // TODO: 06.11.16 make limitation by sql-query
         ArrayList<Post> posts;
 
         if(visitorId == 0){

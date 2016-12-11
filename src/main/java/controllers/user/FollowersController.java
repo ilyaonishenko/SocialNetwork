@@ -48,8 +48,10 @@ public class FollowersController extends BaseServlet {
             req.setAttribute(FOLLOWERS, followerUsers);
 
             req.getRequestDispatcher("/WEB-INF/user/followers.jsp").forward(req, resp);
-        }
+        } else {
 
-        // TODO: 03.11.16 error no usch user or profile is private
+            log.info("no such user");
+            resp.sendError(550, "no such user");
+        }
     }
 }
