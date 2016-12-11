@@ -26,10 +26,6 @@ import java.util.Optional;
 @Slf4j
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterController extends BaseServlet {
-
-    // TODO: 01.11.16 Валидация на jsp и тут
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
