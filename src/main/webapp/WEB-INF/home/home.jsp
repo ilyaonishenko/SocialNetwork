@@ -89,10 +89,11 @@
                                 <div id="timeline">
 
                                 </div>
-                            </div>
                                 <a id="buttonMore" style=" display:none; margin-left: auto; margin-right: auto" onclick="loadMore()" class="btn btn-info">
-                                    <fmt:message key="post.loadmore"/>
-                                </a>
+                                <fmt:message key="post.loadmore"/>
+                            </a>
+                            </div>
+
                             </div>
                             <%--right ended--%>
                         </div>
