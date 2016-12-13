@@ -36,17 +36,19 @@ public class ConnectionPool implements AutoCloseable {
         int poolSize = Integer.parseInt(getValueAndRemoveKey(properties, "poolSize"));
 
         return create(poolSize,getValueAndRemoveKey(properties,"driver"),
-                getValueAndRemoveKey(properties,"url"));
+                getValueAndRemoveKey(properties,"url"),
+                getValueAndRemoveKey(properties, "user"),
+                getValueAndRemoveKey(properties, "password"));
     }
 
-    private static ConnectionPool create(Integer poolSize, String driver, String url){
+    private static ConnectionPool create(Integer poolSize, String driver, String url, String user, String password){
 
         //noinspection Duplicates
         return new ConnectionPool(poolSize, () ->{
 
             try {
                 Class.forName(driver);
-                return DriverManager.getConnection(url);
+                return DriverManager.getConnection(url, user, password);
             } catch (ClassNotFoundException | SQLException e){
                 e.printStackTrace();
             }

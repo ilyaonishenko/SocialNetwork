@@ -41,9 +41,9 @@ public class Initer implements ServletContextListener {
 
         ConnectionPool connectionPool = ConnectionPool.create(path + DB_PROPERTIES);
 
-        connectionPool.initDb(path+ H2_JSP_SQL);
+//        connectionPool.initDb(path+ H2_JSP_SQL);
 
-        reinitDbWithHash(connectionPool);
+//        reinitDbWithHash(connectionPool);
 
         UserDAO userDAO = new H2UserDAO(connectionPool);
         UserRoleDAO userRoleDAO = new H2UserRoleDAO(connectionPool);
