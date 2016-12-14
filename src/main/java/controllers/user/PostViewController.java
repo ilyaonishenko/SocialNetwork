@@ -43,7 +43,8 @@ public class PostViewController extends BaseServlet {
             req.getRequestDispatcher("/WEB-INF/user/postView.jsp").forward(req,resp);
 
         } else {
-            log.info("some error here");
+            log.info("no such post");
+            resp.sendError(550, "no such post");
         }
     }
 }
